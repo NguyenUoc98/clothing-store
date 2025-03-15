@@ -1,0 +1,837 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+   
+    font-family: "Kalnia", serif;
+    font-weight: 400;
+}
+
+.main {
+    position: relative;
+    width: 100%;
+    height: 15vh;
+    overflow: hidden;
+    margin-bottom: 5%;
+}
+
+.navbar {
+    display: flex;
+    /* Sử dụng Flexbox */
+    justify-content: space-between;
+    /* Dàn đều các khối */
+    align-items: center;
+    /* Căn giữa nội dung theo chiều dọc */
+    width: 100%;
+    /* Chiếm toàn bộ chiều rộng */
+    max-width: 1200px;
+    /* Chiều rộng tối đa */
+    margin: auto;
+    height: 97px;
+    /* Chiều cao cố định */
+    padding: 0 20px;
+    /* Khoảng cách hai bên */
+}
+
+.search {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    /* Chiếm 1/3 không gian của navbar */
+    justify-content: flex-start;
+    /* Căn trái */
+}
+
+.search a {
+    margin-left: 10px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #000000;
+}
+
+.iconsearch {
+    font-size: 1.1rem;
+    color: #000000;
+}
+
+.menu {
+    flex: 2;
+    /* Chiếm gấp đôi không gian so với search và icon */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.menu ul {
+    display: flex;
+    /* Căn ngang các mục menu */
+    gap: 70px;
+    /* Khoảng cách giữa các mục */
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.menu ul li {
+    position: relative;
+}
+
+.menu ul li a {
+    text-decoration: none;
+    font-size: 18px;
+    color: #000000;
+    transition: color 0.3s;
+    position: relative;
+    margin-right:15px;
+    margin-left: 10px;
+}
+
+.anh{
+    width:75px;
+    height:75px;
+    position: absolute;
+    bottom:-32px;
+    left:-23px
+}
+
+.menu ul li a:hover {
+    color: #555;
+    /* Đổi màu khi hover */
+}
+
+.submenu {
+    display: none; /* Ban đầu ẩn submenu */
+    position: absolute;
+    background-color: white;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    top: 100%; /* Chỉnh vị trí submenu ngay dưới icon */
+    left: 50%; /* Đặt submenu ở giữa */
+    transform: translateX(-50%); /* Căn giữa submenu so với icon */
+    z-index: 2;
+    opacity: 0; /* Ẩn submenu */
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease; /* Hiệu ứng mờ và chuyển động */
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Bóng đổ nhẹ */
+    min-width: 150px; /* Đảm bảo submenu có đủ chiều rộng */
+}
+
+.submenu li {
+    padding: 8px 20px; /* Thêm padding cho các mục trong submenu */
+    transition: background-color 0.3s ease; /* Hiệu ứng chuyển màu nền khi hover */
+    position: relative;
+}
+
+.submenu li a {
+    text-decoration: none;
+    font-size: 16px;
+    font-family: "Kalnia", serif;
+    font-weight: 400;
+    color: #333;
+    display: block;
+    padding: 5px 0;
+    text-align: center;
+}
+
+.iconsearch1:hover .submenu {
+    display: block; /* Hiển thị submenu khi hover vào icon */
+    opacity: 1; /* Làm submenu hiện lên */
+}
+
+.iconsearch1 {
+    position: relative; /* Để submenu xuất hiện dưới icon */
+}
+
+.iconsearch1 i {
+    cursor: pointer; /* Chỉnh chuột để báo hiệu đây là phần có thể nhấp vào */
+}
+
+
+.icon {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex: 1;
+}
+
+.icon1 {
+    display: flex;
+    gap: 20px;
+}
+
+.iconsearch1 i {
+    font-size: 1.1rem;
+    color: #000000;
+    cursor: pointer;
+}
+
+.iconsearch1 i:hover {
+    color: #555;
+}
+
+header hr {
+    position: absolute;
+    width: 100vw;
+    margin: 0;
+    left: 0;
+    top: 108px;
+}
+
+.slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transition: opacity 1s ease-in-out;
+}
+
+.slide.active {
+    opacity: 1;
+}
+
+.text {
+    font-family: "Kalnia", serif;
+    font-weight: 400;
+    position: absolute;
+    line-height: 2em;
+    bottom: 48%;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #000000;
+    font-size: 4em;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+
+
+/* Bố cục tổng quan */
+.product-detail {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    /* padding: 40px; */
+    background-color: #fff;
+    min-height: 78vh;
+    font-family: "Aboreto", system-ui;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.product-container {
+    display: flex;
+    max-width: 1350px;
+    gap: 170px;
+    width:100%;
+}
+
+/* Hình ảnh sản phẩm */
+.product-image {
+    flex: 1;
+    /* Chiếm 50% chiều rộng */
+}
+
+.product-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+/* Thông tin sản phẩm */
+.product-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.product-title {
+    font-size: 40px;
+    font-weight: 400;
+    text-transform: uppercase;
+    color: #000;
+    
+}
+
+.product-price {
+    font-size: 36px;
+    color: #888;
+    font-weight: 600;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.product-description {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.8;
+}
+
+/* Sizes */
+.product-sizes h3,
+.product-colors h3 {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #000;
+}
+
+.size-options {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.size-options span {
+    display: inline-block;
+    border: 1px solid #000;
+    padding: 5px 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.size-options span:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+/* Colors */
+.color-options {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.color {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid #000;
+    cursor: pointer;
+}
+
+.color.black {
+    background-color: #000;
+}
+
+.color.navy {
+    background-color: #001f3f;
+}
+
+.color.purple {
+    background-color: #800080;
+}
+
+.color.beige {
+    background-color: #f5deb3;
+}
+
+/* Hành động sản phẩm */
+.product-actions {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.quantity-selector {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.quantity-selector button {
+    padding: 5px 10px;
+    border: 1px solid #000;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.quantity-selector button:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+.quantity-selector input {
+    width: 50px;
+    height:9px;
+    text-align: center;
+    border: 1px solid #000;
+}
+
+.add-to-cart {
+    padding: 10px 20px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.add-to-cart:hover {
+    background-color: #444;
+}
+
+.product-image hr{
+    margin-top:5%;
+}
+
+
+
+
+/* Tổng thể */
+.product-details {
+    font-family: "Kalnia", serif;
+    /* padding: 40px; */
+    background-color: #fff;
+}
+
+.details-container {
+    display: flex;
+    gap: 40px;
+    max-width: 1500px;
+    margin: 0 auto; /* Đảm bảo container nằm giữa màn hình */
+    justify-content: center; /* Căn giữa các phần tử con trong container */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    position: relative; 
+}
+.details-container::before {
+    content: "";
+    position: absolute;
+    bottom: -25px;
+    left: 0;
+    width: 48%;
+    height: 1px;
+    background-color: #807e7e;
+}
+
+/* Key Features */
+.key-features {
+    flex: 10; /* Cột trái chiếm 2/3 */
+    padding-bottom:10px;
+}
+
+.key-features h2 {
+    font-size: 24px;
+    font-weight: 400;
+    margin-bottom: 20px;
+}
+
+.key-features ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.key-features li {
+    font-size: 1rem;
+    line-height: 1.8;
+    margin-bottom: 10px;
+}
+
+.key-features li span {
+    display: inline-block;
+    width: 150px;
+    text-transform: uppercase;
+}
+
+/* Customer Reviews */
+.customer-reviews {
+    flex: 5; /* Cột phải chiếm 1/3 */
+    width:600px;
+}
+
+.customer-reviews h2 {
+    font-size: 24px;
+    font-weight: 400;
+    margin-bottom: 20px;
+}
+
+.customer-reviews form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    width:400px;
+}
+
+.form-group-inline {
+    display: flex;
+    gap: 40px;
+}
+
+.form-group label {
+    font-size: 12px;
+    font-weight: 400;
+    margin-bottom: 5px;
+    gap:20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+textarea,
+input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    width: 100%;
+    flex:1;
+}
+
+textarea {
+    resize: none;
+}
+
+.checkbox {
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+}
+
+.checkbox input {
+    margin-right: 10px;
+}
+
+.submit-btn {
+    padding: 10px 20px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    width:100px;
+}
+
+.submit-btn:hover {
+    background-color: #555;
+}
+textarea{
+    width:600px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .details-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .key-features {
+        border-right: none;
+        padding-right: 0;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 20px;
+    }
+}
+
+
+
+
+.ourteam {
+    /* display: flex; */
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    /* background-color: #161623; */
+    min-height: 100vh;
+    padding-top: 10%;
+}
+
+.ourteamh3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* margin: 40px 0; */
+}
+
+.team-title {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    /* Khoảng cách giữa chữ và đường kẻ */
+}
+
+.team-title .title {
+    font-size: 2rem;
+    /* Kích thước chữ */
+    font-weight: 300;
+    /* Độ dày chữ */
+    text-transform: uppercase;
+    /* Chữ in hoa */
+    color: #000000;
+    /* Màu chữ */
+    text-align: center;
+    font-size: 50px;
+    letter-spacing: 2px;
+    /* Khoảng cách giữa các ký tự */
+}
+
+
+
+.ourteam1 {
+    position: relative;
+    padding-bottom: 70px;
+}
+
+.ourteam1:before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    clip-path: circle(25% at right 60%);
+}
+
+.container1 {
+    position: relative;
+    Z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 80px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 4%;
+    gap: 70px;
+
+}
+
+.container1 .card1 {
+    position: relative;
+    width: 260px;
+    height: 400px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    margin: 20px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: filter 1s ease;
+
+}
+
+.container1 .card1 .content1 {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    /* opacity: 0.7; */
+    transition: .5s;
+}
+
+.container1 .card1 .sci {
+    position: absolute;
+    bottom: 50px;
+    display: flex;
+}
+
+.container1 .card1 .sci li {
+    list-style: none;
+    margin: 0 10px;
+    transform: translateY(40px);
+    opacity: 0;
+    transition: .5s;
+    transition-delay: calc(0.1s * var(--i));
+}
+
+.container1 .card1:hover .sci li {
+    transform: translateY(-120px);
+    opacity: 1;
+}
+
+.container1 .card1 .sci li a {
+    text-decoration: none;
+
+}
+
+.container1 .card1 .sci li a .viewmore {
+    font-size: 14px;
+    padding-bottom: 2px;
+    border-bottom: 1px solid #c9ab81;
+    color: #c9ab81;
+    transition: 1s;
+}
+
+.container1 .card1:hover .content1 {
+    filter: brightness(0.4);
+}
+
+.container1 .card1:hover .container1 .card1 .sci li a .viewmore {
+    opacity: 1;
+}
+
+.container1 .card1 .sci li a .viewmore:hover {
+    color: #fff;
+}
+
+.container1 .card1 .content1 .contentBx {
+    position: absolute;
+    bottom: -166px;
+}
+
+.container1 .card1 .content1 .contentBx h3 {
+    color: rgb(65, 89, 98);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 500;
+    font-size: 16px;
+    margin: 20px 0 10px;
+    line-height: 3.1em;
+    text-align: center;
+}
+
+.container1 .card1 .content1 .contentBx h3 span {
+    font-size: 12px;
+    font-weight: 300;
+    text-transform: initial;
+    color: black;
+}
+
+.container1 .card1 .content1 .contentBx h3 span i {
+    font-size: 21px;
+    text-transform: initial;
+    color: black;
+}
+
+.container1 .card1 .content1 .imgBx {
+    position: relative;
+    width: 360px;
+    height: 400px;
+    overflow: hidden;
+    border: 10px solid rgba(0, 0, 0, 0);
+}
+
+.container1 .card1 .content1 .imgBx img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+}
+
+
+
+
+.footer {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #000;
+    padding: 40px 10px;
+    color:#fff;
+    height:395px;
+    margin-top:4%;
+}
+
+.footer-section {
+    text-align: left;
+    max-width: 363px;
+}
+
+.logo h1 {
+    font-size: 3rem;
+    margin: 0;
+}
+
+.logo p {
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+.contact h3,
+.openhours h3,
+.subscribe h3 {
+    font-size: 30px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    font-weight: 400;
+}
+
+.contact p,
+.openhours p {
+    margin: 5px 0;
+    font-size: 14px;
+    line-height: 64px;
+}
+
+.subscribe form {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.email-input {
+    background: none;
+    border: none;
+    border-bottom: 1px solid #fff;
+    color: #fff;
+    padding: 5px;
+    font-size: 1rem;
+    margin-right: 10px;
+    width: 220px;
+    outline: none;
+}
+
+.subscribe button {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0;
+}
+
+.subscribe button:hover {
+    color: #aaa;
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+    margin-top: 62px;
+}
+
+.social-icons a {
+    text-decoration: none; 
+    color: #fff;
+    font-size: 2rem;
+    height: 50px; 
+    width: 50px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%; 
+    background-color: transparent;
+    transition: all 0.3s ease; 
+}
+
+.social-icons a:hover {
+    color: #aaa;
+    background-color: #333; 
+}
+
+.social-icons i {
+    display: inline-block;
+    line-height: 1; 
+    vertical-align: middle;
+}
+
+
+.footer-section.subscribe {
+    line-height: 141px;
+    height: 362px;
+}

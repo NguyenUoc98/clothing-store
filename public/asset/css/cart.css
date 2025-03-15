@@ -1,0 +1,135 @@
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+/* Tiêu đề giỏ hàng */
+.cart-title {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+/* Cảnh báo giỏ hàng trống */
+.empty-cart-message {
+    text-align: center;
+    font-size: 18px;
+    padding: 30px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.shop-now-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+.shop-now-btn:hover {
+    background-color: #218838;
+}
+
+/* Bảng giỏ hàng */
+.cart-table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.cart-table th, .cart-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.cart-table th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+}
+
+.product-details {
+    display: flex;
+    align-items: center;
+}
+
+.product-details img {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+}
+
+input[type="number"] {
+    width: 60px;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.remove-btn {
+    background-color: #dc3545;
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.remove-btn:hover {
+    background-color: #c82333;
+}
+
+/* Tóm tắt giỏ hàng */
+.cart-summary {
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+    margin-top: 20px;
+}
+
+.update-cart-btn {
+    background-color: #ffc107;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.update-cart-btn:hover {
+    background-color: #e0a800;
+}
+
+/* Thanh toán */
+.checkout {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.checkout-btn {
+    padding: 12px 30px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 18px;
+}
+
+.checkout-btn:hover {
+    background-color: #0056b3;
+}

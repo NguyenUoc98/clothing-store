@@ -1,0 +1,1006 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Kalnia", serif;
+    font-weight: 400;
+}
+
+.main {
+    position: relative;
+    width: 100%;
+    height: 120vh;
+    overflow: hidden;
+    margin-bottom: 10%;
+}
+
+.navbar {
+    display: flex;
+    /* Sử dụng Flexbox */
+    justify-content: space-between;
+    /* Dàn đều các khối */
+    align-items: center;
+    /* Căn giữa nội dung theo chiều dọc */
+    width: 100%;
+    /* Chiếm toàn bộ chiều rộng */
+    max-width: 1200px;
+    /* Chiều rộng tối đa */
+    margin: auto;
+    height: 97px;
+    /* Chiều cao cố định */
+    padding: 0 20px;
+    /* Khoảng cách hai bên */
+}
+
+.search {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    /* Chiếm 1/3 không gian của navbar */
+    justify-content: flex-start;
+    /* Căn trái */
+}
+
+.search a {
+    margin-left: 10px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #000000;
+}
+
+.iconsearch {
+    font-size: 1.1rem;
+    color: #000000;
+}
+
+.menu {
+    flex: 2;
+    /* Chiếm gấp đôi không gian so với search và icon */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.menu ul {
+    display: flex;
+    /* Căn ngang các mục menu */
+    gap: 70px;
+    /* Khoảng cách giữa các mục */
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.menu ul li {
+    position: relative;
+}
+
+.menu ul li a {
+    text-decoration: none;
+    font-size: 18px;
+    color: #000000;
+    transition: color 0.3s;
+    position: relative;
+    margin-right:15px;
+    margin-left: 10px;
+}
+
+.anh{
+    width:75px;
+    height:75px;
+    position: absolute;
+    bottom:-32px;
+    left:-23px
+}
+
+.menu ul li a:hover {
+    color: #555;
+    /* Đổi màu khi hover */
+}
+
+.submenu {
+    display: none; /* Ban đầu ẩn submenu */
+    position: absolute;
+    background-color: white;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    top: 100%; /* Chỉnh vị trí submenu ngay dưới icon */
+    left: 50%; /* Đặt submenu ở giữa */
+    transform: translateX(-50%); /* Căn giữa submenu so với icon */
+    z-index: 2;
+    opacity: 0; /* Ẩn submenu */
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease; /* Hiệu ứng mờ và chuyển động */
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Bóng đổ nhẹ */
+    min-width: 150px; /* Đảm bảo submenu có đủ chiều rộng */
+}
+
+.submenu li {
+    padding: 8px 20px; /* Thêm padding cho các mục trong submenu */
+    transition: background-color 0.3s ease; /* Hiệu ứng chuyển màu nền khi hover */
+    position: relative;
+}
+
+.submenu li a {
+    text-decoration: none;
+    font-size: 16px;
+    font-family: "Kalnia", serif;
+    font-weight: 400;
+    color: #333;
+    display: block;
+    padding: 5px 0;
+    text-align: center;
+}
+
+.iconsearch1:hover .submenu {
+    display: block; /* Hiển thị submenu khi hover vào icon */
+    opacity: 1; /* Làm submenu hiện lên */
+}
+
+.iconsearch1 {
+    position: relative; /* Để submenu xuất hiện dưới icon */
+}
+
+.iconsearch1 i {
+    cursor: pointer; /* Chỉnh chuột để báo hiệu đây là phần có thể nhấp vào */
+}
+
+
+.icon {
+    display: flex;
+    justify-content: flex-end;
+    /* Căn phải */
+    align-items: center;
+    flex: 1;
+    /* Chiếm 1/3 không gian của navbar */
+}
+
+.icon1 {
+    display: flex;
+    gap: 20px;
+    /* Khoảng cách giữa các icon */
+}
+
+.iconsearch1 i {
+    font-size: 1.1rem;
+    color: #000000;
+    cursor: pointer;
+}
+
+.iconsearch1 i:hover {
+    color: #555;
+}
+
+/* Không thay đổi các phần khác */
+header hr {
+    position: absolute;
+    right: 15px;
+    left: 15px;
+    width: 85%;
+    border: 1px solid #ccc;
+    margin: 20px -20px 0 71px;
+}
+
+.slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transition: opacity 1s ease-in-out;
+}
+
+.slide.active {
+    opacity: 1;
+}
+
+.text {
+    font-family: "Kalnia", serif;
+    font-weight: 400;
+    position: absolute;
+    line-height: 2em;
+    bottom: 48%;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #000000;
+    font-size: 4em;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+
+
+.ourteam {
+    /* display: flex; */
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    /* background-color: #161623; */
+    min-height: 100vh;
+    padding-top: 70px;
+}
+
+.ourteamh3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* margin: 40px 0; */
+}
+
+.team-title {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    /* Khoảng cách giữa chữ và đường kẻ */
+}
+
+.team-title .title {
+    font-size: 2rem;
+    /* Kích thước chữ */
+    font-weight: 300;
+    /* Độ dày chữ */
+    text-transform: uppercase;
+    /* Chữ in hoa */
+    color: #000000;
+    /* Màu chữ */
+    text-align: center;
+    font-size: 50px;
+    letter-spacing: 2px;
+    /* Khoảng cách giữa các ký tự */
+}
+
+.team-title::before,
+.team-title::after {
+    content: "";
+    width: 109px;
+    /* Đặt chiều dài cố định cho đường kẻ */
+    height: 1px;
+    /* Độ dày của đường kẻ */
+    background: #ccc;
+    /* Màu của đường kẻ */
+}
+
+
+.ourteam1 {
+    position: relative;
+    padding-bottom: 70px;
+}
+
+.ourteam1:before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    clip-path: circle(25% at right 60%);
+}
+
+.container1 {
+    position: relative;
+    Z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 80px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 4%;
+    gap: 70px;
+
+}
+
+.container1 .card1 {
+    position: relative;
+    width: 260px;
+    height: 400px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    margin: 20px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: filter 1s ease;
+
+}
+
+.container1 .card1 .content1 {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    /* opacity: 0.7; */
+    transition: .5s;
+}
+
+.container1 .card1 .sci {
+    position: absolute;
+    bottom: 50px;
+    display: flex;
+}
+
+.container1 .card1 .sci li {
+    list-style: none;
+    margin: 0 10px;
+    transform: translateY(40px);
+    opacity: 0;
+    transition: .5s;
+    transition-delay: calc(0.1s * var(--i));
+}
+
+.container1 .card1:hover .sci li {
+    transform: translateY(-120px);
+    opacity: 1;
+}
+
+.container1 .card1 .sci li a {
+    text-decoration: none;
+
+}
+
+.container1 .card1 .sci li a .viewmore {
+    font-size: 14px;
+    padding-bottom: 2px;
+    border-bottom: 1px solid #c9ab81;
+    color: #c9ab81;
+    transition: 1s;
+}
+
+.container1 .card1:hover .content1 {
+    filter: brightness(0.4);
+}
+
+.container1 .card1:hover .container1 .card1 .sci li a .viewmore {
+    opacity: 1;
+}
+
+.container1 .card1 .sci li a .viewmore:hover {
+    color: #fff;
+}
+
+.container1 .card1 .content1 .contentBx {
+    position: absolute;
+    bottom: -166px;
+}
+
+.container1 .card1 .content1 .contentBx h3 {
+    color: rgb(65, 89, 98);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 500;
+    font-size: 16px;
+    margin: 20px 0 10px;
+    line-height: 3.1em;
+    text-align: center;
+}
+
+.container1 .card1 .content1 .contentBx h3 span {
+    font-size: 12px;
+    font-weight: 300;
+    text-transform: initial;
+    color: black;
+}
+
+.container1 .card1 .content1 .contentBx h3 span i {
+    font-size: 21px;
+    text-transform: initial;
+    color: black;
+}
+
+.container1 .card1 .content1 .imgBx {
+    position: relative;
+    width: 360px;
+    height: 400px;
+    overflow: hidden;
+    border: 10px solid rgba(0, 0, 0, 0);
+}
+
+.container1 .card1 .content1 .imgBx img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+}
+
+
+
+
+
+.img-decorate {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15% 0 5% 0;
+
+}
+
+.img-deco {
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    height: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.img-text {
+    padding: 20px;
+    color: #fff;
+    text-align: center;
+
+}
+
+.img-text h3 {
+    margin: 0;
+    font-size: 128px;
+    line-height: 1.5em;
+    font-family: "Aboreto", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 24px;
+}
+
+
+
+
+
+.two-columns {
+    display: flex;
+    width: 100%;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+
+.column {
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.column-20 {
+    flex: 0 0 20%;
+}
+
+.column-80 {
+    flex: 0 0 60%;
+}
+
+.container11 {
+    position: relative;
+    Z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 80px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 4%;
+    gap: 70px;
+
+}
+
+.container11 .card11 {
+    position: relative;
+    width: 260px;
+    height: 400px;
+    margin: 20px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: filter 1s ease;
+
+}
+
+.container11 .card11 .content11 {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    /* opacity: 0.7; */
+    transition: .5s;
+}
+
+.container11 .card11 .sci1 {
+    position: absolute;
+    bottom: 50px;
+    display: flex;
+}
+
+.container11 .card11 .sci1 li {
+    list-style: none;
+    margin: 0 10px;
+    transform: translateY(40px);
+    opacity: 0;
+    transition: .5s;
+    transition-delay: calc(0.1s * var(--i));
+}
+
+.container11 .card11:hover .sci1 li {
+    transform: translateY(-120px);
+    opacity: 1;
+}
+
+.container11 .card11 .sci1 li a {
+    text-decoration: none;
+
+}
+
+.container11 .card11 .sci1 li a .viewmore1 {
+    font-size: 14px;
+    padding-bottom: 2px;
+    border-bottom: 1px solid #c9ab81;
+    color: #c9ab81;
+    transition: 1s;
+}
+
+.container11 .card11:hover .content11 {
+    filter: brightness(0.4);
+}
+
+.container11 .card11:hover .container11 .card11 .sci1 li a .viewmore1 {
+    opacity: 1;
+}
+
+.container11 .card11 .sci1 li a .viewmore1:hover {
+    color: #fff;
+}
+
+.container11 .card11 .content11 .contentBx1 {
+    position: absolute;
+    bottom: -166px;
+}
+
+.container11 .card11 .content11 .contentBx1 h3 {
+    color: rgb(65, 89, 98);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 500;
+    font-size: 16px;
+    margin: 20px 0 10px;
+    line-height: 3.1em;
+    text-align: center;
+}
+
+.container11 .card11 .content11 .contentBx1 h3 span {
+    font-size: 12px;
+    font-weight: 300;
+    text-transform: initial;
+    color: black;
+}
+
+.container11 .card11 .content11 .contentBx1 h3 span i {
+    font-size: 21px;
+    text-transform: initial;
+    color: black;
+}
+
+.container11 .card11 .content11 .imgBx1 {
+    position: relative;
+    width: 360px;
+    height: 1000px;
+    overflow: hidden;
+    border: 10px solid rgba(0, 0, 0, 0);
+}
+
+.container11 .card11 .content11 .imgBx1 img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+}
+
+.ourteam12 {
+    position: relative;
+    padding-bottom: 20px;
+}
+
+.ourteam12:before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    clip-path: circle(25% at right 60%);
+}
+
+.container12 {
+    position: relative;
+    Z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 80px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 4%;
+    gap: 80px;
+
+}
+
+.container12 .card12 {
+    position: relative;
+    width: 260px;
+    height: 400px;
+    margin: 20px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: filter 1s ease;
+
+}
+
+.container12 .card12 .content12 {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    /* opacity: 0.7; */
+    transition: .5s;
+}
+
+.container12 .card12 .sci2 {
+    position: absolute;
+    bottom: 50px;
+    display: flex;
+}
+
+.container12 .card12 .sci2 li {
+    list-style: none;
+    margin: 0 10px;
+    transform: translateY(40px);
+    opacity: 0;
+    transition: .5s;
+    transition-delay: calc(0.1s * var(--i));
+}
+
+.container12 .card12:hover .sci2 li {
+    transform: translateY(-120px);
+    opacity: 1;
+}
+
+.container12 .card12 .sci2 li a {
+    text-decoration: none;
+
+}
+
+.container12 .card12 .sci2 li a .viewmore2 {
+    font-size: 14px;
+    padding-bottom: 2px;
+    border-bottom: 1px solid #c9ab81;
+    color: #c9ab81;
+    transition: 1s;
+}
+
+.container12 .card12:hover .content12 {
+    filter: brightness(0.4);
+}
+
+.container12 .card12:hover .container12 .card12 .sci2 li a .viewmore2 {
+    opacity: 1;
+}
+
+.container12 .card12 .sci2 li a .viewmore2:hover {
+    color: #fff;
+}
+
+.container12 .card12 .content12 .contentBx2 {
+    position: absolute;
+    bottom: -185px;
+}
+
+.container12 .card12 .content12 .contentBx2 h3 {
+    color: rgb(65, 89, 98);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 500;
+    font-size: 16px;
+    margin: 20px 0 10px;
+    line-height: 3.1em;
+    text-align: center;
+}
+
+.container12 .card12 .content12 .contentBx2 h3 span {
+    font-size: 12px;
+    font-weight: 300;
+    text-transform: initial;
+    color: black;
+}
+
+.container12 .card12 .content12 .contentBx2 h3 span i {
+    font-size: 21px;
+    text-transform: initial;
+    color: black;
+}
+
+.container12 .card12 .content12 .imgBx2 {
+    position: relative;
+    width: 360px;
+    height: 400px;
+    overflow: hidden;
+    border: 10px solid rgba(0, 0, 0, 0);
+}
+
+.container12 .card12 .content12 .imgBx2 img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+}
+
+
+
+
+
+/* Tổng thể */
+.announcement-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #fff;
+    padding: 20px;
+    margin-top:11%;
+    margin-bottom:11%;
+}
+
+.announcement-container {
+    display: flex;
+    width: 100%;
+    gap: 20px;
+    height: 700px;
+    margin-right: 5%;
+    margin-left: 5%;
+}
+
+/* Phần bên trái */
+.announcement-left {
+    flex: 6;
+    /* Tương ứng với 50% */
+    text-align: center;
+    padding: 20px;
+}
+
+
+.announcement-left h2 {
+    font-size: 50px;
+    font-family: "Aboreto", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    margin: 32px 0;
+}
+
+.announcement-left h3 {
+    font-size: 50px;
+    font-family: "Aboreto", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    margin: 32px 0;
+    line-height: 1.5;
+}
+
+.announcement-left .description {
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.8;
+    margin: 20px 0;
+    text-align: left;
+}
+
+.countdown {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.countdown-item {
+    text-align: center;
+    border: 1px solid #000000;
+    border-radius: 50%;
+    padding: 20px;
+    width: 60px;
+    height: 60px;
+}
+
+.countdown-item h3 {
+    font-size: 2rem;
+    margin: 0;
+
+}
+
+.countdown-item p {
+    font-size: 10px;
+    color: #666;
+    font-family: "Aboreto", system-ui;
+    font-weight: 400;
+    font-style: normal;
+}
+
+/* Phần bên phải */
+.announcement-right {
+    flex: 3;
+    /* Tương ứng với 30% */
+    position: relative;
+}
+
+.announcement-right img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.announcement-right .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    text-align: center;
+}
+
+.announcement-right .overlay h1 {
+    font-size: 64px;
+    font-weight: 500;
+}
+
+.announcement-right .overlay h1 span {
+    font-size: 40px;
+    font-family: "Aboreto", system-ui;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.announcement-right .overlay p {
+    position: absolute;
+    font-size: 40px;
+    margin-top: 10px;
+    bottom: 15px;
+    font-family: "Aboreto", system-ui;
+    font-weight: 400;
+    font-style: normal;
+}
+
+
+
+
+
+.footer {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #000;
+    padding: 40px 10px;
+    color:#fff;
+    height:395px;
+    margin-top:8%;
+}
+
+.footer-section {
+    text-align: left;
+    max-width: 363px;
+}
+
+.logo h1 {
+    font-size: 3rem;
+    margin: 0;
+}
+
+.logo p {
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+.contact h3,
+.openhours h3,
+.subscribe h3 {
+    font-size: 30px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    font-weight: 400;
+}
+
+.contact p,
+.openhours p {
+    margin: 5px 0;
+    font-size: 14px;
+    line-height: 64px;
+}
+
+.subscribe form {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.email-input {
+    background: none;
+    border: none;
+    border-bottom: 1px solid #fff;
+    color: #fff;
+    padding: 5px;
+    font-size: 1rem;
+    margin-right: 10px;
+    width: 220px;
+    outline: none;
+}
+
+.subscribe button {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0;
+}
+
+.subscribe button:hover {
+    color: #aaa;
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+    margin-top: 62px;
+}
+
+.social-icons a {
+    text-decoration: none; 
+    color: #fff;
+    font-size: 2rem;
+    height: 50px; 
+    width: 50px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%; 
+    background-color: transparent;
+    transition: all 0.3s ease; 
+}
+
+.social-icons a:hover {
+    color: #aaa;
+    background-color: #333; 
+}
+
+.social-icons i {
+    display: inline-block;
+    line-height: 1; 
+    vertical-align: middle;
+}
+
+
+.footer-section.subscribe {
+    line-height: 141px;
+    height: 362px;
+}

@@ -1,0 +1,546 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Kalnia", serif;
+    font-weight: 400;
+}
+
+.main {
+    position: relative;
+    width: 100%;
+    height: 103vh;
+    overflow: hidden;
+    margin-bottom: 10%;
+}
+.fashion-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0 0 0 / 62%);
+    /* Hiệu ứng mờ */
+    z-index: 1;
+}
+.navbar {
+    display: flex;
+    /* Sử dụng Flexbox */
+    justify-content: space-between;
+    /* Dàn đều các khối */
+    align-items: center;
+    /* Căn giữa nội dung theo chiều dọc */
+    width: 100%;
+    /* Chiếm toàn bộ chiều rộng */
+    max-width: 1200px;
+    /* Chiều rộng tối đa */
+    margin: auto;
+    height: 97px;
+    /* Chiều cao cố định */
+    padding: 0 20px;
+    /* Khoảng cách hai bên */
+}
+
+.search {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    /* Chiếm 1/3 không gian của navbar */
+    justify-content: flex-start;
+    /* Căn trái */
+}
+
+.search a {
+    margin-left: 10px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #000000;
+}
+
+.iconsearch {
+    font-size: 1.1rem;
+    color: #000000;
+}
+
+.menu {
+    flex: 2;
+    /* Chiếm gấp đôi không gian so với search và icon */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.menu ul {
+    display: flex;
+    /* Căn ngang các mục menu */
+    gap: 70px;
+    /* Khoảng cách giữa các mục */
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.menu ul li {
+    position: relative;
+}
+
+.menu ul li a {
+    text-decoration: none;
+    font-size: 18px;
+    color: #000000;
+    transition: color 0.3s;
+    position: relative;
+    margin-right:15px;
+    margin-left: 10px;
+}
+
+.anh{
+    width:75px;
+    height:75px;
+    position: absolute;
+    bottom:-32px;
+    left:-23px
+}
+
+.menu ul li a:hover {
+    color: #555;
+    /* Đổi màu khi hover */
+}
+
+
+
+.icon {
+    display: flex;
+    justify-content: flex-end;
+    /* Căn phải */
+    align-items: center;
+    flex: 1;
+    /* Chiếm 1/3 không gian của navbar */
+}
+
+.icon1 {
+    display: flex;
+    gap: 20px;
+    /* Khoảng cách giữa các icon */
+}
+
+.iconsearch1 i {
+    font-size: 1.1rem;
+    color: #000000;
+    cursor: pointer;
+}
+
+.iconsearch1 i:hover {
+    color: #555;
+}
+
+/* Không thay đổi các phần khác */
+header hr {
+    position: absolute;
+    right: 15px;
+    left: 15px;
+    width: 85%;
+    border: 1px solid #ccc;
+    margin: 20px -20px 0 71px;
+}
+
+.slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transition: opacity 1s ease-in-out;
+}
+
+.slide.active {
+    opacity: 1;
+}
+
+.text {
+    font-family: "Kalnia", serif;
+    font-weight: 400;
+    position: absolute;
+    line-height: 2em;
+    bottom: 48%;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #ffffff;
+    font-size: 4em;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 2;
+}
+
+
+
+.contact-section {
+    text-align: center;
+    padding: 7% 0 10% 0;
+}
+
+h1 {
+    font-size: 3em;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+.contact-section p {
+    font-size: 1.2em;
+    margin-bottom: 60px;
+    margin-top: 25px;
+    color: #bbb;
+    /* color:rgb(65, 89, 98); */
+}
+
+/* Contact Form Styles */
+.form-wrapper {
+    width: 60%;
+    margin: 0 auto;
+}
+
+/* Make name and email side by side */
+.form-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px; /* Optional: spacing between fields */
+}
+
+.field-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 40px;
+    flex: 1; /* Allow fields to expand and shrink equally */
+    text-align: left;
+    border-bottom: 1px solid #000;
+}
+
+label {
+    margin-bottom: 10px;
+    font-style: italic;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    /* background-color: #000; */
+    border: none;
+    border-bottom: 1px solid #fff;
+    color: #000;
+    font-size: 1em;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+input:focus, textarea:focus {
+    border-bottom: 1px solid #bbb;
+}
+
+.submit-btn {
+    padding: 10px 40px;
+    background: none;
+    border: 1px solid #000;
+    color: #000;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-size: 16px;
+    outline: none;
+    font-style: oblique;
+    font-weight: 500;
+    transition: 1s;
+}
+
+.submit-btn:hover {
+    background-color: #000;
+    color: #fff;
+    border: 1px solid #fff;
+}
+
+
+.divicon{
+    position: absolute;
+    top:10%;
+    right:10%;
+}
+.divp{
+    display: none;
+    position: absolute;
+    height:100%;
+    width:450px;
+    top:0px;
+    right:0px;
+    color:#fff
+}
+.div1{
+    position: absolute;
+    top:30%;
+    left:15%;
+    line-height: 1.5em;
+    font-size: 17px;
+
+}
+.div2{
+    position: absolute;
+    top:47%;
+    left:15%;
+    line-height: 2em;
+    font-size: 17px;
+}
+.div3{
+    position: absolute;
+    display: flex;
+    top: 68%;
+    left: 15%;
+}
+.div3 p{
+    font-size: 17px;
+    padding: 25px;
+    padding-left: 0;
+    font-style: oblique;
+}
+
+/* For responsive design */
+@media (max-width: 768px) {
+    .form-wrapper {
+        width: 90%;
+    }
+
+    .form-row {
+        flex-direction: column; /* Stack fields on top of each other on small screens */
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    p {
+        font-size: 1em;
+    }
+}
+
+
+
+.column{
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    height: 500px;
+    padding:0 60px 10% 60px;
+    box-sizing: border-box;
+
+}
+.map-section {
+    width: 100%;
+    
+}
+
+.map-section iframe {
+    width: 100%;
+    height: 400px;
+    border: 0;
+}
+
+
+
+
+.service {
+    /* background-color: rgb(65, 89, 98); */
+    background-color: #fff;
+    margin: 5% 0 15% 0;
+    display: flex;
+    justify-content: space-evenly;
+    /* Khoảng cách đều giữa các phần tử và container */
+    align-items: center;
+    height: 200px;
+}
+
+
+
+.service1 {
+    width: 230px;
+    height: 230px;
+    ;
+}
+
+.service1 img {
+    width: 100%;
+    height: 100%;
+}
+
+.service2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    line-height: 2.2em;
+    border: 1px solid #333;
+    /* background-color: #f7f5f3; */
+
+}
+
+.service2 h2 {
+    font-weight: 500;
+    font-size: 27px;
+}
+
+
+
+.footer {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #000;
+    padding: 40px 10px;
+    color:#fff;
+    height:395px;
+    margin-top:8%;
+}
+
+.footer-section {
+    text-align: left;
+    max-width: 363px;
+}
+
+.logo h1 {
+    font-size: 3rem;
+    margin: 0;
+}
+
+.logo p {
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+.contact h3,
+.openhours h3,
+.subscribe h3 {
+    font-size: 30px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    font-weight: 400;
+}
+
+.contact p,
+.openhours p {
+    margin: 5px 0;
+    font-size: 14px;
+    line-height: 64px;
+}
+
+.subscribe form {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.email-input {
+    background: none;
+    border: none;
+    border-bottom: 1px solid #fff;
+    color: #fff;
+    padding: 5px;
+    font-size: 1rem;
+    margin-right: 10px;
+    width: 220px;
+    outline: none;
+}
+
+.subscribe button {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0;
+}
+
+.subscribe button:hover {
+    color: #aaa;
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+    margin-top: 62px;
+}
+
+.social-icons a {
+    text-decoration: none; 
+    color: #fff;
+    font-size: 2rem;
+    height: 50px; 
+    width: 50px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%; 
+    background-color: transparent;
+    transition: all 0.3s ease; 
+}
+
+.social-icons a:hover {
+    color: #aaa;
+    background-color: #333; 
+}
+
+.social-icons i {
+    display: inline-block;
+    line-height: 1; 
+    vertical-align: middle;
+}
+
+
+.footer-section.subscribe {
+    line-height: 141px;
+    height: 362px;
+}
+
+
+
+.submenu {
+    display: none; /* Ban đầu ẩn submenu */
+    position: absolute;
+    background-color: white;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    top: 100%; /* Chỉnh vị trí submenu ngay dưới icon */
+    left: 50%; /* Đặt submenu ở giữa */
+    transform: translateX(-50%); /* Căn giữa submenu so với icon */
+    z-index: 2;
+    opacity: 0; /* Ẩn submenu */
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease; /* Hiệu ứng mờ và chuyển động */
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Bóng đổ nhẹ */
+    min-width: 150px; /* Đảm bảo submenu có đủ chiều rộng */
+}
+
+.submenu li {
+    padding: 8px 20px; /* Thêm padding cho các mục trong submenu */
+    transition: background-color 0.3s ease; /* Hiệu ứng chuyển màu nền khi hover */
+    position: relative;
+}
+
+.submenu li a {
+    text-decoration: none;
+    font-size: 16px;
+    font-family: "Kalnia", serif;
+    font-weight: 400;
+    color: #333;
+    display: block;
+    padding: 5px 0;
+    text-align: center;
+}
+
+.iconsearch1:hover .submenu {
+    display: block; /* Hiển thị submenu khi hover vào icon */
+    opacity: 1; /* Làm submenu hiện lên */
+}
+
+.iconsearch1 {
+    position: relative; /* Để submenu xuất hiện dưới icon */
+}
+
+.iconsearch1 i {
+    cursor: pointer; /* Chỉnh chuột để báo hiệu đây là phần có thể nhấp vào */
+}
