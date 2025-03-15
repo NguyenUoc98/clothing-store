@@ -18,7 +18,7 @@
         <div class="icon" id="menuIcon">
             <div class="icon1">
                 <div class="iconsearch1">
-                    @guest
+                    @guest('customer')
                         <i class="fa-solid fa-user">
                             <ul class="submenu">
                                 <li><a href="{{ route('login') }}">Login</a></li>
@@ -27,7 +27,7 @@
                         </i>
                     @else
                         <span class="user-name">
-                                @if (Auth::guard('customer')->check())
+                            @if (Auth::guard('customer')->check())
                                 {{ Auth::guard('customer')->user()->name }}
                             @else
                                 Khách hàng
@@ -43,15 +43,14 @@
                         </form>
                     @endguest
                 </div>
-                <div class="cart-icon">
-                    <a href="{{ route('cart.index') }}">
-                        <i class="fa-solid fa-cart-shopping"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="iconsearch1">
-                <i class="fa-solid fa-bars"></i>
             </div>
         </div>
+        @if (Auth::guard('customer')->check())
+            <div class="cart-icon">
+                <a href="{{ route('cart.index') }}">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                </a>
+            </div>
+        @endif
     </div>
 </nav>
