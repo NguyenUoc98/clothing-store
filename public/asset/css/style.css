@@ -25,6 +25,7 @@ body {
     height: 100%;
     opacity: 0;
     transition: opacity 1s ease-in-out;
+    background-size: cover;
 }
 
 .slide.active {
@@ -1509,4 +1510,236 @@ body {
     height: 100%;
     object-fit: cover;
 
+}
+
+.search {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 250px;
+    height: 35px;
+    margin: 0 10px;
+    border: 2px solid #000;
+    /* Viền chỉ có ở phần khung ngoài */
+    border-radius: 20px;
+    padding: 0 10px;
+    /* Căn chỉnh khoảng cách nội dung */
+    background: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Cải thiện khung tìm kiếm */
+.search-box {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    padding: 5px;
+    background: transparent;
+}
+
+.search-box:focus {
+    border-color: #0056b3;
+    /* Đổi màu viền khi focus */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    /* Thêm hiệu ứng ánh sáng khi focus */
+}
+
+/* Danh sách gợi ý */
+.suggestions-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    background: #fff;
+    border-radius: 8px;
+    /* width: 100%; */
+    z-index: 9999;
+    /* Đảm bảo danh sách nằm trên tất cả các phần tử */
+    max-height: 400px;
+    /* overflow-y: auto; */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.suggestions-list li {
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.suggestions-list li:hover {
+    background: #f4f4f4;
+    transform: translateX(5px);
+}
+
+.suggestions-list li:active {
+    background: #e0e0e0;
+    transform: translateX(2px);
+}
+
+.suggestions-list li:first-child {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.suggestions-list li:last-child {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+/* Đảm bảo không bị che khuất bởi các yếu tố khác */
+.suggestions-list-wrapper {
+    position: relative;
+    /* Giữ danh sách gợi ý nằm trong vùng chứa */
+}
+
+/* Kiểu chung cho menu */
+.menu {
+    display: flex;
+    height: 60px;
+    align-items: center;
+    justify-content: flex-start;
+    /* Đẩy menu sang trái */
+    padding-left: 50px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+}
+
+/* Căn chỉnh các mục con trong menu */
+.menu ul {
+    display: flex;
+    justify-content: center;
+    /* Căn giữa các mục trong menu */
+    align-items: center;
+    /* Căn giữa theo trục dọc */
+    list-style: none;
+    /* Loại bỏ dấu chấm ở danh sách */
+    padding: 0;
+    margin: 0;
+    gap: 20px;
+    /* Khoảng cách giữa các mục menu */
+}
+
+/* Kiểu cho các mục menu */
+.menu ul li {
+    margin-right: 20px;
+    position: relative;
+    /* Để hỗ trợ submenu */
+}
+
+.menu ul li a {
+    font-size: 14px;
+    text-decoration: none;
+    color: #000;
+    padding: 5px 10px;
+    /* Điều chỉnh khoảng cách bên trong */
+    transition: color 0.3s ease;
+    /* Hiệu ứng khi hover */
+}
+
+.menu ul li a:hover {
+    color: #0056b3;
+    /* Đổi màu khi hover */
+}
+
+/* Logo ở giữa */
+.menu ul li img.anh {
+    height: 100px;
+    /* Điều chỉnh kích thước logo */
+    object-fit: contain;
+}
+
+/* Biểu tượng bên phải */
+.icon {
+    margin-left: auto;
+    /* Đẩy icon sang bên phải */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.icon1 {
+    display: flex;
+    align-items: center;
+    /* Đảm bảo căn giữa theo trục dọc */
+    gap: 15px;
+    /* Khoảng cách giữa các thành phần trong icon1 */
+}
+
+.cart-icon {
+    position: relative;
+    /* Giữ nguyên để thêm hiệu ứng nếu cần */
+    display: flex;
+    align-items: center;
+    /* Căn giữa biểu tượng giỏ hàng theo trục dọc */
+    justify-content: center;
+    /* Căn giữa biểu tượng giỏ hàng theo trục ngang */
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.cart-icon a {
+    text-decoration: none;
+    color: #000;
+    /* Màu sắc của biểu tượng */
+}
+
+.cart-icon i {
+    font-size: 18px;
+    /* Điều chỉnh kích thước biểu tượng */
+    color: #000;
+    /* Màu biểu tượng */
+    transition: color 0.3s ease;
+}
+
+.cart-icon i:hover {
+    color: #0056b3;
+    /* Thay đổi màu khi hover */
+}
+
+/* Submenu (ẩn/hiện khi hover) */
+.submenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+}
+
+.menu ul li:hover .submenu {
+    display: block;
+}
+
+.submenu li {
+    padding: 5px 15px;
+    white-space: nowrap;
+}
+
+.submenu li a {
+    color: #000;
+    font-size: 14px;
+}
+
+.submenu li a:hover {
+    color: #0056b3;
+}
+
+.user-name {
+    font-size: 5px;
+    /* Điều chỉnh kích thước chữ nhỏ hơn */
+    font-weight: normal;
+    /* Bỏ định dạng đậm (nếu có) */
+    color: #000;
+    /* Màu sắc phù hợp */
+    margin-right: 10px;
+    /* Khoảng cách với các phần tử bên cạnh */
+    white-space: nowrap;
+    /* Ngăn chữ bị xuống dòng */
 }

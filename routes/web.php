@@ -15,7 +15,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 
-Route::get('/', [ProductController::class, 'home']);
+Route::get('/', [ProductController::class, 'home'])->name('home');
 // Route::get('/', function () {
 //     return view('home');  
 // });
@@ -39,7 +39,6 @@ Route::get('password/reset/{token}', [AuthenticatedSessionController::class, 'sh
 Route::post('password/reset', [AuthenticatedSessionController::class, 'resetPassword'])->name('password.update');
 
 
-
 // Trang đăng ký
 Route::get('/createaccount', [RegisteredUserController::class, 'create']);
 Route::post('/createaccount', [RegisteredUserController::class, 'store'])->name('createaccount');
@@ -59,7 +58,6 @@ Route::middleware(['role:admin|staff'])->group(function () {
     Route::get('/admin/products', [ProductController::class, 'index'])->name('products.index');
     Route::get('/search', [ProductController::class, 'search'])->name('search');
     Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
-
 
 
     Route::get('customers', [CustomerController::class, 'index'])->name('customer.index');
@@ -91,25 +89,25 @@ Route::middleware(['role:admin|staff'])->group(function () {
 Route::middleware('auth:customer')->group(function () {
     // Route::get('/', [ProductController::class, 'home']);
     Route::get('/product', [ProductController::class, 'product']);
-    Route::get('/', [ProductController::class, 'home']);
+//    Route::get('/', [ProductController::class, 'home'])->name('home');
 });
 
 
-Route::get('/product', [ProductController::class, 'product']);
+Route::get('/product', [ProductController::class, 'product'])->name('product.index');
 Route::get('/productItem/{id}', [ProductController::class, 'showProductDetails'])->name('productItem');
 
 Route::get('/createaccount', function () {
     return view('createaccount');
-});
+})->name('create-account');
 Route::get('/contact', function () {
     return view('contact');
-});
+})->name('contact');
 Route::get('/blog', function () {
     return view('blog');
-});
+})->name('blog');
 Route::get('/about', function () {
     return view('about');
-});
+})->name('about');
 Route::get('/productItem', function () {
     return view('productItem');
 });
