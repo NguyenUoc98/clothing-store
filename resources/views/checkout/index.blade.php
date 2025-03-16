@@ -78,7 +78,7 @@
                                 </svg>
                                 <b>Nhập địa chỉ mới</b>
                             </p>
-                            <div class="mt-1 ml-10 grid w-2/3 grid-cols-3 gap-2">
+                            <div class="mt-1 ml-10 grid grid-cols-3 gap-2">
                                 <label for="name" class="font-bold leading-10">
                                     Tên người nhận <span class="text-red-400">*</span>
                                 </label>
@@ -103,7 +103,7 @@
                                        value="{{ $user->address }}"
                                 >
                                 <div class="col-span-2 col-start-2">
-                                    <button type="submit" id="save-new-address" class="cursor-pointer rounded-md bg-black px-4 py-2 font-bold text-white hover:bg-gray-700">
+                                    <button type="submit" class="cursor-pointer rounded-md bg-black px-4 py-2 font-bold text-white hover:bg-gray-700">
                                         Lưu địa chỉ
                                     </button>
                                     <button type="button" onclick="toggleFormAddress()" class="cursor-pointer rounded-md bg-red-600 px-4 py-2 font-bold text-white hover:bg-red-500">
@@ -124,13 +124,18 @@
                                 </svg>
                                 <b>Phương thức thanh toán</b>
                             </p>
+                            @if ($defaultAddress)
+                                <input type="hidden" name="customer_name" value="{{ $defaultAddress['name'] }}">
+                                <input type="hidden" name="customer_phone" value="{{ $defaultAddress['phone'] }}">
+                                <input type="hidden" name="customer_address" value="{{ $defaultAddress['address'] }}">
+                            @endif
 
-                            <select id="payment_method" name="payment_method" required class="ml-6 my-2 rounded-lg border border-neutral-300 px-4 py-2" style="width: calc(100% - 1.5rem);">
+                            <select name="payment_method" required class="ml-6 my-2 rounded-lg border border-neutral-300 px-4 py-2" style="width: calc(100% - 1.5rem);">
                                 <option value="{{ \App\Enum\PaymentType::CASH }}" {{ old('payment_method', '1') == \App\Enum\PaymentType::CASH ? 'selected' : '' }}>Thanh toán khi nhận hàng (COD)</option>
                                 <option value="{{ \App\Enum\PaymentType::ONLINE }}" {{ old('payment_method', '1') == \App\Enum\PaymentType::ONLINE ? 'selected' : '' }}>Thanh toán online</option>
                             </select>
                         </div>
-                        <button type="submit" class="float-right cursor-pointer rounded-md bg-black px-4 py-2 font-bold text-white hover:bg-gray-700" id="paymentButton">
+                        <button type="submit" class="float-right cursor-pointer rounded-md bg-black px-4 py-2 font-bold text-white hover:bg-gray-700">
                             Thanh toán
                         </button>
 
@@ -139,7 +144,6 @@
                         </div>
                     </form>
                 </div>
-
             </div>
         </div>
     </div>
@@ -153,41 +157,3 @@
         }
     </script>
 @endpush
-
-{{--<script>--}}
-{{--    $(document).ready(function () {--}}
-{{--        // Hiển thị form thêm địa chỉ khi bấm vào nút "Thay đổi"--}}
-{{--        $('#change-address').click(function () {--}}
-{{--            $('#new-address-form').show();--}}
-{{--        });--}}
-
-{{--        // Lưu địa chỉ mới--}}
-{{--        $('#save-new-address').click(function () {--}}
-{{--            alert('Địa chỉ mới đã được lưu!');--}}
-{{--            $('#new-address-form').hide();--}}
-{{--        });--}}
-
-{{--        // Sự kiện click vào nút thanh toán--}}
-{{--        $('#paymentButton').click(function (e) {--}}
-{{--            e.preventDefault(); // Ngăn chặn form gửi ngay lập tức--}}
-
-{{--            const paymentMethod = $('#payment_method').val();--}}
-
-{{--            // Kiểm tra phương thức thanh toán--}}
-{{--            if (paymentMethod === 'cod') {--}}
-{{--                // Hiển thị thông báo cảm ơn--}}
-{{--                $('#thankYouMessage').show();--}}
-
-{{--                // Ẩn nút thanh toán--}}
-{{--                $('#paymentButton').hide();--}}
-
-{{--                // Sau 3 giây, chuyển hướng về trang chủ--}}
-{{--                setTimeout(function () {--}}
-{{--                    window.location.href = '/'; // Địa chỉ trang chủ của bạn--}}
-{{--                }, 3000); // Chờ 3 giây--}}
-{{--            } else {--}}
-{{--                alert('Vui lòng chọn phương thức thanh toán');--}}
-{{--            }--}}
-{{--        });--}}
-{{--    });--}}
-{{--</script>--}}

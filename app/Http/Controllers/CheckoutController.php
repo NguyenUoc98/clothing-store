@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Enum\PaymentStatus;
+use App\Enum\PaymentType;
+use App\Models\Cart;
+use App\Models\Order;
+use App\Models\Product;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use App\Models\Cart;
-use App\Models\CartItem;
-use App\Models\Order;
-use App\Models\OrderItem;
-use App\Models\Product;
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class CheckoutController extends Controller
 {
@@ -48,57 +49,69 @@ class CheckoutController extends Controller
         }
 
         $request->validate([
-            'address'        => 'required|string',
-            'payment_method' => 'required|string',
+            'customer_name'    => 'required|string',
+            'customer_phone'   => 'required|string',
+            'customer_address' => 'required|string',
+            'payment_method'   => [
+                'required',
+                Rule::enum(PaymentType::class),
+            ],
         ]);
 
-        DB::beginTransaction();
+        $paymentMethod = PaymentType::tryFrom($request->payment_method);
+
         try {
-            $cart = Cart::where('user_id', $user->id)->first();
+            DB::beginTransaction();
+            $cart = Cart::query()
+                ->with(['items'])
+                ->where('user_id', $user->id)
+                ->where('processed', false)
+                ->first();
 
             if (!$cart || $cart->items->isEmpty()) {
                 return redirect()->route('cart.index')->with('error', 'Giỏ hàng của bạn hiện đang trống.');
             }
 
-            $order = Order::create([
-                'user_id'        => $user->id,
-                'total_amount'   => $cart->items->sum(fn($item) => $item->quantity * $item->product->price),
-                'status'         => 'pending',
-                'address'        => $request->address,
-                'payment_method' => $request->payment_method,
+            // Tạo đơn hàng
+            $order = $cart->order()->create([
+                'total_price'      => $cart->items->sum('price'),
+                'status'           => PaymentType::CASH->value == $paymentMethod->value ? PaymentStatus::PROCESSING : PaymentStatus::INIT,
+                'shipping_address' => $request->get('customer_address'),
+                'customer_name'    => $request->get('customer_name'),
+                'customer_phone'   => $request->get('customer_phone'),
+                'type'             => $paymentMethod,
             ]);
 
+            // Giảm số lượng của sản phẩm trong kho
             foreach ($cart->items as $cartItem) {
-                OrderItem::create([
-                    'order_id'   => $order->id,
-                    'product_id' => $cartItem->product_id,
-                    'quantity'   => $cartItem->quantity,
-                    'price'      => $cartItem->product->price,
-                ]);
-
-                $product = Product::find($cartItem->product_id);
+                $product = Product::query()->find($cartItem->product_id);
                 if ($product) {
                     $product->decrement('stock', $cartItem->quantity);
                 }
             }
 
-            $cart->items()->delete();
-            $cart->delete();
+            // Update trạng thái đã xử lý giỏ hàng
+            $cart->update([
+                'processed' => true,
+            ]);
 
             DB::commit();
 
-            return redirect()->route('order.confirmation', ['order' => $order->id])
+            // TODO: nếu thanh toán online phải chuyển hướng sang màn thanh toán của provider
+            return redirect()->route('order.confirmation', ['orderId' => $order->id])
                 ->with('success', 'Đặt hàng thành công. Bạn sẽ nhận được email xác nhận.');
-        } catch (\Exception $e) {
+        } catch (\Exception|\Throwable $e) {
             DB::rollBack();
-            Log::error('Error processing checkout: '.$e->getMessage());
-            return redirect()->route('cart.index')->with('error', 'Có lỗi xảy ra trong quá trình thanh toán.');
+            Log::error($e);
         }
+
+        return redirect()->route('cart.index')->with('error', 'Có lỗi xảy ra trong quá trình thanh toán.');
     }
 
     public function confirmation($orderId)
     {
-        $order = Order::with('items.product')->find($orderId);
+        // TODO: Cần phải check xem đơn hàng này có phải của user hiện tại hay không?
+        $order = Order::with('cart.items.product')->find($orderId);
 
         if (!$order) {
             return redirect()->route('cart.index')->with('error', 'Không tìm thấy đơn hàng.');

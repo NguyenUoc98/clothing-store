@@ -4,8 +4,8 @@ namespace App\Enum;
 
 enum PaymentStatus: int
 {
-    const ERROR      = -1;
-    const INIT       = 0;
-    const PROCESSING = 1;
-    const SUCCESS    = 2;
+    case ERROR      = -1;
+    case INIT       = 0;
+    case PROCESSING = 1;
+    case SUCCESS    = 2;
 }

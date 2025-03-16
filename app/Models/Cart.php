@@ -2,29 +2,28 @@
 
 namespace App\Models;
 
-use App\Enum\PaymentStatus;
-use App\Enum\PaymentType;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Cart extends Model
 {
-    use HasFactory;
-
     protected $guarded = [];
 
     protected $casts = [
-        'type'                 => PaymentType::class,
-        'status'               => PaymentStatus::class,
-        'addition_information' => 'array',
+        'processed' => 'bool',
     ];
 
     /**
      * Thiết lập mối quan hệ với bảng `cart_items`.
      */
-    public function items()
+    public function items(): HasMany
     {
         return $this->hasMany(CartItem::class);
+    }
+
+    public function order()
+    {
+        return $this->hasOne(Order::class);
     }
 
     /**
