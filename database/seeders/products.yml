@@ -1,0 +1,251 @@
+%YAML 1.1
+---
+# clothing-store.products
+-
+  id: 35
+  name: "Faded Black Denim Jacket"
+  description: "Hàng đẹp, chất lượng tốt"
+  category_id: 1
+  image: "images/IZBK6bQoS1MF5De64nfn5Ncbu9TKJvM47QncYC1b.jpg"
+  size: "S, M,L,XL"
+  price: 990000.00
+  stock: 2
+  created_at: "2025-01-08 16:04:45"
+  updated_at: "2025-01-08 16:04:45"
+  color: "Trắng"
+  product_code: "A01"
+-
+  id: 36
+  name: "Patchwork Denim"
+  description: "Chất lượng của sản phẩm tốt"
+  category_id: 1
+  image: "images/Q1IfXoPyMgw6XjoyTM9PlGbFBCXDqSfhv6TUkoPO.jpg"
+  size: "S, M,L,XL"
+  price: 800000.00
+  stock: 3
+  created_at: "2025-01-08 16:06:41"
+  updated_at: "2025-01-08 16:06:41"
+  color: "Trắng"
+  product_code: "A02"
+-
+  id: 37
+  name: "Cropped Wide-Leg Denim Pants"
+  description: "Thiết kế thời thượng, giữ ấm tuyệt vời trong những ngày se lạnh, thích hợp cho cả công sở và dạo phố."
+  category_id: 1
+  image: "images/c0gIiAFh9xI4JURNYdvD32NCdJVLJKDvJynhZSkG.jpg"
+  size: "S, M,L,XL"
+  price: 700000.00
+  stock: 4
+  created_at: "2025-01-08 16:09:44"
+  updated_at: "2025-01-08 16:09:44"
+  color: "Đen"
+  product_code: "A03"
+-
+  id: 38
+  name: "Faded Black Denim Jacket"
+  description: "Suit nữ phong cách cổ điển, dễ dàng kết hợp với các phụ kiện thời trang."
+  category_id: 1
+  image: "images/XFbn4x0D8TvP01KA4H7wpWMND9xlK1x8UafDaQQ1.jpg"
+  size: "S, M,L,XL"
+  price: 500000.00
+  stock: 5
+  created_at: "2025-01-08 16:12:07"
+  updated_at: "2025-01-08 16:12:07"
+  color: "Nâu"
+  product_code: "A04"
+-
+  id: 39
+  name: "Cashmere Wool Blazer"
+  description: "Blazer với thiết kế đơn giản nhưng vô cùng năng động và cá tính"
+  category_id: 1
+  image: "images/udwLNtdly38IHoKqAkJmBlZFVaQ4jXTyxTwy82OK.jpg"
+  size: "S, M,L,XL"
+  price: 900000.00
+  stock: 3
+  created_at: "2025-01-08 16:14:08"
+  updated_at: "2025-01-08 16:14:08"
+  color: "Be"
+  product_code: "A05"
+-
+  id: 40
+  name: "Elegant Linen Trousers"
+  description: "Áo khoác Trousers mang lại vẻ ngoài sang trọng và lịch lãm."
+  category_id: 1
+  image: "images/iH5ZWIiNot0dGb1qYOJ1LcNEOxxv7qqL1H3AKHuh.jpg"
+  size: "S, M,L,XL"
+  price: 700000.00
+  stock: 2
+  created_at: "2025-01-08 16:15:38"
+  updated_at: "2025-01-08 16:15:38"
+  color: "Xám"
+  product_code: "A06"
+-
+  id: 41
+  name: "Plaid box pleat mini skirt"
+  description: "Mini skirt màu pastel nhẹ nhàng, dễ dàng kết hợp với giày cao gót hoặc sneakers."
+  category_id: 1
+  image: "images/1Tjpe4pwoBZXArpTXpZbIRrcLJVYEooe6J2DAX5Y.jpg"
+  size: "S, M,L,XL"
+  price: 980000.00
+  stock: 3
+  created_at: "2025-01-08 16:17:22"
+  updated_at: "2025-01-08 16:17:22"
+  color: "Be"
+  product_code: "A07"
+-
+  id: 42
+  name: "Pocketed denim jacket"
+  description: "Áo khoác dáng dài thanh lịch, phù hợp với cả công sở và dạo phố."
+  category_id: 1
+  image: "images/aTe14hDRtL2lAXzDAwsQ44SZ9gtZv2LRP6Tu03jr.jpg"
+  size: "S, M,L,XL"
+  price: 780000.00
+  stock: 4
+  created_at: "2025-01-08 16:18:35"
+  updated_at: "2025-01-08 16:18:35"
+  color: "Trắng"
+  product_code: "A08"
+-
+  id: 43
+  name: "Round-neck knitted sweater"
+  description: "Áo khoác dạ cao cấp, phù hợp với những ngày trời se lạnh, mang đến vẻ ngoài thanh lịch."
+  category_id: 1
+  image: "images/lBlTZ3ADluKWtDzLkvwqAyQUQYTWheBB92OTT3P6.jpg"
+  size: "S, M,L,XL"
+  price: 670000.00
+  stock: 5
+  created_at: "2025-01-08 16:20:00"
+  updated_at: "2025-01-08 16:20:00"
+  color: "Xanh đen"
+  product_code: "A09"
+-
+  id: 44
+  name: "Shearling denim jacket"
+  description: "Áo khoác bò dáng dài thanh lịch, phù hợp với cả công sở và dạo phố."
+  category_id: 1
+  image: "images/0vYmr9Qm65RLBOM4AFnYsbtYJUO5khymsmXcOACN.jpg"
+  size: "S, M,L,XL"
+  price: 560000.00
+  stock: 5
+  created_at: "2025-01-08 16:21:41"
+  updated_at: "2025-01-08 16:21:53"
+  color: "Xanh"
+  product_code: "A10"
+-
+  id: 45
+  name: "Tweed jacket with jewel"
+  description: "Váy công sở với chất liệu vải cao cấp, giúp bạn nổi bật trong mọi cuộc họp."
+  category_id: 2
+  image: "images/gdkosNTBWN2HlqgYhOtNQBN11JkRgjLHlTCtO2a7.jpg"
+  size: "S, M,L,XL"
+  price: 470000.00
+  stock: 4
+  created_at: "2025-01-08 16:23:03"
+  updated_at: "2025-01-08 16:23:03"
+  color: "Xanh"
+  product_code: "Q01"
+-
+  id: 46
+  name: "Lapels Houndstooth suit"
+  description: "Áo phao dáng ngắn, là sự lựa chọn lý tưởng cho những ngày đông lạnh giá."
+  category_id: 1
+  image: "images/if2VFBR3x7m45R9f7qTs7nWrKILk00Ex7YorAfcm.jpg"
+  size: "S, M,L,XL"
+  price: 450000.00
+  stock: 6
+  created_at: "2025-01-08 16:24:17"
+  updated_at: "2025-01-08 16:24:17"
+  color: "Xanh lá"
+  product_code: "A11"
+-
+  id: 47
+  name: "Cashmere Wool Blazer"
+  description: "Áo khoác bò nữ thiết kế trẻ trung, năng động, kết hợp với túi và chi tiết thêu, mang lại phong cách bụi bặm nhưng vẫn thời trang. Hoàn hảo cho những ngày thu se lạnh."
+  category_id: 1
+  image: "images/cVuIv4LuGZkATnnuekIItRtVis4dyxl0mkq3xgZY.jpg"
+  size: "S, M,L,XL"
+  price: 500000.00
+  stock: 2
+  created_at: "2025-01-08 16:27:47"
+  updated_at: "2025-01-13 11:40:50"
+  color: "Xanh"
+  product_code: "A12"
+-
+  id: 48
+  name: "Cashmere Wool Denim jacket"
+  description: "Áo khoác bò nữ cổ điển với chất liệu denim bền đẹp, dễ dàng phối cùng nhiều loại trang phục khác nhau, mang đến phong cách năng động cho phái đẹp."
+  category_id: 1
+  image: "images/1SsoY4HQxtmiCT1vawClPjT2YNSAZCyAQtl3AGTW.jpg"
+  size: "S, M,L,XL"
+  price: 980000.00
+  stock: 8
+  created_at: "2025-01-08 16:28:47"
+  updated_at: "2025-01-08 16:35:55"
+  color: "Xanh"
+  product_code: "A13"
+-
+  id: 49
+  name: "Cashmere Wool Blazer"
+  description: "Áo khoác bò nữ thiết kế cá tính với phong cách bụi bặm, chất liệu denim dày dặn giữ ấm hiệu quả trong những ngày lạnh. Áo có kiểu dáng oversized thoải mái, dễ dàng phối hợp với các trang phục như áo thun, quần jean hoặc váy, tạo nên vẻ ngoài vừa năng động vừa thời trang. Phù hợp cho cả những buổi dạo phố hay những chuyến đi chơi cùng bạn bè."
+  category_id: 1
+  image: "images/fL82nYbloSRCRNZbUcWErKcd87KFoEaUmZOuhcnr.jpg"
+  size: "S, M,L,XL"
+  price: 570000.00
+  stock: 6
+  created_at: "2025-01-08 16:29:41"
+  updated_at: "2025-01-08 16:29:41"
+  color: "Xanh"
+  product_code: "A14"
+-
+  id: 50
+  name: "Quần bò ngắn"
+  description: "Quần ngắn nữ phong cách trẻ trung, thiết kế thời trang, phù hợp với những chuyến đi du lịch hoặc các buổi gặp gỡ bạn bè."
+  category_id: 2
+  image: "images/TY1NmvXaZq8sv3RcWsbebegZIon7VGdYBDnWZhad.jpg"
+  size: "S, M,L,XL"
+  price: 600000.00
+  stock: 4
+  created_at: "2025-01-08 16:31:10"
+  updated_at: "2025-01-08 16:31:10"
+  color: "Xanh"
+  product_code: "Q02"
+-
+  id: 51
+  name: "Quần bò ống"
+  description: "Quần dài nữ thời trang với thiết kế ôm sát cơ thể, chất liệu vải co giãn tạo sự thoải mái cho người mặc, phù hợp với nhiều phong cách từ công sở đến dạo phố."
+  category_id: 2
+  image: "images/jelzgNj2ZersLR3PPBNpVSKdOzvxqncZ6OPTdUGX.jpg"
+  size: "S, M,L,XL"
+  price: 520000.00
+  stock: 5
+  created_at: "2025-01-08 16:32:18"
+  updated_at: "2025-01-08 16:32:18"
+  color: "Xám"
+  product_code: "Q03"
+-
+  id: 52
+  name: "Denim skirt"
+  description: "Váy nữ thiết kế đơn giản nhưng đầy thanh lịch, chất liệu mềm mại mang lại cảm giác thoải mái, phù hợp cho những dịp đi chơi hoặc dạo phố."
+  category_id: 2
+  image: "images/I7iGI5FwEUdBqvI5GAlMjcpTn90YuYvt2821N5ft.jpg"
+  size: "S, M,L,XL"
+  price: 420000.00
+  stock: 3
+  created_at: "2025-01-08 16:33:15"
+  updated_at: "2025-01-08 16:35:24"
+  color: "Xanh"
+  product_code: "Q04"
+-
+  id: 53
+  name: "Cashmere Wool Denim shorts"
+  description: "Quần ngắn nữ denim với màu sắc tươi sáng  giúp bạn nổi bật trong các dịp vui chơi, dạo phố hay picnic."
+  category_id: 2
+  image: "images/JmfhXCylZp8iOMd2zaFHgne7HieL5bpSSv7VSY0v.jpg"
+  size: "S, M,L,XL"
+  price: 320000.00
+  stock: 10
+  created_at: "2025-01-08 16:34:50"
+  updated_at: "2025-01-14 03:00:47"
+  color: "Xanh đen, đen, trắng"
+  product_code: "Q05"
+...

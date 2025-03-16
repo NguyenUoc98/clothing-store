@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enum\PaymentStatus;
+use App\Enum\PaymentType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -9,7 +11,13 @@ class Cart extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'guest_id'];
+    protected $guarded = [];
+
+    protected $casts = [
+        'type'                 => PaymentType::class,
+        'status'               => PaymentStatus::class,
+        'addition_information' => 'array',
+    ];
 
     /**
      * Thiết lập mối quan hệ với bảng `cart_items`.
@@ -58,9 +66,9 @@ class Cart extends Model
      */
     public function addItem($productId, $quantity, $price)
     {
-        $cartItem = $this->items()->firstOrNew(['product_id' => $productId]);
+        $cartItem           = $this->items()->firstOrNew(['product_id' => $productId]);
         $cartItem->quantity += $quantity;
-        $cartItem->price = $price;
+        $cartItem->price    = $price;
         $cartItem->save();
     }
 

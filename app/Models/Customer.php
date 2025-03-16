@@ -11,23 +11,12 @@ class Customer extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    protected $guard = 'customer';  
-
-    protected $fillable = [
-        'name',
-        'email',
-        'phone',
-        'addresses',   // Thêm addresses vào đây
-        'default_address_id', // Thêm default_address_id vào đây
-        'password',
-        'status',
-        'token',
-        'remember_token'
-    ];
+    protected $guarded = [];
 
     protected $hidden = [
         'password',
     ];
+
     protected $casts = [
         'addresses' => 'array',  // Laravel sẽ tự động chuyển đổi giữa JSON và mảng khi cần
     ];

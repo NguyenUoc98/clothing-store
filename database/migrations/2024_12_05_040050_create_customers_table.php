@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name'); // Tên khách hàng
             $table->string('email')->unique(); // Email (unique)
             $table->string('phone')->unique(); // Số điện thoại (unique)
-            $table->string('address')->nullable()->change();
+            $table->string('address')->nullable();
             $table->string('password'); // Mật khẩu
             $table->timestamps(); // Tự động thêm created_at, updated_at
         });
