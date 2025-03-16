@@ -15,16 +15,36 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 
+// Home
 Route::get('/', [ProductController::class, 'home'])->name('home');
-// Route::get('/', function () {
-//     return view('home');  
-// });
+
+// Liên hệ
+Route::get('/contact', function () {
+    return view('contact');
+})->name('contact');
+
+// Blog
+Route::get('/blog', function () {
+    return view('blog');
+})->name('blog');
+
+// Giới thiệu
+Route::get('/about', function () {
+    return view('about');
+})->name('about');
+
+// Sản phẩm
+Route::get('/productItem', function () {
+    return view('productItem');
+});
+
+Route::get('/product', [ProductController::class, 'product'])->name('product.index');
+Route::get('/productItem/{id}', [ProductController::class, 'showProductDetails'])->name('productItem');
 
 // Trang đăng nhập
 Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
 Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
-
 
 // Route cho form quên mật khẩu
 Route::get('password/forgot', [AuthenticatedSessionController::class, 'showForgotPasswordForm'])->name('password.forgot');
@@ -40,8 +60,8 @@ Route::post('password/reset', [AuthenticatedSessionController::class, 'resetPass
 
 
 // Trang đăng ký
-Route::get('/createaccount', [RegisteredUserController::class, 'create']);
-Route::post('/createaccount', [RegisteredUserController::class, 'store'])->name('createaccount');
+Route::get('/create-account', [RegisteredUserController::class, 'create']);
+Route::post('/create-account', [RegisteredUserController::class, 'store'])->name('create-account');
 Route::get('/verify-email', [RegisteredUserController::class, 'verifyEmail'])->name('verify.email');
 
 // Nhóm các route yêu cầu đăng nhập
@@ -87,39 +107,24 @@ Route::middleware(['role:admin|staff'])->group(function () {
 
 // Trang khách hàng - chỉ khách hàng mới vào được
 Route::middleware('auth:customer')->group(function () {
-    // Route::get('/', [ProductController::class, 'home']);
     Route::get('/product', [ProductController::class, 'product']);
-//    Route::get('/', [ProductController::class, 'home'])->name('home');
 });
 
-
-Route::get('/product', [ProductController::class, 'product'])->name('product.index');
-Route::get('/productItem/{id}', [ProductController::class, 'showProductDetails'])->name('productItem');
-
-Route::get('/createaccount', function () {
-    return view('createaccount');
-})->name('create-account');
-Route::get('/contact', function () {
-    return view('contact');
-})->name('contact');
-Route::get('/blog', function () {
-    return view('blog');
-})->name('blog');
-Route::get('/about', function () {
-    return view('about');
-})->name('about');
-Route::get('/productItem', function () {
-    return view('productItem');
-});
 
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
 Route::post('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
 Route::delete('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
 
-Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
-Route::post('/checkout/process', [CheckoutController::class, 'processCheckout'])->name('checkout.process');
+// Thanh toán
+Route::prefix('checkout')
+    ->name('checkout.')
+    ->group(function () {
+        Route::get('/', [CheckoutController::class, 'index'])->name('index');
+        Route::post('process', [CheckoutController::class, 'processCheckout'])->name('process');
+        Route::post('update-default-address', [CheckoutController::class, 'updateDefaultAddress'])->name('updateDefaultAddress');
+        Route::post('add-address', [CheckoutController::class, 'addAddress'])->name('add-address');
+    });
+
 Route::get('/order/confirmation/{orderId}', [CheckoutController::class, 'confirmation'])->name('order.confirmation');
 Route::post('/set-default-address', [CheckoutController::class, 'setDefaultAddress'])->name('checkout.setDefaultAddress');
-Route::post('/add-address', [CheckoutController::class, 'addAddress'])->name('checkout.addAddress');
-Route::post('checkout/update-default-address', [CheckoutController::class, 'updateDefaultAddress'])->name('checkout.updateDefaultAddress');

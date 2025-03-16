@@ -32,12 +32,11 @@ class CheckoutController extends Controller
         $cartItems = $cart->items;
         $cartTotal = $cartItems->sum(fn($item) => $item->quantity * $item->product->price);
 
-        $addresses = is_string($user->addresses) ? json_decode($user->addresses, true) : $user->addresses;
-        $addresses = $addresses ?? [];
+        $addresses = $user->addresses;
 
         $defaultAddress = collect($addresses)->firstWhere('is_default', true);
 
-        return view('checkout.index', compact('cartItems', 'cartTotal', 'addresses', 'defaultAddress'));
+        return view('checkout.index', compact('cartItems', 'cartTotal', 'addresses', 'defaultAddress', 'user'));
     }
 
     public function processCheckout(Request $request)
@@ -49,7 +48,7 @@ class CheckoutController extends Controller
         }
 
         $request->validate([
-            'address' => 'required|string',
+            'address'        => 'required|string',
             'payment_method' => 'required|string',
         ]);
 
@@ -62,19 +61,19 @@ class CheckoutController extends Controller
             }
 
             $order = Order::create([
-                'user_id' => $user->id,
-                'total_amount' => $cart->items->sum(fn($item) => $item->quantity * $item->product->price),
-                'status' => 'pending',
-                'address' => $request->address,
+                'user_id'        => $user->id,
+                'total_amount'   => $cart->items->sum(fn($item) => $item->quantity * $item->product->price),
+                'status'         => 'pending',
+                'address'        => $request->address,
                 'payment_method' => $request->payment_method,
             ]);
 
             foreach ($cart->items as $cartItem) {
                 OrderItem::create([
-                    'order_id' => $order->id,
+                    'order_id'   => $order->id,
                     'product_id' => $cartItem->product_id,
-                    'quantity' => $cartItem->quantity,
-                    'price' => $cartItem->product->price,
+                    'quantity'   => $cartItem->quantity,
+                    'price'      => $cartItem->product->price,
                 ]);
 
                 $product = Product::find($cartItem->product_id);
@@ -92,7 +91,7 @@ class CheckoutController extends Controller
                 ->with('success', 'Đặt hàng thành công. Bạn sẽ nhận được email xác nhận.');
         } catch (\Exception $e) {
             DB::rollBack();
-            Log::error('Error processing checkout: ' . $e->getMessage());
+            Log::error('Error processing checkout: '.$e->getMessage());
             return redirect()->route('cart.index')->with('error', 'Có lỗi xảy ra trong quá trình thanh toán.');
         }
     }
@@ -142,12 +141,12 @@ class CheckoutController extends Controller
             $defaultAddress = collect($addresses)->firstWhere('is_default', true);
 
             return response()->json([
-                'success' => true,
-                'message' => 'Cập nhật địa chỉ mặc định thành công!',
+                'success'        => true,
+                'message'        => 'Cập nhật địa chỉ mặc định thành công!',
                 'defaultAddress' => $defaultAddress, // Trả về thông tin địa chỉ mặc định
             ]);
         } catch (\Exception $e) {
-            Log::error('Error updating default address: ' . $e->getMessage());
+            Log::error('Error updating default address: '.$e->getMessage());
             return response()->json(['success' => false, 'message' => 'Có lỗi xảy ra khi cập nhật địa chỉ mặc định.']);
         }
     }
@@ -163,21 +162,22 @@ class CheckoutController extends Controller
             }
 
             $request->validate([
-                'name' => 'required|string|max:255',
-                'phone' => 'required|string|max:15|min:10',
+                'name'    => 'required|string|max:255',
+                'phone'   => 'required|string|max:15|min:10',
                 'address' => 'required|string|max:500',
             ]);
 
-            $addresses = is_string($user->addresses) ? json_decode($user->addresses, true) : $user->addresses;
-            $addresses = $addresses ?? [];
+            $addresses = $user->addresses ?: [];
+
+            $isDefault = empty($addresses) || $request->has('is_default') && $request->is_default == 'true';
 
             $newAddress = [
-                'id' => Str::uuid()->toString(),
-                'name' => $request->name,
-                'phone' => $request->phone,
-                'address' => $request->address,
-                'note' => $request->note ?? null,
-                'is_default' => $request->has('is_default') && $request->is_default == 'true',
+                'id'         => Str::uuid()->toString(),
+                'name'       => $request->name,
+                'phone'      => $request->phone,
+                'address'    => $request->address,
+                'note'       => $request->note ?? null,
+                'is_default' => $isDefault,
             ];
 
             if ($newAddress['is_default']) {
@@ -190,19 +190,21 @@ class CheckoutController extends Controller
 
             DB::table('customers')
                 ->where('id', $user->id)
-                ->update(['addresses' => json_encode($addresses)]);
+                ->update(['addresses' => $addresses]);
 
             $defaultAddress = collect($addresses)->firstWhere('is_default', true);
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Thêm địa chỉ mới thành công.',
-                'addresses' => $addresses,
+            return redirect()->back()->with([
+                'success'        => true,
+                'message'        => 'Thêm địa chỉ mới thành công.',
+                'addresses'      => $addresses,
                 'defaultAddress' => $defaultAddress,
             ]);
         } catch (\Exception $e) {
-            Log::error('Error adding address: ' . $e->getMessage());
-            return response()->json(['success' => false, 'message' => 'Có lỗi xảy ra trong quá trình thêm địa chỉ.']);
+            Log::error('Error adding address: '.$e->getMessage());
+            return redirect()->back()->with([
+                'success' => false, 'message' => 'Có lỗi xảy ra trong quá trình thêm địa chỉ.'
+            ]);
         }
     }
 }
