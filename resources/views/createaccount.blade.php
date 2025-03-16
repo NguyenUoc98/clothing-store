@@ -85,7 +85,7 @@
     </header>
     <section>
         <div class="contact-section" style="background-image: url('asset/img/login.jpg');">
-            <form action="{{ route('createaccount') }}" method="POST" class="form-wrapper">
+            <form action="{{ route('create-account') }}" method="POST" class="form-wrapper">
                 @csrf
                 @if ($errors->any())
                 <div class="alert alert-danger">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -60,6 +61,7 @@ class RegisteredUserController extends Controller
 
         try {
             Mail::to($customer->email)->send(new EmailVerificationMail($token));
+            Auth::guard('customer')->login($customer);
         } catch (\Exception $e) {
             return back()->with('error', 'Could not send verification email. Please try again later.');
         }
