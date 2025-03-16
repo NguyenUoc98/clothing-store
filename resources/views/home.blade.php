@@ -1,7 +1,7 @@
 @extends('layouts.frontend.app')
 
 @section('content')
-    <div>
+    <div class="!mb-24">
         <div class="slide active" style="background-image: url({{ asset('asset/img/banner1.webp') }});">
         </div>
         <div class="slide" style="background-image: url({{ asset('asset/img/bannner5.webp') }});">
@@ -55,17 +55,17 @@
                         </div>
                     @endforeach
                 </div>
-                <div>
+                <div class="gallery1">
                     @foreach($products_35_38 as $product)
-                        <span class="image-container">
-                        <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
-                        <div class="overlay-text">
-                            <p>
-                                <span>{{ number_format($product->price, 0, ',', '.') }} VND</span><br>
-                                {{ $product->name }}
-                            </p>
+                        <div class="image-container">
+                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
+                            <div class="overlay-text">
+                                <p>
+                                    <span>{{ number_format($product->price, 0, ',', '.') }} VND</span><br>
+                                    {{ $product->name }}
+                                </p>
+                            </div>
                         </div>
-                    </span>
                     @endforeach
                 </div>
             </div>
@@ -119,7 +119,7 @@
         </div>
 
         <div class="ourteam1">
-            <div class="container1">
+            <div class="container1 !grid !grid-cols-4 !container !mx-auto !gap-10">
                 @foreach($products_39_42 as $product)
                     <div class="card1">
                         <div class="content1">
@@ -127,30 +127,23 @@
                                 <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
                             </div>
                             <div class="contentBx">
-                                <h3>{{ $product->name }} <br><span>{{ number_format($product->price, 0, ',', '.') }}
-                                    VND</span> <br>
-
-                                    <span>
-                                    <i class="fa-solid fa-cart-plus add-to-cart" data-product-id="{{ $product->id }}">
-                                    </i>
-                                </span>
-
-
-                                </h3>
+                                <h3>{{ $product->name }}</h3>
+                                <p class="!text-lg">{{ number_format($product->price, 0, ',', '.') }} VND</p>
+                                <i class="fa-solid fa-cart-plus add-to-cart cursor-pointer" data-product-id="{{ $product->id }}"></i>
                             </div>
                         </div>
                         <ul class="sci">
-                            <li style="--i:1"><a href="{{ route('productItem', $product->id) }}">
+                            <li style="--i:1">
+                                <a href="{{ route('productItem', $product->id) }}">
                                     <bottom class="viewmore">View more</bottom>
-                                </a></li>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 @endforeach
-
             </div>
-        </div>
-        <div class="ourteam1">
-            <div class="container1">
+
+            <div class="container1 !grid !grid-cols-4 !container !mx-auto !gap-10">
                 @foreach($products_43_46 as $product)
                     <div class="card1">
                         <div class="content1">
@@ -158,13 +151,9 @@
                                 <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
                             </div>
                             <div class="contentBx">
-                                <h3>{{ $product->name }} <br><span>{{ number_format($product->price, 0, ',', '.') }}
-                                    VND</span> <br>
-                                    <span>
-                                    <i class="fa-solid fa-cart-plus add-to-cart" data-product-id="{{ $product->id }}">
-                                    </i>
-                                </span>
-                                </h3>
+                                <h3>{{ $product->name }}</h3>
+                                <p class="!text-lg">{{ number_format($product->price, 0, ',', '.') }} VND</p>
+                                <i class="fa-solid fa-cart-plus add-to-cart cursor-pointer" data-product-id="{{ $product->id }}"></i>
                             </div>
                         </div>
                         <ul class="sci">
@@ -327,7 +316,7 @@
                 }
 
                 $.ajax({
-                    url: '/cart/add', // Đường dẫn đến route xử lý thêm sản phẩm
+                    url: '{{ route('cart.add') }}', // Đường dẫn đến route xử lý thêm sản phẩm
                     method: 'POST',
                     data: {
                         product_id: productId,

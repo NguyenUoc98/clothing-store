@@ -345,6 +345,7 @@ body {
 .image-container img{
     height:600px ;
     width:400px;
+    grid-column: span 4 / span 4;
 }
 .overlay-text {
     position: absolute;
@@ -372,8 +373,8 @@ body {
     width:75px;
     height:75px;
     position: absolute;
-    bottom:-32px;
-    left:-23px
+    bottom:-36px;
+    left:0;
 }
 
 
@@ -1387,7 +1388,7 @@ body {
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    margin-top: 80px;
+    margin-top: 190px;
     margin-left: 0;
     margin-right: 0;
     margin-bottom: 4%;
@@ -1397,17 +1398,10 @@ body {
 
 .container1 .card1 {
     position: relative;
-    width: 260px;
-    height: 400px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-    margin: 20px;
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
     display: flex;
     justify-content: center;
     align-items: center;
     transition: filter 1s ease;
-
 }
 
 .container1 .card1 .content1 {
@@ -1416,8 +1410,11 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    /* opacity: 0.7; */
     transition: .5s;
+    width: 100%;
+    border: 3px solid rgba(0, 0, 0, 0);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
 }
 
 .container1 .card1 .sci {
@@ -1467,7 +1464,8 @@ body {
 
 .container1 .card1 .content1 .contentBx {
     position: absolute;
-    bottom: -166px;
+    bottom: -145px;
+    text-align: center;
 }
 
 .container1 .card1 .content1 .contentBx h3 {
@@ -1478,7 +1476,6 @@ body {
     font-size: 16px;
     margin: 20px 0 10px;
     line-height: 3.1em;
-    text-align: center;
 }
 
 .container1 .card1 .content1 .contentBx h3 span {
@@ -1496,10 +1493,10 @@ body {
 
 .container1 .card1 .content1 .imgBx {
     position: relative;
-    width: 360px;
+    width: 100%;
     height: 400px;
     overflow: hidden;
-    border: 10px solid rgba(0, 0, 0, 0);
+    border-radius: 12px;
 }
 
 .container1 .card1 .content1 .imgBx img {
@@ -1602,9 +1599,6 @@ body {
     justify-content: flex-start;
     /* Đẩy menu sang trái */
     padding-left: 50px;
-    background-color: #fff;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-
 }
 
 /* Căn chỉnh các mục con trong menu */

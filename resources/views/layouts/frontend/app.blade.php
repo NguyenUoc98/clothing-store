@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ config('app.name') }}</title>
+    <title>@yield('title', config('app.name'))</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="{{ asset('asset/fontawesome-free-6.6.0-web/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('asset/css/style.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,11 +19,13 @@
 <body>
 @include('layouts.frontend.header')
 
-@yield('content')
+<div class="!mt-[60px]">
+    @yield('content')
+</div>
 
 @include('layouts.frontend.footer')
 </body>
-<script src="asset/js/app.js"></script>
+<script src="{{ asset('asset/js/app.js') }}"></script>
 
 @stack('script')
 </html>
