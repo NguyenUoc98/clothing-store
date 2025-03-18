@@ -10,14 +10,14 @@ class OrderController extends Controller
 {
     public function index()
     {
-    $orders = Order::with('items.product')->paginate(10);
+    $orders = Order::with('cart.items.product')->paginate(10);
     return view('orders.index', compact('orders'));
     }
 
 
     public function show($id)
     {
-    $order = Order::with('items.product')->findOrFail($id);
+    $order = Order::with('cart.items.product')->findOrFail($id);
     return view('orders.show', compact('order'));
     }
 
@@ -38,9 +38,9 @@ class OrderController extends Controller
 
     public function printInvoice($id)
     {
-    $order = Order::with('items.product')->findOrFail($id);
-    $pdf = \PDF::loadView('orders.invoice', compact('order'));
-    return $pdf->download('invoice-' . $order->id . '.pdf');
+        $order = Order::with('cart.items.product')->findOrFail($id);
+        $pdf = \Pdf::loadView('orders.invoice', compact('order'));
+        return $pdf->download('invoice-' . $order->id . '.pdf');
     }
 
 }

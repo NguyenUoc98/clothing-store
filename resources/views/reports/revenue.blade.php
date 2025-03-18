@@ -1,6 +1,6 @@
 <!-- resources/views/reports/revenue.blade.php -->
 
-@extends('layouts.app')
+@extends('layouts.admin.app')
 
 @section('title', 'Báo cáo doanh thu')
 
@@ -23,18 +23,18 @@
     <!-- Hiển thị bảng doanh thu -->
     <table class="table table-bordered mt-4">
         <thead>
-            <tr>
-                <th>Ngày</th>
-                <th>Doanh thu</th>
-            </tr>
+        <tr>
+            <th>Ngày</th>
+            <th>Doanh thu</th>
+        </tr>
         </thead>
         <tbody>
-            @foreach ($revenue as $item)
-                <tr>
-                    <td>{{ $item->date }}</td>
-                    <td>{{ number_format($item->total_revenue, 2) }} VND</td>
-                </tr>
-            @endforeach
+        @foreach ($revenue as $item)
+            <tr>
+                <td>{{ $item->date }}</td>
+                <td>{{ number_format($item->total_revenue, 2) }} VND</td>
+            </tr>
+        @endforeach
         </tbody>
     </table>
 @endsection

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin.app')
 
 @section('content')
     <h1>Sửa sản phẩm</h1>
@@ -23,32 +23,32 @@
         </div>
 
         <div class="form-group">
-    <label for="product_code">Mã sản phẩm</label>
-    <input type="text" class="form-control" name="product_code" value="{{ $product->product_code }}">
-    </div>
+            <label for="product_code">Mã sản phẩm</label>
+            <input type="text" class="form-control" name="product_code" value="{{ $product->product_code }}">
+        </div>
 
         <div class="form-group">
-    <label for="category">Danh mục</label>
-    <select name="category_id" id="category" class="form-control">
-        @foreach($categories as $category)
-            <option value="{{ $category->id }}" {{ isset($product) && $product->category_id == $category->id ? 'selected' : '' }}>
-                {{ $category->name }}
-            </option>
-        @endforeach
-    </select>
-</div>
+            <label for="category">Danh mục</label>
+            <select name="category_id" id="category" class="form-control">
+                @foreach($categories as $category)
+                    <option value="{{ $category->id }}" {{ isset($product) && $product->category_id == $category->id ? 'selected' : '' }}>
+                        {{ $category->name }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
 
-<div class="form-group">
-    <label for="size">Size</label>
-    <input type="text" class="form-control" name="size" value="{{ $product->size }}">
-    </div>
+        <div class="form-group">
+            <label for="size">Size</label>
+            <input type="text" class="form-control" name="size" value="{{ $product->size }}">
+        </div>
 
-<div class="form-group">
-    <label for="color">Color</label>
-    <input type="text" class="form-control" name="color" value="{{ $product->color }}">
-    </div>
+        <div class="form-group">
+            <label for="color">Color</label>
+            <input type="text" class="form-control" name="color" value="{{ $product->color }}">
+        </div>
 
-<div class="form-group">
+        <div class="form-group">
             <label for="price">Giá</label>
             <input type="number" class="form-control" name="price" step="0.01" value="{{ $product->price }}" required>
         </div>

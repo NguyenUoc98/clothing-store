@@ -1,22 +1,22 @@
-@extends('layouts.app')
+@extends('layouts.admin.app')
 
 @section('content')
-<div class="container">
-    <h2>Danh Sách Chương Trình Khuyến Mãi</h2>
+    <div class="container">
+        <h2>Danh Sách Chương Trình Khuyến Mãi</h2>
 
-    <!-- Hiển thị thông báo thành công hoặc lỗi nếu có -->
-    @if (session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
+        <!-- Hiển thị thông báo thành công hoặc lỗi nếu có -->
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
 
-    <!-- Nút thêm mới chương trình khuyến mãi -->
-    <a href="{{ route('promotions.create') }}" class="btn btn-primary mb-3">Thêm Khuyến Mãi Mới</a>
+        <!-- Nút thêm mới chương trình khuyến mãi -->
+        <a href="{{ route('promotions.create') }}" class="btn btn-primary mb-3">Thêm Khuyến Mãi Mới</a>
 
-    <!-- Bảng danh sách khuyến mãi -->
-    <table class="table table-bordered">
-        <thead>
+        <!-- Bảng danh sách khuyến mãi -->
+        <table class="table table-bordered">
+            <thead>
             <tr>
                 <th>ID</th>
                 <th>Tên Khuyến Mãi</th>
@@ -27,8 +27,8 @@
                 <th>Ngày Kết Thúc</th>
                 <th>Hành Động</th>
             </tr>
-        </thead>
-        <tbody>
+            </thead>
+            <tbody>
             @forelse ($promotions as $promotion)
                 <tr>
                     <td>{{ $promotion->id }}</td>
@@ -61,7 +61,7 @@
                     <td colspan="8" class="text-center">Không có chương trình khuyến mãi nào.</td>
                 </tr>
             @endforelse
-        </tbody>
-    </table>
-</div>
+            </tbody>
+        </table>
+    </div>
 @endsection
