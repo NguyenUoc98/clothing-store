@@ -54,6 +54,7 @@
                             <div id="default-address">
                                 <div class="my-2 ml-6 rounded-lg border border-neutral-300 px-4 py-2 shadow">
                                     <p class="text-lg font-bold" id="selected-name">{{ $defaultAddress['name'] }}</p>
+                                    <p>{{ $defaultAddress['email'] }}</p>
                                     <p>{{ $defaultAddress['phone'] }}</p>
                                     <p>{{ $defaultAddress['address'] }}</p>
                                 </div>
@@ -85,6 +86,14 @@
                                 <input class="col-span-2 rounded-md border border-gray-200 px-4 py-2 focus:outline-none"
                                        type="text" name="name" placeholder="Nhập tên người nhận"
                                        value="{{ $user->name }}"
+                                >
+
+                                <label for="phone" class="font-bold leading-10">
+                                    Email <span class="text-red-400">*</span>
+                                </label>
+                                <input class="col-span-2 rounded-md border border-gray-200 px-4 py-2 focus:outline-none"
+                                       type="text" name="email" placeholder="Nhập email"
+                                       value="{{ $user->email }}"
                                 >
 
                                 <label for="phone" class="font-bold leading-10">
@@ -127,6 +136,7 @@
                             @if ($defaultAddress)
                                 <input type="hidden" name="customer_name" value="{{ $defaultAddress['name'] }}">
                                 <input type="hidden" name="customer_phone" value="{{ $defaultAddress['phone'] }}">
+                                <input type="hidden" name="customer_email" value="{{ $defaultAddress['email'] }}">
                                 <input type="hidden" name="customer_address" value="{{ $defaultAddress['address'] }}">
                             @endif
 

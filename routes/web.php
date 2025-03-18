@@ -1,19 +1,17 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\PromotionController;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Http\Controllers\CheckoutController;
-use App\Http\Controllers\ReportController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\OrderController;
-use App\Http\Controllers\Controller;
-use App\Models\Category;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\PromotionController;
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Route;
 
 // Home
 Route::get('/', [ProductController::class, 'home'])->name('home');
@@ -94,7 +92,7 @@ Route::middleware(['role:admin|staff'])->group(function () {
     Route::prefix('orders')->name('orders.')->group(function () {
         Route::get('/', [OrderController::class, 'index'])->name('index');
         Route::get('/{id}', [OrderController::class, 'show'])->name('show');
-        Route::put('/{id}/status', [OrderController::class, 'updateStatus'])->name('updateStatus');
+        Route::match(['post', 'put'], '/{order}/update', [OrderController::class, 'update'])->name('update');
         Route::get('/{id}/invoice', [OrderController::class, 'printInvoice'])->name('printInvoice');
     });
 

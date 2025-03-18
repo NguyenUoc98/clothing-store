@@ -7,5 +7,6 @@ enum PaymentStatus: int
     case ERROR      = -1;
     case INIT       = 0;
     case PROCESSING = 1;
-    case SUCCESS    = 2;
+    case SHIPPING   = 2;
+    case SUCCESS    = 3;
 }

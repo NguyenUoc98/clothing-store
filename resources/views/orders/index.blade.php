@@ -16,7 +16,7 @@
         </div>
     @endif
 
-    <div class="overflow-x-auto rounded-lg border border-neutral-300 bg-white shadow">
+    <div class="card overflow-x-auto border border-neutral-300 !p-0">
         <table class="table">
             <thead>
             <tr>
@@ -43,6 +43,12 @@
                                 </g>
                             </svg>
                             {{ $order->customer_name }}
+                        </p>
+                        <p class="flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 24 24" class="size-5 shrink-0">
+                                <path fill="currentColor" d="M4 20q-.825 0-1.413-.588T2 18V6q0-.825.588-1.413T4 4h16q.825 0 1.413.588T22 6v12q0 .825-.588 1.413T20 20H4Zm8-7l8-5V6l-8 5l-8-5v2l8 5Z"/>
+                            </svg>
+                            {{ $order->customer_email }}
                         </p>
                         <p class="flex items-center gap-2">
                             <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 16 16" class="size-5 shrink-0">
@@ -75,10 +81,10 @@
                     <td>
                         <div class="flex justify-center gap-2">
                             <a href="{{ route('orders.show', $order->id) }}" class="shrink-0 bg-blue-500 text-white button hover:bg-blue-700">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"/>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 20 20" class="size-5">
+                                    <path fill="currentColor" d="M9.963 2.5c2.043 0 4.223.775 6.184 2.434c1.449 1.226 2.703 2.802 3.763 4.722c.11.198.12.439.027.645c-.988 2.2-2.295 3.882-3.921 5.032C13.94 16.8 11.749 17.5 9.999 17.5c-1.973 0-3.734-.525-5.74-2.094c-1.577-1.232-2.964-2.901-4.164-5a.724.724 0 0 1-.021-.678c.734-1.493 1.851-2.95 3.347-4.377C5.438 3.428 7.833 2.5 9.963 2.5Zm.036 3.406c-2.148 0-3.89 1.792-3.89 4.003c0 2.21 1.742 4.002 3.89 4.002c2.149 0 3.89-1.792 3.89-4.002S12.148 5.906 10 5.906Zm0 1.413c1.39 0 2.517 1.16 2.517 2.59s-1.127 2.59-2.517 2.59s-2.517-1.16-2.517-2.59s1.127-2.59 2.517-2.59Z"/>
                                 </svg>
-                                Sửa
+                                Chi tiết
                             </a>
                             <a href="{{ route('orders.printInvoice', $order->id) }}" class="shrink-0 bg-black text-white button hover:bg-gray-800">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">

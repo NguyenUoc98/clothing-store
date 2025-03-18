@@ -59,7 +59,7 @@
                             <i class="fa-solid fa-user">
                                 <ul class="submenu">
                                     <li><a href="login.html">Login</a></li>
-                                    <li><a href="/createaccount">Sign up</a></li>
+                                    <li><a href="{{ route('create-account') }}">Sign up</a></li>
                                 </ul>
                             </i>
                         </div>

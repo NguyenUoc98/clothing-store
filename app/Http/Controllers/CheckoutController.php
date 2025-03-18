@@ -78,6 +78,7 @@ class CheckoutController extends Controller
                 'status'           => PaymentType::COD->value == $paymentMethod->value ? PaymentStatus::PROCESSING : PaymentStatus::INIT,
                 'shipping_address' => $request->get('customer_address'),
                 'customer_name'    => $request->get('customer_name'),
+                'customer_email'    => $request->get('customer_email'),
                 'customer_phone'   => $request->get('customer_phone'),
                 'type'             => $paymentMethod,
             ]);
@@ -178,6 +179,7 @@ class CheckoutController extends Controller
                 'name'    => 'required|string|max:255',
                 'phone'   => 'required|string|max:15|min:10',
                 'address' => 'required|string|max:500',
+                'email'   => 'required|email',
             ]);
 
             $addresses = $user->addresses ?: [];
@@ -187,6 +189,7 @@ class CheckoutController extends Controller
             $newAddress = [
                 'id'         => Str::uuid()->toString(),
                 'name'       => $request->name,
+                'email'      => $request->email,
                 'phone'      => $request->phone,
                 'address'    => $request->address,
                 'note'       => $request->note ?? null,

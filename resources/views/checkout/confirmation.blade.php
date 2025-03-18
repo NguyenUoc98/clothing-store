@@ -67,12 +67,13 @@
             </label>
             <div class="my-2 ml-6 w-fit rounded-lg border border-neutral-300 px-4 py-2 shadow">
                 <p class="text-lg font-bold" id="selected-name">{{ $order->customer_name }}</p>
+                <p>{{ $order->customer_email }}</p>
                 <p>{{ $order->customer_phone }}</p>
                 <p>{{ $order->shipping_address }}</p>
             </div>
 
             <div class="text-center mt-10">
-                <p class="italic mb-3">Cảm ơn bạn đã đặt hàng tại cửa hàng của chúng tôi! Đơn hàng của bạn đã được xác nhận và sẽ được xử lý trong thời gian sớm nhất.</p>
+                <p class="italic mb-3 text-green-600">Cảm ơn bạn đã đặt hàng tại cửa hàng của chúng tôi! Đơn hàng của bạn đã được xác nhận và sẽ được xử lý trong thời gian sớm nhất.</p>
                 <a href="{{ route('home') }}" class="bg-black text-white hover:bg-gray-800 px-4 py-2 cursor-pointer rounded-lg flex items-end w-fit mx-auto gap-1 leading-none">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
                         <path d="M11.47 3.841a.75.75 0 0 1 1.06 0l8.69 8.69a.75.75 0 1 0 1.06-1.061l-8.689-8.69a2.25 2.25 0 0 0-3.182 0l-8.69 8.69a.75.75 0 1 0 1.061 1.06l8.69-8.689Z" />
