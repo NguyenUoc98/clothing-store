@@ -75,7 +75,7 @@ class CheckoutController extends Controller
             // Tạo đơn hàng
             $order = $cart->order()->create([
                 'total_price'      => $cart->items->sum('price'),
-                'status'           => PaymentType::CASH->value == $paymentMethod->value ? PaymentStatus::PROCESSING : PaymentStatus::INIT,
+                'status'           => PaymentType::COD->value == $paymentMethod->value ? PaymentStatus::PROCESSING : PaymentStatus::INIT,
                 'shipping_address' => $request->get('customer_address'),
                 'customer_name'    => $request->get('customer_name'),
                 'customer_phone'   => $request->get('customer_phone'),

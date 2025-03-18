@@ -131,7 +131,7 @@
                             @endif
 
                             <select name="payment_method" required class="ml-6 my-2 rounded-lg border border-neutral-300 px-4 py-2" style="width: calc(100% - 1.5rem);">
-                                <option value="{{ \App\Enum\PaymentType::CASH }}" {{ old('payment_method', '1') == \App\Enum\PaymentType::CASH ? 'selected' : '' }}>Thanh toán khi nhận hàng (COD)</option>
+                                <option value="{{ \App\Enum\PaymentType::COD }}" {{ old('payment_method', '1') == \App\Enum\PaymentType::COD ? 'selected' : '' }}>Thanh toán khi nhận hàng (COD)</option>
                                 <option value="{{ \App\Enum\PaymentType::ONLINE }}" {{ old('payment_method', '1') == \App\Enum\PaymentType::ONLINE ? 'selected' : '' }}>Thanh toán online</option>
                             </select>
                         </div>

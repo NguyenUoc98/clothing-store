@@ -15,7 +15,7 @@ return new class extends Migration
             $table->renameColumn('customer_email', 'customer_phone');
             $table->smallInteger('status')->default(\App\Enum\PaymentStatus::INIT)->comment('Trạng thái thanh toán của đơn hàng')->change();
             $table->json('addition_information')->after('status')->nullable()->comment('Thông tin thêm: tiền khách đưa, tiền trả khách, ghi chú...');
-            $table->tinyInteger('type')->after('status')->default(\App\Enum\PaymentType::CASH)->comment('Loại hình thành toán: online - trả tiền mặt');
+            $table->tinyInteger('type')->after('status')->default(\App\Enum\PaymentType::COD)->comment('Loại hình thành toán: online - trả tiền mặt');
             $table->unsignedBigInteger('cart_id')->after('id')->comment('Khóa ngoại đến bảng giỏ hàng');
 
             $table->foreign('cart_id')->on('carts')->references('id')->cascadeOnUpdate();

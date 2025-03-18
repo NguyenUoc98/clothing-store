@@ -7,6 +7,9 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style type="text/tailwindcss">
         @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+        :root {
+            font-size: 15px;
+        }
 
         table {
             @apply w-full;
@@ -25,7 +28,7 @@
         }
 
         th {
-            @apply font-bold text-center bg-[#00000050] text-white;
+            @apply font-bold text-center bg-[#00000020];
         }
 
         .button {
@@ -91,7 +94,7 @@
 
 <div class="container mt-[80px] mb-10 mx-auto">
     <div class="w-full rounded-xl bg-white shadow flex items-center justify-between p-6 mb-10">
-        <h1 class="font-bold text-2xl">@yield('title')</h1>
+        <h1 class="text-2xl">@yield('title')</h1>
         <div class="flex items-center gap-2 justify-end">
             @yield('command-bar')
         </div>

@@ -10,7 +10,7 @@
             <h3 class="mb-2 text-lg font-bold">Thông tin đơn hàng</h3>
             <p><b>Mã đơn hàng:</b> {{ $order->order_number }}</p>
             <p><b>Ngày đặt hàng:</b> {{ $order->created_at->format('d/m/Y H:i') }}</p>
-            <p><b>Phương thức thanh toán:</b> {{ $order->type == \App\Enum\PaymentType::CASH->value ? 'Thanh toán khi nhận hàng (COD)' : 'Thanh toán online' }}</p>
+            <p><b>Phương thức thanh toán:</b> {{ $order->type == \App\Enum\PaymentType::COD->value ? 'Thanh toán khi nhận hàng (COD)' : 'Thanh toán online' }}</p>
             <p>
                 <b>Trạng thái đơn hàng:</b>
                 @switch($order->status) 
