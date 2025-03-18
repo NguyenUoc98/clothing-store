@@ -2,9 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 use App\Models\User;
+use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
 
@@ -20,9 +19,8 @@ class UserSeeder extends Seeder
         User::query()->truncate();
         User::create([
             'name' => 'Admin User',
-            'email' => 'daogam26@gmailgmail.com',
-            'password' => Hash::make('password'),
-            'password' => 'Daogam12345@',
+            'email' => 'daogam26@gmail.com',
+            'password' => Hash::make('Daogam12345@'),
             'role' => 'admin',
         ]);
 
