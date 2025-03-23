@@ -68,8 +68,10 @@ class CartController extends Controller
             if (Auth::guard('customer')->check()) {
                 // Nếu khách hàng đã đăng nhập
                 $cart = Cart::query()->firstOrCreate(
-                    ['user_id' => Auth::guard('customer')->id()],
-                    ['processed' => false]
+                    [
+                        'user_id'   => Auth::guard('customer')->id(),
+                        'processed' => false
+                    ]
                 );
             } else {
                 // Nếu khách hàng chưa đăng nhập

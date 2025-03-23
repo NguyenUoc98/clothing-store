@@ -14,7 +14,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Aboreto&family=Kalnia:wght@100..700&display=swap" rel="stylesheet">
     <script src="{{ asset('asset/js/jquery-3.6.0.min.js') }}"></script>
     <script src="{{ asset('asset/js/header.js') }}"></script>
+    @vite(['resources/js/app.js'])
     @stack('css')
+    <style type="text/tailwindcss">
+        .card {
+            @apply overflow-hidden rounded-lg bg-white p-4 shadow;
+        }
+    </style>
 </head>
 <body>
 @include('layouts.frontend.header')
@@ -23,9 +29,56 @@
     @yield('content')
 </div>
 
+<div id="popup" class="fixed top-0 left-0 z-20 flex hidden h-screen w-full items-center justify-center bg-black/80 opacity-0 transition-opacity duration-300 ease-in-out">
+    <div class="text-center card min-w-md relative">
+        <i class="absolute cursor-pointer right-2 top-1 top-2" onclick="closePopup()">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+            </svg>
+        </i>
+        <p class="title mb-5 text-2xl font-bold">Thông báo</p>
+        <p class="msg text-balance">Xin chào thế giới!</p>
+    </div>
+</div>
+
 @include('layouts.frontend.footer')
 </body>
 <script src="{{ asset('asset/js/app.js') }}"></script>
 
 @stack('script')
+
+<script type="text/javascript">
+    function closePopup()
+    {
+        const content = document.getElementById("popup");
+        content.classList.add("hidden");
+        setTimeout(() => {
+            content.classList.add("opacity-0");
+        }, 10);
+    }
+</script>
+
+@if(Auth::guard('customer')->check())
+    <script type="module">
+
+
+        function openPopup(title, msg)
+        {
+            const content = document.getElementById("popup");
+            content.querySelector(".title").textContent = title ? title: '';
+            content.querySelector(".msg").textContent = msg ? msg : '';
+
+            content.classList.remove("hidden");
+            setTimeout(() => {
+                content.classList.remove("opacity-0");
+            }, 10);
+        }
+
+        Echo.private('App.Models.Customer.{{ Auth::guard('customer')->id() }}')
+            .notification((notification) => {
+                openPopup(notification.title, notification.message);
+            });
+    </script>
+@endif
+
 </html>
