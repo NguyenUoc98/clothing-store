@@ -4,15 +4,27 @@ namespace App\Http\Controllers;
 
 use App\Enum\PaymentStatus;
 use App\Enum\PaymentType;
+use App\Enums\Payment\PaymentMethod;
+use App\Events\NotificationPayment;
+use App\Events\Payment\RequestRecharge;
 use App\Models\Cart;
+use App\Models\MoneyMomo;
 use App\Models\Order;
 use App\Models\Product;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use Uocnv\BaokimPayment\Clients\VA;
+use Uocnv\BaokimPayment\Exceptions\CollectionRequestException;
+use Uocnv\BaokimPayment\Exceptions\InvalidSignatureException;
+use Uocnv\BaokimPayment\Exceptions\SignFailedException;
 
 class CheckoutController extends Controller
 {
@@ -40,6 +52,91 @@ class CheckoutController extends Controller
         return view('checkout.index', compact('cartItems', 'cartTotal', 'addresses', 'defaultAddress', 'user'));
     }
 
+    /**
+     * @param  Request  $request
+     *
+     * @return false|\Illuminate\Http\JsonResponse
+     *
+     * Ví dụ mẫu:
+     *
+     *  <samp>
+     *  $data = [
+     *       'RequestId'    => 'BK156438AF4AE2A2757',
+     *       'RequestTime'  => '2023-04-14 08:41:30',
+     *       'PartnerCode'  => 'BAOKIM',
+     *       'AccNo'        => '008281087664887309',
+     *       'ClientIdNo'   => null,
+     *       'TransId'      => 'BK6438AF4ADCC96QHZIG',
+     *       'TransAmount'  => '50000',
+     *       'TransTime'    => '2023-04-14 08:41:30',
+     *       'BefTransDebt' => '50000',
+     *       'AffTransDebt' => 0,
+     *       'AccountType'  => 2,
+     *       'OrderId'      => 'trans1681436471',
+     *  ];
+     *  </samp>
+     * @throws SignFailedException
+     */
+    public function resultTransfer(Request $request)
+    {
+        $rawData = $request->getContent();
+        if (app()->environment('production')) {
+            try {
+                $vaClient = new VA();
+                $vaClient->checkValidData($rawData);
+            } catch (InvalidSignatureException $e) {
+                Log::error($e);
+                return response()->json([
+                    'message' => 'Chữ ký không hợp lệ',
+                ], 401);
+            }
+        }
+
+        $data = json_decode($rawData, true);
+
+        $accNo      = $data['AccNo'];
+        $money      = $data['TransAmount'];
+        $transferId = $data['TransId'];
+
+        $order = Order::query()->whereJsonContains('addition_information->order_id', $accNo)->first();
+        if ($order && $order->status == PaymentStatus::INIT && $money >= (int) $order->total_price) {
+            $order->update([
+                'status'               => PaymentStatus::SUCCESS,
+                'addition_information' => [
+                    'order_id'       => $accNo,
+                    'money'          => $money,
+                    'transaction_id' => $transferId,
+                ],
+            ]);
+            $dataReturn = [
+                'ResponseCode'    => 200,
+                'ResponseMessage' => 'Success',
+                'AccNo'           => $accNo,
+                'ReferenceId'     => config('baokim-payment.virtual_account.production.partner_code').md5($order->id),
+                'AffTransDebt'    => $data['AffTransDebt'],
+            ];
+
+            NotificationPayment::dispatch($order);
+        } else {
+            $dataReturn = [
+                'ResponseCode'    => 200,
+                'ResponseMessage' => 'Transaction processed successfully',
+                'AccNo'           => $accNo,
+            ];
+        }
+        $vaClient = new VA();
+        $response = $vaClient->makeResponse($dataReturn);
+        return response()->json($response);
+    }
+
+    /**
+     * Xử lý thanh toán
+     *
+     * @param  Request  $request
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Throwable
+     */
     public function processCheckout(Request $request)
     {
         $user = Auth::guard('customer')->user();
@@ -75,10 +172,10 @@ class CheckoutController extends Controller
             // Tạo đơn hàng
             $order = $cart->order()->create([
                 'total_price'      => $cart->items->sum('price'),
-                'status'           => PaymentType::COD->value == $paymentMethod->value ? PaymentStatus::PROCESSING : PaymentStatus::INIT,
+                'status'           => PaymentType::COD == $paymentMethod ? PaymentStatus::PROCESSING : PaymentStatus::INIT,
                 'shipping_address' => $request->get('customer_address'),
                 'customer_name'    => $request->get('customer_name'),
-                'customer_email'    => $request->get('customer_email'),
+                'customer_email'   => $request->get('customer_email'),
                 'customer_phone'   => $request->get('customer_phone'),
                 'type'             => $paymentMethod,
             ]);
@@ -96,11 +193,59 @@ class CheckoutController extends Controller
                 'processed' => true,
             ]);
 
-            DB::commit();
+            if ($paymentMethod == PaymentType::ONLINE) {
+//                $dataRequest = Momo::request(
+//                    transactionId: $order->id,
+//                    amount       : $order->total_price,
+//                    referer      : 'https://123docz.com/trang-chu.htm',
+//                    userPhone    : $order->customer_phone
+//                );
 
-            // TODO: nếu thanh toán online phải chuyển hướng sang màn thanh toán của provider
-            return redirect()->route('order.confirmation', ['orderId' => $order->id])
-                ->with('success', 'Đặt hàng thành công. Bạn sẽ nhận được email xác nhận.');
+                try {
+                    $vaClient = new VA();
+                    $response = $vaClient->registerVirtualAccount(
+                        accName   : 'CONG THANH TOAN',
+                        orderId   : 'create'.rand(1, 99).time(),
+                        amountMin : $order->total_price,
+                        amountMax : $order->total_price,
+                        expireDate: Carbon::now()->addDay()->format('Y-m-d H:i:s')
+                    );
+
+                    $dataRequest = [
+                        'acc_no'          => $response['AccountInfo']['BANK']['AccNo'],
+                        'acc_name'        => $response['AccountInfo']['BANK']['AccName'],
+                        'bank_short_name' => $response['AccountInfo']['BANK']['BankShortName'],
+                        'bank_name'       => $response['AccountInfo']['BANK']['BankName'],
+                        'bank_branch'     => $response['AccountInfo']['BANK']['BankBranch'],
+                        'collect_min'     => $response['CollectAmountMin'],
+                        'collect_max'     => $response['CollectAmountMax'],
+                        'expire_date'     => $response['ExpireDate'],
+                        'qr_string'       => $response['AccountInfo']['BANK']['QrPath'],
+                    ];
+                } catch (GuzzleException|CollectionRequestException|SignFailedException) {
+                    $dataRequest = [];
+                }
+
+                if (!empty($dataRequest)) {
+                    $orderId = Arr::get($dataRequest, 'acc_no');
+
+                    $order->update([
+                        'addition_information' => [
+                            'order_id' => $orderId,
+                        ]
+                    ]);
+                    DB::commit();
+                    return to_route('checkout.transfer', [
+                        'd' => Crypt::encryptString(json_encode($dataRequest, JSON_UNESCAPED_UNICODE)),
+                    ]);
+                }
+                return redirect()->back()->with([
+                    'error' => 'Lỗi khởi tạo giao dịch',
+                ]);
+            } else {
+                return redirect()->route('order.confirmation', ['orderId' => $order->id])
+                    ->with('success', 'Đặt hàng thành công. Bạn sẽ nhận được email xác nhận.');
+            }
         } catch (\Exception|\Throwable $e) {
             DB::rollBack();
             Log::error($e);
@@ -109,6 +254,26 @@ class CheckoutController extends Controller
         return redirect()->route('cart.index')->with('error', 'Có lỗi xảy ra trong quá trình thanh toán.');
     }
 
+    /**
+     * Màn thông tin chuyển khoản
+     *
+     * @param  Request  $request
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\View\View
+     */
+    public function transferInformation(Request $request)
+    {
+        $dataTransfer = json_decode(Crypt::decryptString($request->get('d')), true);
+        return view('checkout.transfer', compact('dataTransfer'));
+    }
+
+    /**
+     * Màn xác nhận đặt hàng thành công
+     *
+     * @param $orderId
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
     public function confirmation($orderId)
     {
         // TODO: Cần phải check xem đơn hàng này có phải của user hiện tại hay không?
@@ -165,7 +330,11 @@ class CheckoutController extends Controller
         }
     }
 
-
+    /**
+     * @param  Request  $request
+     *
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
     public function addAddress(Request $request)
     {
         try {

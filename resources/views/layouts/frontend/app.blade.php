@@ -30,14 +30,14 @@
 </div>
 
 <div id="popup" class="fixed top-0 left-0 z-20 flex hidden h-screen w-full items-center justify-center bg-black/80 opacity-0 transition-opacity duration-300 ease-in-out">
-    <div class="text-center card min-w-md relative">
-        <i class="absolute cursor-pointer right-2 top-1 top-2" onclick="closePopup()">
+    <div class="relative text-center card w-md border-t-4 border-blue-500">
+        <i class="absolute top-1 top-2 right-2 cursor-pointer" onclick="closePopup()">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/>
             </svg>
         </i>
-        <p class="title mb-5 text-2xl font-bold">Thông báo</p>
-        <p class="msg text-balance">Xin chào thế giới!</p>
+        <p class="mb-5 text-2xl font-bold text-blue-500 title">Thông báo</p>
+        <p class="msg text-balance font-[Arial]">Xin chào thế giới!</p>
     </div>
 </div>
 
@@ -48,24 +48,43 @@
 @stack('script')
 
 <script type="text/javascript">
-    function closePopup()
-    {
-        const content = document.getElementById("popup");
+    function closePopup() {
+        let content = document.getElementById("popup");
         content.classList.add("hidden");
         setTimeout(() => {
             content.classList.add("opacity-0");
+        }, 10);
+    }
+
+    const openPopup = function (title, msg) {
+        let content = document.getElementById("popup");
+        content.querySelector(".title").textContent = title ? title : '';
+        content.querySelector(".msg").textContent = msg ? msg : '';
+
+        content.classList.remove("hidden");
+        setTimeout(() => {
+            content.classList.remove("opacity-0");
         }, 10);
     }
 </script>
 
 @if(Auth::guard('customer')->check())
     <script type="module">
+        Echo.private('App.Models.Customer.{{ Auth::guard('customer')->id() }}')
+            .notification((notification) => {
+                openPopup(notification.title, notification.message);
+            })
+            .listen('NotificationPayment', function (event) {
+                openPopup('Thông báo', event.message);
+            });
+    </script>
+@endif
 
-
-        function openPopup(title, msg)
-        {
+@if(session()->get('guest_id', Str::uuid()))
+    <script type="module">
+        function openPopup(title, msg) {
             const content = document.getElementById("popup");
-            content.querySelector(".title").textContent = title ? title: '';
+            content.querySelector(".title").textContent = title ? title : '';
             content.querySelector(".msg").textContent = msg ? msg : '';
 
             content.classList.remove("hidden");

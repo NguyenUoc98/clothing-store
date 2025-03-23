@@ -120,6 +120,7 @@ Route::prefix('checkout')
     ->group(function () {
         Route::get('/', [CheckoutController::class, 'index'])->name('index');
         Route::post('process', [CheckoutController::class, 'processCheckout'])->name('process');
+        Route::get('transfer', [CheckoutController::class, 'transferInformation'])->name('transfer');
         Route::post('update-default-address', [CheckoutController::class, 'updateDefaultAddress'])->name('updateDefaultAddress');
         Route::post('add-address', [CheckoutController::class, 'addAddress'])->name('add-address');
     });
