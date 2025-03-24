@@ -38,11 +38,19 @@ class CheckoutController extends Controller
         if (!$user) {
             $userId      = session()->get('guest_id');
             $addresses[] = session()->get('address');
-            $cart        = Cart::where('guest_id', $userId)->with('items.product')->first();
+            $cart        = Cart::query()
+                ->where('guest_id', $userId)
+                ->where('processed', false)
+                ->with('items.product')
+                ->first();
         } else {
             $userId    = $user->id;
             $addresses = $user->addresses;
-            $cart      = Cart::where('user_id', $userId)->with('items.product')->first();
+            $cart      = Cart::query()
+                ->where('user_id', $userId)
+                ->where('processed', false)
+                ->with('items.product')
+                ->first();
         }
 
         if (!$cart || $cart->items->isEmpty()) {
