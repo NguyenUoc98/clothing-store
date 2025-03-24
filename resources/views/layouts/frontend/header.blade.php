@@ -46,13 +46,11 @@
                     </div>
                 </div>
             </div>
-            @if (Auth::guard('customer')->check())
-                <div class="cart-icon">
-                    <a href="{{ route('cart.index') }}">
-                        <i class="fa-solid fa-cart-shopping"></i>
-                    </a>
-                </div>
-            @endif
+            <div class="cart-icon">
+                <a href="{{ route('cart.index') }}">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                </a>
+            </div>
         </div>
     </div>
 </nav>

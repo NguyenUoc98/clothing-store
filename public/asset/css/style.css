@@ -1595,7 +1595,7 @@ body {
     align-items: center;
     justify-content: flex-start;
     /* Đẩy menu sang trái */
-    padding-left: 50px;
+    gap: 2rem;
 }
 
 /* Căn chỉnh các mục con trong menu */

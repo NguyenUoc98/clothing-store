@@ -37,7 +37,7 @@
             </svg>
         </i>
         <p class="mb-5 text-2xl font-bold text-blue-500 title">Thông báo</p>
-        <p class="msg text-balance font-[Arial]">Xin chào thế giới!</p>
+        <p class="msg text-xl text-balance font-[Arial]">Xin chào thế giới!</p>
     </div>
 </div>
 
@@ -93,9 +93,9 @@
             }, 10);
         }
 
-        Echo.private('App.Models.Customer.{{ Auth::guard('customer')->id() }}')
-            .notification((notification) => {
-                openPopup(notification.title, notification.message);
+        Echo.channel('guest_id.{{ session()->get('guest_id') }}')
+            .listen('NotificationPayment', function (event) {
+                openPopup('Thông báo', event.message);
             });
     </script>
 @endif

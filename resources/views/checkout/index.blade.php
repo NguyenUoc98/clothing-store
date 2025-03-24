@@ -85,7 +85,7 @@
                                 </label>
                                 <input class="col-span-2 rounded-md border border-gray-200 px-4 py-2 focus:outline-none"
                                        type="text" name="name" placeholder="Nhập tên người nhận"
-                                       value="{{ $user->name }}"
+                                       value="{{ $user?->name }}"
                                 >
 
                                 <label for="phone" class="font-bold leading-10">
@@ -93,7 +93,7 @@
                                 </label>
                                 <input class="col-span-2 rounded-md border border-gray-200 px-4 py-2 focus:outline-none"
                                        type="text" name="email" placeholder="Nhập email"
-                                       value="{{ $user->email }}"
+                                       value="{{ $user?->email }}"
                                 >
 
                                 <label for="phone" class="font-bold leading-10">
@@ -101,7 +101,7 @@
                                 </label>
                                 <input class="col-span-2 rounded-md border border-gray-200 px-4 py-2 focus:outline-none"
                                        type="text" name="phone" placeholder="Nhập số điện thoại"
-                                       value="{{ $user->phone }}"
+                                       value="{{ $user?->phone }}"
                                 >
 
                                 <label for="address" class="font-bold leading-10">
@@ -109,7 +109,7 @@
                                 </label>
                                 <input class="col-span-2 rounded-md border border-gray-200 px-4 py-2 focus:outline-none"
                                        type="text" name="address" placeholder="Nhập địa chỉ chi tiết"
-                                       value="{{ $user->address }}"
+                                       value="{{ $user?->address }}"
                                 >
                                 <div class="col-span-2 col-start-2">
                                     <button type="submit" class="cursor-pointer rounded-md bg-black px-4 py-2 font-bold text-white hover:bg-gray-700">

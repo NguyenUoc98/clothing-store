@@ -4,14 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Enum\PaymentStatus;
 use App\Enum\PaymentType;
-use App\Enums\Payment\PaymentMethod;
 use App\Events\NotificationPayment;
-use App\Events\Payment\RequestRecharge;
 use App\Models\Cart;
-use App\Models\MoneyMomo;
 use App\Models\Order;
 use App\Models\Product;
 use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
@@ -21,6 +22,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use Uocnv\BaokimPayment\Clients\VA;
 use Uocnv\BaokimPayment\Exceptions\CollectionRequestException;
 use Uocnv\BaokimPayment\Exceptions\InvalidSignatureException;
@@ -33,10 +36,14 @@ class CheckoutController extends Controller
         $user = Auth::guard('customer')->user();
 
         if (!$user) {
-            return redirect()->route('login')->with('error', 'Bạn cần đăng nhập để tiếp tục.');
+            $userId      = session()->get('guest_id');
+            $addresses[] = session()->get('address');
+            $cart        = Cart::where('guest_id', $userId)->with('items.product')->first();
+        } else {
+            $userId    = $user->id;
+            $addresses = $user->addresses;
+            $cart      = Cart::where('user_id', $userId)->with('items.product')->first();
         }
-
-        $cart = Cart::where('user_id', $user->id)->with('items.product')->first();
 
         if (!$cart || $cart->items->isEmpty()) {
             return redirect()->route('cart.index')->with('error', 'Giỏ hàng của bạn đang trống.');
@@ -44,8 +51,6 @@ class CheckoutController extends Controller
 
         $cartItems = $cart->items;
         $cartTotal = $cartItems->sum(fn($item) => $item->quantity * $item->product->price);
-
-        $addresses = $user->addresses;
 
         $defaultAddress = collect($addresses)->firstWhere('is_default', true);
 
@@ -55,7 +60,7 @@ class CheckoutController extends Controller
     /**
      * @param  Request  $request
      *
-     * @return false|\Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      *
      * Ví dụ mẫu:
      *
@@ -141,10 +146,6 @@ class CheckoutController extends Controller
     {
         $user = Auth::guard('customer')->user();
 
-        if (!$user) {
-            return redirect()->route('login')->with('error', 'Vui lòng đăng nhập để thanh toán.');
-        }
-
         $request->validate([
             'customer_name'    => 'required|string',
             'customer_phone'   => 'required|string',
@@ -157,11 +158,19 @@ class CheckoutController extends Controller
 
         $paymentMethod = PaymentType::tryFrom($request->payment_method);
 
+        if (!$user) {
+            $userId   = session()->get('guest_id');
+            $notLogin = true;
+        } else {
+            $userId   = $user->id;
+            $notLogin = false;
+        }
+
         try {
             DB::beginTransaction();
             $cart = Cart::query()
                 ->with(['items'])
-                ->where('user_id', $user->id)
+                ->where($notLogin ? 'guest_id' : 'user_id', $userId)
                 ->where('processed', false)
                 ->first();
 
@@ -259,11 +268,17 @@ class CheckoutController extends Controller
      *
      * @param  Request  $request
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\View\View
+     * @return Factory|View|Application|RedirectResponse|\Illuminate\View\View
      */
     public function transferInformation(Request $request)
     {
         $dataTransfer = json_decode(Crypt::decryptString($request->get('d')), true);
+
+        // Kiểm tra đơn hàng đã được thanh toán chưa?
+        $order = Order::query()->whereJsonContains('addition_information->order_id', $dataTransfer['acc_no'])->first();
+        if ($order && $order->status == PaymentStatus::SUCCESS) {
+            return redirect()->route('order.confirmation', ['orderId' => $order->id]);
+        }
         return view('checkout.transfer', compact('dataTransfer'));
     }
 
@@ -340,9 +355,6 @@ class CheckoutController extends Controller
         try {
             $user = Auth::guard('customer')->user();
 
-            if (!$user) {
-                return response()->json(['success' => false, 'message' => 'Bạn cần đăng nhập để thêm địa chỉ mới.']);
-            }
 
             $request->validate([
                 'name'    => 'required|string|max:255',
@@ -351,41 +363,59 @@ class CheckoutController extends Controller
                 'email'   => 'required|email',
             ]);
 
-            $addresses = $user->addresses ?: [];
+            if (!$user) {
+                session([
+                    'address' => [
+                        'name'       => $request->name,
+                        'email'      => $request->email,
+                        'phone'      => $request->phone,
+                        'address'    => $request->address,
+                        'is_default' => true,
+                    ]
+                ]);
 
-            $isDefault = empty($addresses) || $request->has('is_default') && $request->is_default == 'true';
+                $addresses      = session()->get('address');
+                $defaultAddress = true;
+            } else {
+                $addresses = $user->addresses ?: [];
 
-            $newAddress = [
-                'id'         => Str::uuid()->toString(),
-                'name'       => $request->name,
-                'email'      => $request->email,
-                'phone'      => $request->phone,
-                'address'    => $request->address,
-                'note'       => $request->note ?? null,
-                'is_default' => $isDefault,
-            ];
+                $isDefault = empty($addresses) || $request->has('is_default') && $request->is_default == 'true';
+
+                $newAddress = [
+                    'id'         => Str::uuid()->toString(),
+                    'name'       => $request->name,
+                    'email'      => $request->email,
+                    'phone'      => $request->phone,
+                    'address'    => $request->address,
+                    'note'       => $request->note ?? null,
+                    'is_default' => $isDefault,
+                ];
 
             if ($newAddress['is_default']) {
                 foreach ($addresses as &$address) {
                     $address['is_default'] = false;
                 }
+                if ($newAddress['is_default']) {
+                    foreach ($addresses as &$address) {
+                        $address['is_default'] = false;
+                    }
+                }
+
+                $addresses[] = $newAddress;
+
+                DB::table('customers')
+                    ->where('id', $user->id)
+                    ->update(['addresses' => $addresses]);
+
+                $defaultAddress = collect($addresses)->firstWhere('is_default', true);
             }
-
-            $addresses[] = $newAddress;
-
-            DB::table('customers')
-                ->where('id', $user->id)
-                ->update(['addresses' => $addresses]);
-
-            $defaultAddress = collect($addresses)->firstWhere('is_default', true);
-
             return redirect()->back()->with([
                 'success'        => true,
                 'message'        => 'Thêm địa chỉ mới thành công.',
                 'addresses'      => $addresses,
                 'defaultAddress' => $defaultAddress,
             ]);
-        } catch (\Exception $e) {
+        } catch (\Exception|NotFoundExceptionInterface|ContainerExceptionInterface $e) {
             Log::error('Error adding address: '.$e->getMessage());
             return redirect()->back()->with([
                 'success' => false, 'message' => 'Có lỗi xảy ra trong quá trình thêm địa chỉ.'

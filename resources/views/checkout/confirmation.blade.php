@@ -14,16 +14,16 @@
             <p>
                 <b>Trạng thái đơn hàng:</b>
                 @switch($order->status) 
-                    @case(\App\Enum\PaymentStatus::INIT->value)
+                    @case(\App\Enum\PaymentStatus::INIT)
                     <b class="rounded-full bg-blue-500 px-3 py-1 text-white text-xs">Khởi tạo</b>
                     @break 
-                    @case(\App\Enum\PaymentStatus::PROCESSING->value)
+                    @case(\App\Enum\PaymentStatus::PROCESSING)
                     <b class="rounded-full bg-yellow-400 px-3 py-1 text-white text-xs">Đang xử lý</b>
                     @break 
-                    @case(\App\Enum\PaymentStatus::SUCCESS->value)
+                    @case(\App\Enum\PaymentStatus::SUCCESS)
                     <b class="rounded-full bg-green-600 px-3 py-1 text-white text-xs">Thành công</b>
                     @break 
-                    @case(\App\Enum\PaymentStatus::ERROR->value)
+                    @case(\App\Enum\PaymentStatus::ERROR)
                     <b class="rounded-full bg-red-600 px-3 py-1 text-white text-xs">Lỗi</b>
                     @break
                 @endswitch

@@ -61,7 +61,7 @@ class CartController extends Controller
 
             // Kiểm tra số lượng sản phẩm trong kho
             if ($request->quantity > $product->stock) {
-                return response()->json(['message' => 'Số lượng vượt quá số lượng có trong kho'], 400);
+                return response()->json(['message' => 'Sản phẩm đã hết hàng'], 400);
             }
 
             // Lấy hoặc tạo giỏ hàng
@@ -77,7 +77,10 @@ class CartController extends Controller
                 // Nếu khách hàng chưa đăng nhập
                 $guestId = session()->get('guest_id', Str::uuid());
                 session()->put('guest_id', $guestId);
-                $cart = Cart::firstOrCreate(['guest_id' => $guestId]);
+                $cart = Cart::firstOrCreate([
+                    'guest_id'  => $guestId,
+                    'processed' => false
+                ]);
             }
 
             // Kiểm tra xem sản phẩm đã có trong giỏ hàng chưa

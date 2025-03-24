@@ -324,10 +324,10 @@
                         _token: '{{ csrf_token() }}' // Đảm bảo gửi token bảo mật
                     },
                     success: function (response) {
-                        alert(response.message); // Hiển thị thông báo thêm sản phẩm thành công
+                        openPopup('Thành công', response.message); // Hiển thị thông báo thêm sản phẩm thành công
                     },
                     error: function (response) {
-                        alert('Có lỗi xảy ra, vui lòng thử lại!');
+                        openPopup('Lỗi', response.responseJSON.message);
                     }
                 });
             });
