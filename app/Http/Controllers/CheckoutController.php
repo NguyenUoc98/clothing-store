@@ -103,6 +103,20 @@ class CheckoutController extends Controller
         $money      = $data['TransAmount'];
         $transferId = $data['TransId'];
 
+        // Kiểm tra mã giao dịch nếu đã tồn tại và thành công thì bỏ qua
+        $orderProcessed = Order::query()
+            ->where('status', PaymentStatus::SUCCESS)
+            ->whereJsonContains('addition_information->transaction_id', $transferId)
+            ->exists();
+        if ($orderProcessed) {
+            $dataReturn = [
+                'ResponseCode'    => 200,
+                'ResponseMessage' => 'Transaction processed successfully',
+                'AccNo'           => $accNo,
+            ];
+            goto END;
+        }
+
         $order = Order::query()->whereJsonContains('addition_information->order_id', $accNo)->first();
         if ($order && $order->status == PaymentStatus::INIT && $money >= (int) $order->total_price) {
             $order->update([
@@ -129,6 +143,7 @@ class CheckoutController extends Controller
                 'AccNo'           => $accNo,
             ];
         }
+        END:
         $vaClient = new VA();
         $response = $vaClient->makeResponse($dataReturn);
         return response()->json($response);
@@ -391,10 +406,6 @@ class CheckoutController extends Controller
                     'is_default' => $isDefault,
                 ];
 
-            if ($newAddress['is_default']) {
-                foreach ($addresses as &$address) {
-                    $address['is_default'] = false;
-                }
                 if ($newAddress['is_default']) {
                     foreach ($addresses as &$address) {
                         $address['is_default'] = false;
