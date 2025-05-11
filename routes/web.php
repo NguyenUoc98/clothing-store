@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CustomerController;
@@ -32,12 +31,8 @@ Route::get('/about', function () {
 })->name('about');
 
 // Sản phẩm
-Route::get('/productItem', function () {
-    return view('productItem');
-});
-
 Route::get('/product', [ProductController::class, 'product'])->name('product.index');
-Route::get('/productItem/{id}', [ProductController::class, 'showProductDetails'])->name('productItem');
+Route::get('/product-item/{product}', \App\Livewire\Product\Item::class)->name('product.detail');
 
 // Trang đăng nhập
 Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
@@ -108,11 +103,8 @@ Route::middleware('auth:customer')->group(function () {
     Route::get('/product', [ProductController::class, 'product']);
 });
 
-
-Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
-Route::post('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
-Route::delete('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
+// Giỏ hàng
+Route::get('/cart', \App\Livewire\Cart\Index::class)->name('cart.index');
 
 // Thanh toán
 Route::prefix('checkout')

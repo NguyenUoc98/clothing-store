@@ -170,7 +170,7 @@
                             </div>
                         </div>
                         <ul class="sci1">
-                            <li style="--i:1"><a href="{{ route('productItem', $product->id) }}">
+                            <li style="--i:1"><a href="{{ route('product.detail', $product->id) }}">
                                     <bottom class="viewmore1">View more</bottom>
                                 </a></li>
                         </ul>
@@ -198,7 +198,7 @@
                             </div>
                             <ul class="sci2">
                                 <li style="--i:1">
-                                    <a href="{{ route('productItem', $product->id) }}">
+                                    <a href="{{ route('product.detail', $product->id) }}">
                                         <button class="viewmore2">View more</button>
                                     </a>
                                 </li>
@@ -228,7 +228,7 @@
                             </div>
                             <ul class="sci2">
                                 <li style="--i:1">
-                                    <a href="{{ route('productItem', $product->id) }}">
+                                    <a href="{{ route('product.detail', $product->id) }}">
                                         <button class="viewmore2">View more</button>
                                     </a>
                                 </li>

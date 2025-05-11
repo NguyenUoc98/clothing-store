@@ -129,12 +129,11 @@
                             <div class="contentBx">
                                 <h3>{{ $product->name }}</h3>
                                 <p class="!text-lg">{{ number_format($product->price, 0, ',', '.') }} VND</p>
-                                <i class="fa-solid fa-cart-plus add-to-cart cursor-pointer" data-product-id="{{ $product->id }}"></i>
                             </div>
                         </div>
                         <ul class="sci">
                             <li style="--i:1">
-                                <a href="{{ route('productItem', $product->id) }}">
+                                <a href="{{ route('product.detail', $product->id) }}">
                                     <bottom class="viewmore">View more</bottom>
                                 </a>
                             </li>
@@ -153,12 +152,11 @@
                             <div class="contentBx">
                                 <h3>{{ $product->name }}</h3>
                                 <p class="!text-lg">{{ number_format($product->price, 0, ',', '.') }} VND</p>
-                                <i class="fa-solid fa-cart-plus add-to-cart cursor-pointer" data-product-id="{{ $product->id }}"></i>
                             </div>
                         </div>
                         <ul class="sci">
                             <li style="--i:1">
-                                <a href="{{ route('productItem', $product->id) }}">
+                                <a href="{{ route('product.detail', $product->id) }}">
                                     <bottom class="viewmore">View more</bottom>
                                 </a>
                             </li>
@@ -302,35 +300,5 @@
 
         // Khi chuột rời khỏi container, dừng cuộn
         scrollContainer.addEventListener("mouseleave", stopScroll);
-
-
-        //Them san pham vao gio hang
-        $(document).ready(function () {
-            $('.add-to-cart').click(function () {
-                var productId = $(this).data('product-id');
-                var quantity = $('#quantity').val(); // Lấy số lượng từ input
-
-                // Nếu không có input quantity, gán mặc định là 1
-                if (!quantity || quantity <= 0) {
-                    quantity = 1;
-                }
-
-                $.ajax({
-                    url: '{{ route('cart.add') }}', // Đường dẫn đến route xử lý thêm sản phẩm
-                    method: 'POST',
-                    data: {
-                        product_id: productId,
-                        quantity: quantity,
-                        _token: '{{ csrf_token() }}' // Đảm bảo gửi token bảo mật
-                    },
-                    success: function (response) {
-                        openPopup('Thành công', response.message); // Hiển thị thông báo thêm sản phẩm thành công
-                    },
-                    error: function (response) {
-                        openPopup('Lỗi', response.responseJSON.message);
-                    }
-                });
-            });
-        });
     </script>
 @endpush

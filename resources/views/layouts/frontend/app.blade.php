@@ -21,12 +21,16 @@
             @apply overflow-hidden rounded-lg bg-white p-4 shadow;
         }
     </style>
+    @livewireStyles
 </head>
 <body>
 @include('layouts.frontend.header')
 
 <div class="!mt-[60px]">
     @yield('content')
+    @isset($slot)
+        {{ $slot }}
+    @endisset
 </div>
 
 <div id="popup" class="fixed top-0 left-0 z-20 flex hidden h-screen w-full items-center justify-center bg-black/80 opacity-0 transition-opacity duration-300 ease-in-out">
@@ -42,7 +46,7 @@
 </div>
 
 @include('layouts.frontend.footer')
-</body>
+@livewireScripts
 <script src="{{ asset('asset/js/app.js') }}"></script>
 
 @stack('script')
@@ -99,5 +103,5 @@
             });
     </script>
 @endif
-
+</body>
 </html>
