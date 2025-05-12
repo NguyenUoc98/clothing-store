@@ -3,7 +3,7 @@
 
     <h1 class="text-2xl text-center mx-auto font-medium mb-10">Giỏ Hàng Của Bạn</h1>
 
-    @if($cart->items->isEmpty())
+    @if(!$cart?->items->isNotEmpty())
         <div class="bg-indigo-100 p-5 rounded-lg text-center text-indigo-700 border border-indigo-700 w-fit mx-auto">
             <p class="mb-5">Giỏ hàng của bạn hiện tại chưa có sản phẩm.</p>
             <a href="/" class="cursor-pointer py-2 px-4 text-white bg-black rounded">Mua sắm ngay</a>

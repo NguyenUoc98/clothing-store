@@ -8,7 +8,7 @@ use Livewire\Component;
 
 class Index extends Component
 {
-    public Cart $cart;
+    public ?Cart $cart;
 
     public function render()
     {
@@ -26,9 +26,9 @@ class Index extends Component
                 ->first();
         }
 
-        $cartTotal = $this->cart->items->sum(function ($item) {
+        $cartTotal = $this->cart?->items->sum(function ($item) {
             return $item->quantity * $item->product->price;
-        });
+        }) ?: 0;
         return view('livewire.cart.index', compact('cartTotal'));
     }
 
