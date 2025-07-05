@@ -24,7 +24,7 @@
                 <tr>
                     <td class="border border-gray-200 p-2">
                         <div class="flex gap-3">
-                            <img src="{{ $item->product->image }}" alt="" class="w-24 h-24 shadow object-cover shrink-0">
+                            <img src="{{ asset($item->product->image) }}" alt="" class="w-24 h-24 shadow object-cover shrink-0">
                             <div class="space-y-1">
                                 <p class="text-lg">{{ $item->product->name }}</p>
                                 <div class="text-gray-500">
