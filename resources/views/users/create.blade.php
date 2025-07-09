@@ -1,37 +1,29 @@
 @extends('layouts.admin.app')
 
+@section('title', 'Tạo tài khoản')
+
 @section('content')
-    <h1>Tạo tài khoản</h1>
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-    <form action="{{ route('users.store') }}" method="POST">
-        @csrf
-        <div class="form-group">
-            <label for="name">Tên</label>
-            <input type="text" name="name" class="form-control" required>
-        </div>
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" name="email" class="form-control" required>
-        </div>
-        <div class="form-group">
-            <label for="password">Mật khẩu</label>
-            <input type="password" name="password" class="form-control" required>
-        </div>
-        <div class="form-group">
-            <label for="role">Vai trò</label>
-            <select name="role" class="form-control" required>
-                <option value="staff">Nhân viên</option>
-                <option value="admin">Quản trị viên</option>
-            </select>
-        </div>
-        <button type="submit" class="btn btn-success">Tạo tài khoản</button>
-    </form>
+    <div class="shadow-sm card md:max-w-1/2">
+        <form action="{{ route('users.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+
+            <div class="grid grid-cols-4 gap-3">
+                <label for="name" class="leading-9">Tên <span class="text-red-600">*</span></label>
+                <input type="text" name="name" class="col-span-3" required>
+                <label for="email" class="leading-9">Email <span class="text-red-600">*</span></label>
+                <input type="email" name="email" class="col-span-3" required>
+                <label for="password" class="leading-9">Mật khẩu <span class="text-red-600">*</span></label>
+                <input type="password" name="password" class="col-span-3" required>
+                <label for="role" class="leading-9">Vai trò <span class="text-red-600">*</span></label>
+                <select name="role" class="col-span-3" required>
+                    <option value="staff">Nhân viên</option>
+                    <option value="admin">Quản trị viên</option>
+                </select>
+                <div class="col-span-4 flex justify-end gap-2">
+                    <a href="{{ route('users.index') }}" class="button !px-8 border border-neutral-300 hover:bg-gray-100">Hủy</a>
+                    <button type="submit" class="button !px-8 bg-blue-500 hover:bg-blue-700 text-white">Tạo tài khoản</button>
+                </div>
+            </div>
+        </form>
+    </div>
 @endsection

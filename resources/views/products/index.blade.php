@@ -75,13 +75,6 @@
                                 </button>
                             </form>
                         </div>
-
-                        {{-- Form thêm sản phẩm vào giỏ hàng --}}
-{{--                        <form action="{{ route('cart.add', $product->id) }}" method="POST">--}}
-{{--                            @csrf--}}
-{{--                            <label for="quantity">Số lượng:</label>--}}
-{{--                            <input type="number" name="quantity" value="1" min="1">--}}
-{{--                        </form>--}}
                     </td>
                 </tr>
             @endforeach

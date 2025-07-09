@@ -22,17 +22,17 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|regex:/^[\p{L}\s]+$/u|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'name'     => 'required|string|regex:/^[\p{L}\s]+$/u|max:255',
+            'email'    => 'required|string|email|max:255|unique:users',
             'password' => 'required|min:8|regex:/[^\w]/',
-            'role' => 'required|in:staff,admin'
+            'role'     => 'required|in:staff,admin'
         ]);
 
         User::create([
-            'name' => $request->name,
-            'email' => $request->email,
+            'name'     => $request->name,
+            'email'    => $request->email,
             'password' => Hash::make($request->password),
-            'role' => $request->role
+            'role'     => $request->role
         ]);
 
 
@@ -52,15 +52,15 @@ class UserController extends Controller
         $user = User::findOrFail($id);
 
         $request->validate([
-            'name' => 'required|string|max:255|regex:/^[\p{L}\s]+$/u',
-            'email' => 'required|email|unique:users,email,' . $id,
-            'role' => 'required|in:admin,staff',
+            'name'  => 'required|string|max:255|regex:/^[\p{L}\s]+$/u',
+            'email' => 'required|email|unique:users,email,'.$id,
+            'role'  => 'required|in:admin,staff',
         ]);
 
         $user->update([
-            'name' => $request->name,
+            'name'  => $request->name,
             'email' => $request->email,
-            'role' => $request->role,
+            'role'  => $request->role,
         ]);
 
         return redirect()->route('users.index')->with('success', 'Thông tin người dùng đã được cập nhật.');
