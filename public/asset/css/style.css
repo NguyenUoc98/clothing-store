@@ -47,15 +47,6 @@ body {
     /* Khoảng cách hai bên */
 }
 
-.search {
-    display: flex;
-    align-items: center;
-    flex: 1;
-    /* Chiếm 1/3 không gian của navbar */
-    justify-content: flex-start;
-    /* Căn trái */
-}
-
 .search a {
     margin-left: 10px;
     text-decoration: none;

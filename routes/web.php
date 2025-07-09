@@ -98,11 +98,6 @@ Route::middleware(['role:admin|staff'])->group(function () {
     Route::get('/reports/products', [ReportController::class, 'productReport'])->name('reports.products');
 });
 
-// Trang khách hàng - chỉ khách hàng mới vào được
-Route::middleware('auth:customer')->group(function () {
-    Route::get('/product', [ProductController::class, 'product']);
-});
-
 // Giỏ hàng
 Route::get('/cart', \App\Livewire\Cart\Index::class)->name('cart.index');
 

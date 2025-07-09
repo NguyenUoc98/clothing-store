@@ -119,11 +119,11 @@
         </div>
 
         <div class="ourteam1">
-            <div class="container1 !grid !grid-cols-4 !container !mx-auto !gap-10">
+            <div class="container1 !grid !grid-cols-4 !container !mx-auto !gap-10 !max-w-7xl">
                 @foreach($products_39_42 as $product)
                     <div class="card1">
                         <div class="content1">
-                            <div class="imgBx">
+                            <div class="aspect-square imgBx !h-fit">
                                 <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
                             </div>
                             <div class="contentBx">
@@ -142,11 +142,11 @@
                 @endforeach
             </div>
 
-            <div class="container1 !grid !grid-cols-4 !container !mx-auto !gap-10">
+            <div class="container1 !grid !grid-cols-4 !container !mx-auto !gap-10 !max-w-7xl">
                 @foreach($products_43_46 as $product)
                     <div class="card1">
                         <div class="content1">
-                            <div class="imgBx">
+                            <div class="aspect-square imgBx !h-fit">
                                 <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
                             </div>
                             <div class="contentBx">

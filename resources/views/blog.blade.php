@@ -1,89 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.frontend.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog</title>
-    <link rel="stylesheet" href="asset/fontawesome-free-6.6.0-web/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="asset/css/blog.css">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Roboto+Serif:ital,opsz,wght@0,8..144,100..900;1,8..144,100..900&display=swap"
-        rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Kalnia:wght@100..700&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Aboreto&family=Kalnia:wght@100..700&display=swap"
-        rel="stylesheet">
-</head>
+@push('css')
+    <link rel="stylesheet" href="{{ asset('asset/css/blog.css') }}">
+@endpush
 
-<body>
-    <header>
-        <div class="main">
-            <div class="navbar header-container">
-                <div class="search">
-                    <div class="iconsearch">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                    </div>
-                    <a href="">Search</a>
-                </div>
-
-                <div class="menu">
-                    <ul>
-                        <li><a href="/">Home</a>
-                           
-                        </li>
-                        <li><a href="/about">About</a>
-
-                        </li>
-
-                        <li><a href="/"><img src="asset/img/logo.png" alt="" class="anh"></a></li>
-                        <li><a href="/product">Product</a></li>
-                        <li><a href="blog.html">Blog</a>
-
-                        </li>
-                        <li><a href="/contact">Contact</a>
-
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="icon" id="menuIcon">
-                    <div class="icon1">
-                        <div class="iconsearch1">
-                            <i class="fa-solid fa-user">
-                                <ul class="submenu">
-                                    <li><a href="/login">Login</a></li>
-                                    <li><a href="{{ route('create-account') }}">Sign up</a></li>
-                                </ul>
-                            </i>
-                        </div>
-                        <div class="cart-icon">
-                            <a href="{{ route('cart.index') }}">
-                                <i class="fa-solid fa-cart-shopping"></i>
-                            </a>
-                        </div>
-                        <div class="iconsearch1">
-                            <i class="fa-solid fa-bars"></i>
-                        </div>
-                    </div>
-                </div>
+@section('content')
+    <div class="img-decorate !p-0 !m-0">
+        <div class="img-deco !h-96 !bg-center" style="background-image: url({{ asset('asset/img/banner1.webp') }});">
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-7xl">
+                BLOG
             </div>
-            <hr>
-            <div class="slide">
-                <div class="text">
-                    BLOG
-                </div>
-            </div>
-
         </div>
-    </header>
+    </div>
+
     <section>
-        <div class="container">
+        <div class="max-w-7xl mx-auto container">
             <aside class="sidebar">
                 <div class="container12">
                     <!-- Search Bar Section -->
@@ -270,37 +201,4 @@
             </div>
         </div>
     </section>
-
-    <footer class="footer">
-        <div class="footer-section logo">
-            <h1>GN</h1>
-            <p>The Devil Nest</p>
-        </div>
-        <div class="footer-section contact">
-            <h3>CONTACT</h3>
-            <p>+123456789</p>
-            <p>thedevilnestvietnam.com</p>
-            <p>88 Tran Nguyen Han, Hai Phong, Viet Nam</p>
-        </div>
-        <div class="footer-section openhours">
-            <h3>OPENHOURS</h3>
-            <p>Weekdays: 9:00 AM - 20:30 PM</p>
-            <p>Monday: 9:00 AM - 19:00 PM</p>
-            <p>Sunday: Closed</p>
-        </div>
-        <div class="footer-section subscribe">
-            <h3>CONTACT</h3>
-            <form action="#">
-                <input type="email" placeholder="Your email" class="email-input">
-                <button type="submit">→</button>
-            </form>
-            <div class="social-icons">
-                <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                <a href="#"><i class="fa-brands fa-twitter"></i></a>
-                <a href="#"><i class="fa-brands fa-square-facebook"></i></a>
-            </div>
-        </div>
-    </footer>
-</body>
-
-</html>
+@endsection

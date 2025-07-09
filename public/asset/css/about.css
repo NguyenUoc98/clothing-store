@@ -1,113 +1,3 @@
-* {
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    font-family: "Kalnia", serif;
-    font-weight: 400;
-}
-
-.main {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
-    margin-bottom: 10%;
-}
-
-.navbar {
-    display: flex; /* Sử dụng Flexbox */
-    justify-content: space-between; /* Dàn đều các khối */
-    align-items: center; /* Căn giữa nội dung theo chiều dọc */
-    width: 100%; /* Chiếm toàn bộ chiều rộng */
-    max-width: 1200px; /* Chiều rộng tối đa */
-    margin: auto;
-    height: 97px; /* Chiều cao cố định */
-    padding: 0 20px; /* Khoảng cách hai bên */
-}
-
-.search {
-    display: flex;
-    align-items: center;
-    flex: 1; /* Chiếm 1/3 không gian của navbar */
-    justify-content: flex-start; /* Căn trái */
-}
-
-.search a {
-    margin-left: 10px;
-    text-decoration: none;
-    font-size: 18px;
-    color: #000000;
-}
-
-.iconsearch {
-    font-size: 1.1rem;
-    color: #000000;
-}
-
-.menu {
-    flex: 2; /* Chiếm gấp đôi không gian so với search và icon */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.menu ul {
-    display: flex; /* Căn ngang các mục menu */
-    gap: 70px; /* Khoảng cách giữa các mục */
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.menu ul li {
-    position: relative;
-}
-
-.menu ul li a {
-    text-decoration: none;
-    font-size: 18px;
-    color: #000000;
-    transition: color 0.3s;
-    position: relative;
-    margin-right:15px;
-    margin-left: 10px;
-}
-
-.anh{
-    width:75px;
-    height:75px;
-    position: absolute;
-    bottom:-32px;
-    left:-23px
-}
-
-.menu ul li a:hover {
-    color: #555; /* Đổi màu khi hover */
-}
-
-.icon {
-    display: flex;
-    justify-content: flex-end; /* Căn phải */
-    align-items: center;
-    flex: 1; /* Chiếm 1/3 không gian của navbar */
-}
-
-.icon1 {
-    display: flex;
-    gap: 20px; /* Khoảng cách giữa các icon */
-}
-
-.iconsearch1 i {
-    font-size: 1.1rem;
-    color: #000000;
-    cursor: pointer;
-}
-
-.iconsearch1 i:hover {
-    color: #555;
-}
 
 /* Không thay đổi các phần khác */
 header hr {
@@ -567,27 +457,27 @@ header hr {
 }
 
 .social-icons a {
-    text-decoration: none; 
+    text-decoration: none;
     color: #fff;
     font-size: 2rem;
-    height: 50px; 
-    width: 50px; 
+    height: 50px;
+    width: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 50%; 
+    border-radius: 50%;
     background-color: transparent;
-    transition: all 0.3s ease; 
+    transition: all 0.3s ease;
 }
 
 .social-icons a:hover {
     color: #aaa;
-    background-color: #333; 
+    background-color: #333;
 }
 
 .social-icons i {
     display: inline-block;
-    line-height: 1; 
+    line-height: 1;
     vertical-align: middle;
 }
 
@@ -597,51 +487,3 @@ header hr {
     height: 362px;
 }
 
-
-.submenu {
-    display: none; /* Ban đầu ẩn submenu */
-    position: absolute;
-    background-color: white;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    top: 100%; /* Chỉnh vị trí submenu ngay dưới icon */
-    left: 50%; /* Đặt submenu ở giữa */
-    transform: translateX(-50%); /* Căn giữa submenu so với icon */
-    z-index: 2;
-    opacity: 0; /* Ẩn submenu */
-    transition: opacity 0.3s ease-in-out, transform 0.3s ease; /* Hiệu ứng mờ và chuyển động */
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Bóng đổ nhẹ */
-    min-width: 150px; /* Đảm bảo submenu có đủ chiều rộng */
-}
-
-.submenu li {
-    padding: 8px 20px; /* Thêm padding cho các mục trong submenu */
-    transition: background-color 0.3s ease; /* Hiệu ứng chuyển màu nền khi hover */
-    position: relative;
-}
-
-.submenu li a {
-    text-decoration: none;
-    font-size: 16px;
-    font-family: "Kalnia", serif;
-    font-weight: 400;
-    color: #333;
-    display: block;
-    padding: 5px 0;
-    text-align: center;
-}
-
-.iconsearch1:hover .submenu {
-    display: block; /* Hiển thị submenu khi hover vào icon */
-    opacity: 1; /* Làm submenu hiện lên */
-}
-
-.iconsearch1 {
-    position: relative; /* Để submenu xuất hiện dưới icon */
-}
-
-.iconsearch1 i {
-    cursor: pointer; /* Chỉnh chuột để báo hiệu đây là phần có thể nhấp vào */
-}

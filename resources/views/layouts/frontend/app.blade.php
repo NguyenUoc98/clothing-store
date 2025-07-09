@@ -26,7 +26,7 @@
 <body>
 @include('layouts.frontend.header')
 
-<div class="!mt-[60px]">
+<div>
     @yield('content')
     @isset($slot)
         {{ $slot }}
