@@ -43,10 +43,25 @@
                     @endguest
                 </div>
             </div>
-            <div class="cart-icon">
+
+            @php
+                $cart = App\Models\Cart::query()
+                        ->where('processed', false)
+                        ->withCount('items')
+                        ->when(Auth::guard('customer')->user(), function ($query, $user) {
+                            return $query->where('user_id', $user->id);
+                        }, function ($query) {
+                            return session()->has('guest_id') ? $query->where('guest_id', session('guest_id')) : $query;
+                        })
+                        ->first();
+
+                $totalItemInCart = $cart?->items_count ?: 0;
+            @endphp
+            <div class="cart-icon relative">
                 <a href="{{ route('cart.index') }}">
                     <i class="fa-solid fa-cart-shopping"></i>
                 </a>
+                <p class="p-1 bg-red-500 text-white rounded-full text-xs w-4 leading-2 h-4 text-center absolute -top-2 -right-2">{{ $totalItemInCart }}</p>
             </div>
         </div>
     </div>

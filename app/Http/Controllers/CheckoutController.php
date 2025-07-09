@@ -7,7 +7,6 @@ use App\Enum\PaymentType;
 use App\Events\NotificationPayment;
 use App\Models\Cart;
 use App\Models\Order;
-use App\Models\Product;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -211,14 +210,6 @@ class CheckoutController extends Controller
                 'customer_phone'   => $request->get('customer_phone'),
                 'type'             => $paymentMethod,
             ]);
-
-            // Giảm số lượng của sản phẩm trong kho
-            foreach ($cart->items as $cartItem) {
-                $product = Product::query()->find($cartItem->product_id);
-                if ($product) {
-                    $product->decrement('stock', $cartItem->quantity);
-                }
-            }
 
             // Update trạng thái đã xử lý giỏ hàng
             $cart->update([

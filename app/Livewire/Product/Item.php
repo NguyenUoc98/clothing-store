@@ -69,6 +69,7 @@ class Item extends Component
             if ($cartItem) {
                 // Nếu đã có, cập nhật số lượng
                 $cartItem->quantity += $this->quantity;
+                $this->product->decrement('stock', $this->quantity);
                 $cartItem->save();
             } else {
                 // Nếu chưa có, thêm mới sản phẩm vào giỏ
@@ -79,6 +80,7 @@ class Item extends Component
                     'size'       => $this->productSize,
                     'color'      => $this->productColor,
                 ]);
+                $this->product->decrement('stock');
             }
             session()->flash('success', 'Đã thêm sản phẩm vào giỏ hàng');
         } catch (\Exception $e) {
