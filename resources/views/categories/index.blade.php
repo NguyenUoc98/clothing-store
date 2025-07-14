@@ -11,6 +11,24 @@
     </a>
 @endsection
 
+@section('search')
+    <div class="w-full rounded-xl bg-white shadow p-6 mb-10">
+        <form action="{{ route('categories.index') }}" method="get" class="flex items-end gap-10">
+            <div class="space-y-2 flex flex-col">
+                <label for="search" class="text-gray-700 font-medium">Tên danh mục</label>
+                <input class="p-2 border rounded-lg w-96" name="q" id="search" value="{{ $search }}"/>
+            </div>
+
+            <button class="button bg-[#1c1b22] hover:bg-gray-700 text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/>
+                </svg>
+                Tìm kiếm
+            </button>
+        </form>
+    </div>
+@endsection
+
 @section('content')
     <div class="overflow-x-auto rounded-lg border border-neutral-300 bg-white shadow">
         <table class="table">
@@ -23,7 +41,7 @@
             </tr>
             </thead>
             <tbody>
-            @foreach ($categories as $category)
+            @forelse ($categories as $category)
                 <tr>
                     <td class="text-center">{{ $category->display_order }}</td>
                     <td>{{ $category->name }}</td>
@@ -54,8 +72,16 @@
                         </div>
                     </td>
                 </tr>
-            @endforeach
+            @empty
+                <tr>
+                    <td colspan="4" class="!p-0">
+                        <p class="py-10 bg-white text-center">Không có dữ liệu</p>
+                    </td>
+                </tr>
+            @endforelse
             </tbody>
         </table>
     </div>
+
+    <div class="py-2 px-4">{{ $categories->links() }}</div>
 @endsection

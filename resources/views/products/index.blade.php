@@ -11,6 +11,34 @@
     </a>
 @endsection
 
+@section('search')
+    <div class="w-full rounded-xl bg-white shadow p-6 mb-10">
+        <form action="{{ route('products.index') }}" method="get" class="flex items-end gap-10">
+            <div class="space-y-2 flex flex-col">
+                <label for="search" class="text-gray-700 font-medium">Tên sản phẩm</label>
+                <input class="p-2 border rounded-lg w-96" name="q" id="search" value="{{ $search }}"/>
+            </div>
+
+            <div class="space-y-2 flex flex-col">
+                <label for="category" class="text-gray-700 font-medium">Danh mục</label>
+                <select class="p-2 border rounded-lg w-56" name="c" id="category">
+                    <option value="-1">Tất cả</option>
+                    @foreach(App\Models\Category::all() as $category)
+                        <option value="{{ $category->id }}" @selected($c == $category->id)>{{ $category->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <button class="button bg-[#1c1b22] hover:bg-gray-700 text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/>
+                </svg>
+                Tìm kiếm
+            </button>
+        </form>
+    </div>
+@endsection
+
 @section('content')
     {{-- Hiển thị thông báo thành công hoặc lỗi --}}
     @if (session('success'))
@@ -30,6 +58,7 @@
             <thead>
             <tr>
                 <th>Sản phẩm</th>
+                <th>Loại</th>
                 <th>Mô tả</th>
                 <th>Giá</th>
                 <th>Số lượng trong kho</th>
@@ -37,7 +66,7 @@
             </tr>
             </thead>
             <tbody>
-            @foreach ($products as $product)
+            @forelse ($products as $product)
                 <tr>
                     <td class="min-w-[350px]">
                         <div class="flex gap-4">
@@ -52,8 +81,9 @@
                             </div>
                         </div>
                     </td>
+                    <td class="whitespace-nowrap !text-nowrap text-center">{{ $product->category->name }}</td>
                     <td class="max-w-[500px]"><p class="line-clamp-4">{{ $product->description ?: 'Chưa có mô tả' }}</p></td>
-                    <td class="whitespace-nowrap !text-nowrap"><span>{{ number_format($product->price, 0, ',', '.') }} VND</span></td>
+                    <td class="whitespace-nowrap !text-nowrap font-bold text-red-600 text-right"><span>{{ number_format($product->price, 0, ',', '.') }} VND</span></td>
                     <td class="text-center">{{ $product->stock }}</td>
                     <td>
                         {{-- Hành động: Sửa, Xóa --}}
@@ -77,7 +107,13 @@
                         </div>
                     </td>
                 </tr>
-            @endforeach
+            @empty
+                <tr>
+                    <td colspan="5" class="!p-0">
+                        <p class="py-10 bg-white text-center">Không có dữ liệu</p>
+                    </td>
+                </tr>
+            @endforelse
             </tbody>
         </table>
         <div class="py-2 px-4">{{ $products->links() }}</div>

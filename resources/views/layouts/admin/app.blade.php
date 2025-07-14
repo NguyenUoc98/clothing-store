@@ -107,6 +107,8 @@
         </div>
     </div>
 
+    @yield('search')
+
     {{-- Displaying Validation Errors --}}
     @if ($errors->any())
         <div class="p-4 border border-red-300 rounded-md bg-red-100 text-red-600 mb-10">

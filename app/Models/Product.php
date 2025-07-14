@@ -5,7 +5,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
 
 class Product extends Model
 {
@@ -71,5 +70,10 @@ class Product extends Model
     {
         // Nếu có logic giảm giá, có thể thêm ở đây
         return $this->price;
+    }
+
+    public function category(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Category::class);
     }
 }
