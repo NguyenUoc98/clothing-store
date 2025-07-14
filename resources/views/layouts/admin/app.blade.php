@@ -101,7 +101,10 @@
 
 <div class="mt-[80px] mb-10 mx-10">
     <div class="w-full rounded-xl bg-white shadow flex items-center justify-between p-6 mb-10">
-        <h1 class="text-2xl">@yield('title')</h1>
+        <div class="text-2xl flex items-center gap-2">
+            @yield('icon')
+            <h1>@yield('title')</h1>
+        </div>
         <div class="flex items-center gap-2 justify-end">
             @yield('command-bar')
         </div>
