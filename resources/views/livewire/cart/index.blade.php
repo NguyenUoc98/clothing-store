@@ -124,5 +124,7 @@
                 <p>Bạn chưa có đơn hàng</p>
             @endforelse
         </div>
+
+        <div class="my-4 font-[Arial]">{!! $orders->links() !!}</div>
     </div>
 </div>

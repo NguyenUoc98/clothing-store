@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,6 +17,7 @@
     @vite(['resources/js/app.js'])
     @stack('css')
     <style type="text/tailwindcss">
+        @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
         .card {
             @apply overflow-hidden rounded-lg bg-white p-4 shadow;
         }
