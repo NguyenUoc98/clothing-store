@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up()
 {
+    Schema::dropIfExists('products');
     Schema::create('products', function (Blueprint $table) {
         $table->id(); // ID tự động tăng
         $table->string('name'); // Tên sản phẩm
@@ -30,7 +31,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->dropForeign(['category_id']);
+//            $table->dropForeign(['category_id']);
             $table->dropColumn('category_id');
         });
     }

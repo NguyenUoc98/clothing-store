@@ -29,6 +29,7 @@ return new class extends Migration {
     public function down(): void
     {
         Schema::table('orders', function (Blueprint $table) {
+            $table->dropForeign(['cart_id']);
             $table->dropColumn(['type', 'addition_information', 'cart_id']);
             $table->enum('status', ['processing', 'shipped', 'cancelled'])->default('processing')->change();
         });
