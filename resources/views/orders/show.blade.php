@@ -112,11 +112,11 @@
                         <div class="mt-2 ml-6 space-y-2">
                             <div class="flex items-center gap-2">
                                 <label for="shipping-unit" class="w-32">Đơn vị chuyển <span class="text-red-400">*</span></label>
-                                <input type="text" @class(['grow', '!border-red-300' => $errors->has('shipping_unit')]) name="shipping_unit" id="shipping-unit" value="{{$order->addition_information['shipping_unit']}}"/>
+                                <input type="text" @class(['grow', '!border-red-300' => $errors->has('shipping_unit')]) name="shipping_unit" id="shipping-unit" value="{{$order->addition_information['shipping_unit'] ?? ''}}"/>
                             </div>
                             <div class="flex items-center gap-2">
                                 <label for="shipping-code" class="w-32">Mã vận đơn <span class="text-red-400">*</span></label>
-                                <input type="text" @class(['grow', '!border-red-300' => $errors->has('shipping_code')]) name="shipping_code" id="shipping-code" value="{{$order->addition_information['shipping_code']}}"/>
+                                <input type="text" @class(['grow', '!border-red-300' => $errors->has('shipping_code')]) name="shipping_code" id="shipping-code" value="{{$order->addition_information['shipping_code'] ?? ''}}"/>
                             </div>
                         </div>
                     @else
