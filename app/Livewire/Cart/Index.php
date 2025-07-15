@@ -7,9 +7,12 @@ use App\Models\CartItem;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Index extends Component
 {
+    use WithPagination;
+
     public ?Cart $cart;
 
     public function mount()
@@ -43,7 +46,7 @@ class Index extends Component
         $item = $this->cart->items->firstWhere('id', $itemId);
 
         if ($item) {
-            if(is_int($increase)) {
+            if (is_int($increase)) {
                 $newQuantity = $increase;
             } else {
                 $newQuantity = $increase ? $item->quantity + 1 : $item->quantity - 1;
@@ -67,6 +70,16 @@ class Index extends Component
 
     public function render()
     {
-        return view('livewire.cart.index');
+        $orders = Cart::query()
+            ->with(['items', 'items.product', 'order'])
+            ->where('processed', true)
+            ->when(Auth::guard('customer')->user(), function ($query, $user) {
+                return $query->where('user_id', $user->id);
+            }, function ($query) {
+                return session()->has('guest_id') ? $query->where('guest_id', session('guest_id')) : $query;
+            })
+            ->latest('id')
+            ->paginate(5);
+        return view('livewire.cart.index', ['orders' => $orders]);
     }
 }

@@ -271,6 +271,7 @@ class CheckoutController extends Controller
                     'error' => 'Lỗi khởi tạo giao dịch',
                 ]);
             } else {
+                DB::commit();
                 return redirect()->route('order.confirmation', ['orderId' => $order->id])
                     ->with('success', 'Đặt hàng thành công. Bạn sẽ nhận được email xác nhận.');
             }

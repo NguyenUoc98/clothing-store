@@ -1,6 +1,12 @@
 <div class="container !block pt-16">
     @section('title', 'Giỏ hàng')
 
+    @if(session('error'))
+        <div class="p-4 border border-red-500 rounded-md bg-red-100 text-red-600 mb-10">
+            {{ session('error') }}
+        </div>
+    @endif
+
     <h1 class="text-2xl text-center mx-auto font-medium mb-10">Giỏ Hàng Của Bạn</h1>
 
     @if ($cart && $cart->items->isNotEmpty())
@@ -78,4 +84,45 @@
             <a href="/" class="cursor-pointer py-2 px-4 text-white bg-black rounded">Mua sắm ngay</a>
         </div>
     @endif
+
+    <div class="">
+        <h2 class="text-2xl font-medium my-6">Lịch sử đơn hàng</h2>
+        <div class="space-y-4 font-[Arial]">
+            @forelse($orders as $cartProcessed)
+                <div class="rounded-lg border border-gray-200">
+                    <div class="mx-4 py-4 border-b flex justify-between border-gray-200 gap-4">
+                        <p class="text-gray-500"># {{ md5($cartProcessed->id) }}</p>
+                        <div class="flex gap-4">
+                            <p class="uppercase border-r pr-4">{{ $cartProcessed->order->type->name }}</p>
+                            <p class="uppercase text-yellow-500">{{ $cartProcessed->order->status->name }}</p>
+                        </div>
+                    </div>
+                    <div class="divide-y divide-gray-200">
+                        @foreach($cartProcessed->items as $item)
+                            <div class="flex gap-4 my-2 mx-4 justify-between">
+                                <div class="flex gap-4">
+                                    <div class="shrink-0">
+                                        <img src="{{ asset('storage/' . $item->product->image) }}" class="w-20 h-auto mb-2 rounded border border-gray-200"/>
+                                    </div>
+                                    <div>
+                                        <p>{{ $item->product->name }}</p>
+                                        <p class="text-sm text-gray-500"><b class="text-black">Size: </b>{{ $item->size }}</p>
+                                        <p class="text-sm text-gray-500"><b class="text-black">Màu: </b>{{ $item->color }}</p>
+                                        <p class="text-sm text-gray-500">x{{ $item->quantity }}</p>
+                                    </div>
+                                </div>
+                                <p class="text-red-400">{{ number_format($item->quantity * $item->price, 0, ',', '.') }} VND</p>
+                            </div>
+                        @endforeach
+                    </div>
+                    <div class="border-t border-gray-200 p-4 flex justify-between">
+                        <p class="text-sm text-gray-500">Thời gian đặt: {{ $cartProcessed->order->created_at->format('d/m/Y H:i') }}</p>
+                        <p>Tổng tiền: <span class="text-red-400 text-xl font-semibold">{{ number_format($cartProcessed->order->total_price, 0, ',', '.') }} VND</span></p>
+                    </div>
+                </div>
+            @empty
+                <p>Bạn chưa có đơn hàng</p>
+            @endforelse
+        </div>
+    </div>
 </div>
