@@ -201,8 +201,13 @@ class CheckoutController extends Controller
             }
 
             // Tạo đơn hàng
+            // Tính tổng giá
+            $totalPrice = 0;
+            $cart->items->each(function ($item) use (&$totalPrice) {
+                $totalPrice += $item->quantity * $item->product->price;
+            });
             $order = $cart->order()->create([
-                'total_price'      => $cart->items->sum('price'),
+                'total_price'      => $totalPrice,
                 'status'           => PaymentType::COD == $paymentMethod ? PaymentStatus::PROCESSING : PaymentStatus::INIT,
                 'shipping_address' => $request->get('customer_address'),
                 'customer_name'    => $request->get('customer_name'),
