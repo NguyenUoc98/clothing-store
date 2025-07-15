@@ -9,8 +9,6 @@
             <div class="grid grid-cols-4 gap-3">
                 <label for="name" class="leading-9">Tên danh mục<span class="text-red-600">*</span></label>
                 <input type="text" class="col-span-3" id="name" name="name" value="{{ old('name') }}" required>
-                <label for="display_order" class="leading-9">Số thứ tự<span class="text-red-600">*</span></label>
-                <input type="number" class="col-span-3" id="display_order" name="display_order" value="{{ old('display_order') }}" required>
                 <label for="image" class="leading-9">Hình ảnh<span class="text-red-600">*</span></label>
                 <input type="file" class="col-span-3" id="image" name="image" required>
                 <div class="col-span-4 flex justify-end gap-2">
