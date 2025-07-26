@@ -93,8 +93,14 @@
                     <div class="mx-4 py-4 border-b flex justify-between border-gray-200 gap-4">
                         <p class="text-gray-500"># {{ md5($cartProcessed->id) }}</p>
                         <div class="flex gap-4">
-                            <p class="uppercase border-r pr-4">{{ $cartProcessed->order->type->name }}</p>
-                            <p class="uppercase text-yellow-500">{{ $cartProcessed->order->status->name }}</p>
+                            <p class="uppercase border-r pr-4">{{ $cartProcessed->order->type->description() }}</p>
+                            <p @class([
+                                    'uppercase',
+                                    'text-green-500' => $cartProcessed->order->status == \App\Enum\PaymentStatus::SUCCESS,
+                                    'text-yellow-500' => $cartProcessed->order->status == \App\Enum\PaymentStatus::PROCESSING,
+                                    'text-red-500' => $cartProcessed->order->status == \App\Enum\PaymentStatus::ERROR,
+                            ])>
+                                {{ __($cartProcessed->order->status->description()) }}</p>
                         </div>
                     </div>
                     <div class="divide-y divide-gray-200">

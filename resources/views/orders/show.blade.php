@@ -90,7 +90,7 @@
                             </label>
                             <select name="status" id="status" class="cursor-pointer">
                                 @foreach(\App\Enum\PaymentStatus::cases() as $status)
-                                    <option value="{{ $status->value }}" @selected($status == $order->status)>{{ $status->name }}</option>
+                                    <option value="{{ $status->value }}" @selected($status == $order->status)>{{ $status->description() }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -118,7 +118,7 @@
                                 </svg>
                                 Trạng thái:
                             </b>
-                            {{ $order->status->name }}
+                            {{ $order->status->description() }}
                         </p>
                     @endif
 

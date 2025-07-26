@@ -27,6 +27,9 @@ use Uocnv\BaokimPayment\Clients\VA;
 use Uocnv\BaokimPayment\Exceptions\CollectionRequestException;
 use Uocnv\BaokimPayment\Exceptions\InvalidSignatureException;
 use Uocnv\BaokimPayment\Exceptions\SignFailedException;
+use Uocnv\MomoPayment\Helper\Encoder;
+use Uocnv\MomoPayment\MomoPayment;
+use Uocnv\MomoPayment\Services\Parameter;
 
 class CheckoutController extends Controller
 {
@@ -156,6 +159,66 @@ class CheckoutController extends Controller
         return response()->json($response);
     }
 
+    public function resultMomo(Request $request)
+    {
+        $momoPayment  = new MomoPayment(config('momo-payment.environment'));
+        $response     = $momoPayment->checkResult($request->all());
+        $errorCode    = $response->getErrorCode();
+        $transId      = $response->getTransId();
+        $orderId      = $response->getOrderId();
+        $money        = $response->getAmount();
+
+        // Kiểm tra mã giao dịch nếu đã tồn tại và thành công thì bỏ qua
+        if ($errorCode == 0) {
+            $orderProcessed = Order::query()
+                ->where('status', PaymentStatus::SUCCESS)
+                ->whereJsonContains('addition_information->transaction_id', $transId)
+                ->exists();
+            if ($orderProcessed) {
+                $dataReturn = [
+                    'resultCode' => 100,
+                    'message'    => 'Transaction processed',
+                    'orderId'    => $orderId,
+                ];
+                goto END;
+            }
+
+            $order = Order::query()->whereJsonContains('addition_information->order_id', $orderId)->first();
+            if ($order && $order->status == PaymentStatus::PROCESSING && $money >= (int) $order->total_price) {
+                $order->update([
+                    'status'               => PaymentStatus::SUCCESS,
+                    'addition_information' => [
+                        'order_id'       => $orderId,
+                        'money'          => $money,
+                        'transaction_id' => $transId,
+                    ],
+                ]);
+                $dataReturn = [
+                    'resultCode' => 200,
+                    'message'    => 'Success',
+                    'orderId'    => $orderId,
+                ];
+
+                NotificationPayment::dispatch($order);
+            } else {
+                $dataReturn = [
+                    'resultCode' => 400,
+                    'message'    => 'Transaction processed',
+                    'orderId'    => $orderId,
+                ];
+            }
+        } else {
+            $dataReturn = [
+                'resultCode' => 200,
+                'message'    => 'Transaction failed',
+                'orderId'    => $orderId,
+            ];
+        }
+
+        END:
+        return response()->json($dataReturn);
+    }
+
     /**
      * Xử lý thanh toán
      *
@@ -230,42 +293,57 @@ class CheckoutController extends Controller
 //                );
 
                 try {
-                    $vaClient = new VA();
-                    $response = $vaClient->registerVirtualAccount(
-                        accName   : 'CONG THANH TOAN',
-                        orderId   : 'create'.rand(1, 99).time(),
-                        amountMin : $order->total_price,
-                        amountMax : $order->total_price,
-                        expireDate: Carbon::now()->addDay()->format('Y-m-d H:i:s')
-                    );
+                    $momoPayment = new MomoPayment(config('momo-payment.environment'));
+                    $orderId     = 'create_'.$order->id.'_'.time();
+                    $response    = $momoPayment->createRequest([
+                        'orderId'   => $orderId,
+                        'amount'    => $order->total_price,
+                        'requestId' => rand(1, 99).time(),
+                        'returnUrl' => route('order.confirmation', ['orderId' => $order->id]),
+                        'notifyUrl' => config('app.webhook')."/api/checkout/result-momo"
+                    ]);
+                    $paymentUrl  = $response->getPayUrl();
 
-                    $dataRequest = [
-                        'acc_no'          => $response['AccountInfo']['BANK']['AccNo'],
-                        'acc_name'        => $response['AccountInfo']['BANK']['AccName'],
-                        'bank_short_name' => $response['AccountInfo']['BANK']['BankShortName'],
-                        'bank_name'       => $response['AccountInfo']['BANK']['BankName'],
-                        'bank_branch'     => $response['AccountInfo']['BANK']['BankBranch'],
-                        'collect_min'     => $response['CollectAmountMin'],
-                        'collect_max'     => $response['CollectAmountMax'],
-                        'expire_date'     => $response['ExpireDate'],
-                        'qr_string'       => $response['AccountInfo']['BANK']['QrPath'],
-                    ];
+//                    $vaClient = new VA();
+//                    $response = $vaClient->registerVirtualAccount(
+//                        accName   : 'CONG THANH TOAN',
+//                        orderId   : 'create'.rand(1, 99).time(),
+//                        amountMin : $order->total_price,
+//                        amountMax : $order->total_price,
+//                        expireDate: Carbon::now()->addDay()->format('Y-m-d H:i:s')
+//                    );
+//
+//                    $dataRequest = [
+//                        'acc_no'          => $response['AccountInfo']['BANK']['AccNo'],
+//                        'acc_name'        => $response['AccountInfo']['BANK']['AccName'],
+//                        'bank_short_name' => $response['AccountInfo']['BANK']['BankShortName'],
+//                        'bank_name'       => $response['AccountInfo']['BANK']['BankName'],
+//                        'bank_branch'     => $response['AccountInfo']['BANK']['BankBranch'],
+//                        'collect_min'     => $response['CollectAmountMin'],
+//                        'collect_max'     => $response['CollectAmountMax'],
+//                        'expire_date'     => $response['ExpireDate'],
+//                        'qr_string'       => $response['AccountInfo']['BANK']['QrPath'],
+//                    ];
                 } catch (GuzzleException|CollectionRequestException|SignFailedException) {
                     $dataRequest = [];
+                    $paymentUrl  = null;
                 }
 
-                if (!empty($dataRequest)) {
-                    $orderId = Arr::get($dataRequest, 'acc_no');
+//                if (!empty($dataRequest)) {
+                if (!empty($paymentUrl)) {
+//                    $orderId = Arr::get($dataRequest, 'acc_no');
 
                     $order->update([
                         'addition_information' => [
                             'order_id' => $orderId,
-                        ]
+                        ],
+                        'status'               => PaymentStatus::PROCESSING
                     ]);
                     DB::commit();
-                    return to_route('checkout.transfer', [
-                        'd' => Crypt::encryptString(json_encode($dataRequest, JSON_UNESCAPED_UNICODE)),
-                    ]);
+                    return redirect()->to($paymentUrl);
+//                    return to_route('checkout.transfer', [
+//                        'd' => Crypt::encryptString(json_encode($dataRequest, JSON_UNESCAPED_UNICODE)),
+//                    ]);
                 }
                 return redirect()->back()->with([
                     'error' => 'Lỗi khởi tạo giao dịch',

@@ -28,6 +28,8 @@ return [
 
     'env' => env('APP_ENV', 'production'),
 
+    'schema' => env('APP_SCHEMA', 'http'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Debug Mode
@@ -52,7 +54,8 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url'     => env('APP_URL', 'http://localhost'),
+    'webhook' => env('APP_URL_WEBHOOK', 'http://localhost'),
 
     /*
     |--------------------------------------------------------------------------
@@ -78,7 +81,7 @@ return [
     |
     */
 
-    'locale' => env('APP_LOCALE', 'en'),
+    'locale' => 'vi',
 
     'fallback_locale' => env('APP_FALLBACK_LOCALE', 'en'),
 
@@ -120,7 +123,7 @@ return [
 
     'maintenance' => [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
-        'store' => env('APP_MAINTENANCE_STORE', 'database'),
+        'store'  => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
 ];

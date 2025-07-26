@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Http\Middleware\Role;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
 
@@ -22,6 +23,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        URL::forceScheme(config('app.schema', 'http'));
+
         // Đăng ký middleware tại đây
         $this->app['router']->aliasMiddleware('role', Role::class);
         

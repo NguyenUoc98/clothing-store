@@ -68,8 +68,8 @@
                         </p>
                     </td>
                     <td class="whitespace-nowrap !text-nowrap text-right font-semibold text-red-600"><span>{{ number_format($order->total_price, 0, ',', '.') }}</span></td>
-                    <td class="text-center">{{ $order->status->name }}</td>
-                    <td class="text-center">{{ $order->type->name }}</td>
+                    <td class="text-center">{{ $order->status->description() }}</td>
+                    <td class="text-center">{{ $order->type->description() }}</td>
                     <td class="max-w-md">
                         <ul class="ml-4 list-inside list-disc">
                             @foreach($order->addition_information ?: [] as $key => $value)

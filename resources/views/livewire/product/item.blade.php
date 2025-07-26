@@ -27,82 +27,75 @@
             </p>
 
             <div class="space-y-4">
-                <div class="flex gap-14">
-                    @if(!empty(explode(',', $product->size)))
-                        <div class="space-y-4">
-                            <h3 class="font-bold text-xl font-[Time]">Kích thước:</h3>
-                            <div class="flex gap-4">
-                                @foreach(explode(',', $product->size) as $size)
-                                    <p @class([
+                @if($product->stock < 1)
+                    <p class="text-red-500 italic">Sản phẩm đã hết hàng</p>
+                @else
+                    <div class="flex gap-14">
+                        @if(!empty(explode(',', $product->size)))
+                            <div class="space-y-4">
+                                <h3 class="font-bold text-xl font-[Time]">Kích thước:</h3>
+                                <div class="flex gap-4">
+                                    @foreach(explode(',', $product->size) as $size)
+                                        <p @class([
                                         "p-2 h-10 w-10 text-center border cursor-pointer",
                                         "bg-black text-white" => $size == $productSize
                                       ])
-                                       wire:click="$set('productSize', '{{$size}}')">
-                                        {{ $size }}
-                                    </p>
-                                @endforeach
+                                           wire:click="$set('productSize', '{{$size}}')">
+                                            {{ $size }}
+                                        </p>
+                                    @endforeach
+                                </div>
                             </div>
-                        </div>
-                    @endif
+                        @endif
 
-                    @if(!empty(explode(',', $product->color)))
-                        <div class="space-y-4">
-                            <h3 class="font-bold text-xl font-[Time]">Màu sắc:</h3>
-                            <div class="flex gap-4">
-                                @foreach(explode(',', $product->color) as $color)
-                                    <p @class([
+                        @if(!empty(explode(',', $product->color)))
+                            <div class="space-y-4">
+                                <h3 class="font-bold text-xl font-[Time]">Màu sắc:</h3>
+                                <div class="flex gap-4">
+                                    @foreach(explode(',', $product->color) as $color)
+                                        <p @class([
                                         "p-2 h-10 text-center border cursor-pointer",
                                         "bg-black text-white" => $color == $productColor
                                       ])
-                                       wire:click="$set('productColor', '{{$color}}')">
-                                        {{ $color }}
-                                    </p>
-                                @endforeach
+                                           wire:click="$set('productColor', '{{$color}}')">
+                                            {{ $color }}
+                                        </p>
+                                    @endforeach
+                                </div>
                             </div>
-                        </div>
-                    @endif
-                </div>
-                <div class="space-y-4">
-                    <h3 class="font-bold text-xl font-[Time]">Số lượng:</h3>
-                    <div class="flex gap-4 items-center">
-                        @if($product->stock < 1)
-                            <p class="text-red-500 italic">Sản phẩm đã hết hàng</p>
-                        @else
-                        <div class="flex gap-3 items-center">
-                            <i @if($quantity > 1) wire:click="$set('quantity', Math.max(1, $wire.quantity - 1))" class="cursor-pointer" @else class="text-gray-400 cursor-not-allowed" @endif>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-                                </svg>
-                            </i>
-                            <input
-                                    min="1"
-                                    max="{{ $product->stock }}"
-                                    type="number"
-                                    inputmode="numeric"
-                                    class="h-10 w-10 text-center border leading-9 select-none"
-                                    wire:model.live="quantity"
-                            />
-                            <i @if($quantity < $product->stock) wire:click="$set('quantity', Math.min({{$product->stock}}, $wire.quantity + 1))" class="cursor-pointer" @else class="text-gray-400 cursor-not-allowed" @endif>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-                                </svg>
-                            </i>
-                        </div>
                         @endif
-                        <button
-                                @if($product->stock < 1)
-                                    class="bg-black/70 text-white px-4 py-2 cursor-not-allowed select-none"
-                                    disabled
-                                @else
-                                wire:click="addToCard()"
-                                class="bg-black text-white hover:bg-black/70 px-4 py-2 cursor-pointer select-none"
-                                @endif
-                        >
-                            <i class="fa-solid fa-cart-shopping"></i>
-                            Thêm vào giỏ hàng
-                        </button>
                     </div>
-                </div>
+                    <div class="space-y-4">
+                        <h3 class="font-bold text-xl font-[Time]">Số lượng:</h3>
+                        <div class="flex gap-4 items-center">
+
+                            <div class="flex gap-3 items-center">
+                                <i @if($quantity > 1) wire:click="$set('quantity', Math.max(1, $wire.quantity - 1))" class="cursor-pointer" @else class="text-gray-400 cursor-not-allowed" @endif>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                                    </svg>
+                                </i>
+                                <input
+                                        min="1"
+                                        max="{{ $product->stock }}"
+                                        type="number"
+                                        inputmode="numeric"
+                                        class="h-10 w-10 text-center border leading-9 select-none"
+                                        wire:model.live="quantity"
+                                />
+                                <i @if($quantity < $product->stock) wire:click="$set('quantity', Math.min({{$product->stock}}, $wire.quantity + 1))" class="cursor-pointer" @else class="text-gray-400 cursor-not-allowed" @endif>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                                    </svg>
+                                </i>
+                            </div>
+                            <button wire:click="addToCard()" class="bg-black text-white hover:bg-black/70 px-4 py-2 cursor-pointer select-none">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                                Thêm vào giỏ hàng
+                            </button>
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
     </section>

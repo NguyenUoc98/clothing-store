@@ -15,10 +15,12 @@
         "laravel/reverb": "^1.0",
         "laravel/tinker": "^2.9",
         "livewire/livewire": "^3.6",
+        "php-http/guzzle7-adapter": "^1.1",
         "simplesoftwareio/simple-qrcode": "^4.2",
         "symfony/yaml": "^7.2",
         "unisharp/laravel-filemanager": "^2.9",
-        "uocnv/baokim-payment": "^1.0"
+        "uocnv/baokim-payment": "^1.0",
+        "uocnv/momo-payment": "^1.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
