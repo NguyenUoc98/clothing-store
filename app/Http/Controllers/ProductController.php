@@ -170,8 +170,8 @@ class ProductController extends Controller
     // Xóa sản phẩm
     public function destroy($id)
     {
-        $product = Product::findOrFail($id);
-        $product->delete();
+        $product = Product::query()->findOrFail($id);
+        $product->update(['stock' => 0]);
 
         return redirect()->route('products.index')->with('success', 'Sản phẩm đã được xóa.');
     }
