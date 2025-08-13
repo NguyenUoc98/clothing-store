@@ -17,6 +17,7 @@ class ProductController extends Controller
         $c      = $request->get('c');
 
         $query = Product::query()->with('category')
+            ->where('stock', '>', 0)
             ->orderBy('id', 'desc');
         if ($search) {
             $search = \Str::lower($search);
