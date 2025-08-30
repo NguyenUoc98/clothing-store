@@ -10,21 +10,18 @@
             <h3 class="mb-2 text-lg font-bold">Thông tin đơn hàng</h3>
             <p><b>Mã đơn hàng:</b> {{ $order->order_number }}</p>
             <p><b>Ngày đặt hàng:</b> {{ $order->created_at->format('d/m/Y H:i') }}</p>
-            <p><b>Phương thức thanh toán:</b> {{ $order->type == \App\Enum\PaymentType::COD->value ? 'Thanh toán khi nhận hàng (COD)' : 'Thanh toán online' }}</p>
+            <p><b>Phương thức thanh toán:</b> {{ $order->type->description() }}</p>
             <p>
                 <b>Trạng thái đơn hàng:</b>
                 @switch($order->status) 
                     @case(\App\Enum\PaymentStatus::INIT)
-                    <b class="rounded-full bg-blue-500 px-3 py-1 text-white text-xs">Khởi tạo</b>
-                    @break 
-                    @case(\App\Enum\PaymentStatus::PROCESSING)
-                    <b class="rounded-full bg-yellow-400 px-3 py-1 text-white text-xs">Đang xử lý</b>
+                    <b class="rounded-full bg-blue-500 px-3 py-1 text-white text-xs">{{ $order->status->description() }}</b>
+                    @break
+                    @case(\App\Enum\PaymentStatus::SHIPPING)
+                    <b class="rounded-full bg-yellow-400 px-3 py-1 text-white text-xs">{{ $order->status->description() }}</b>
                     @break 
                     @case(\App\Enum\PaymentStatus::SUCCESS)
-                    <b class="rounded-full bg-green-600 px-3 py-1 text-white text-xs">Thành công</b>
-                    @break 
-                    @case(\App\Enum\PaymentStatus::ERROR)
-                    <b class="rounded-full bg-red-600 px-3 py-1 text-white text-xs">Lỗi</b>
+                    <b class="rounded-full bg-green-600 px-3 py-1 text-white text-xs">{{ $order->status->description() }}</b>
                     @break
                 @endswitch
             </p>

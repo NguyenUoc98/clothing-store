@@ -97,8 +97,8 @@
                             <p @class([
                                     'uppercase',
                                     'text-green-500' => $cartProcessed->order->status == \App\Enum\PaymentStatus::SUCCESS,
-                                    'text-yellow-500' => $cartProcessed->order->status == \App\Enum\PaymentStatus::PROCESSING,
-                                    'text-red-500' => $cartProcessed->order->status == \App\Enum\PaymentStatus::ERROR,
+                                    'text-yellow-500' => $cartProcessed->order->status == \App\Enum\PaymentStatus::SHIPPING,
+                                    'text-blue-500' => $cartProcessed->order->status == \App\Enum\PaymentStatus::INIT,
                             ])>
                                 {{ __($cartProcessed->order->status->description()) }}</p>
                         </div>

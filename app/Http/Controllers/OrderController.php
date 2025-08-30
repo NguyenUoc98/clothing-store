@@ -40,6 +40,13 @@ class OrderController extends Controller
         }
         $dataUpdate['addition_information'] = $information;
 
+        // Trừ số lượng sản phẩm
+        if ($order->status == PaymentStatus::INIT && $dataUpdate['status'] != PaymentStatus::INIT) {
+            foreach ($order->cart->items as $item){
+                $item->product->decrement('stock', $item->quantity);
+            }
+        }
+
         $order->update($dataUpdate);
 
         // Gửi email xác nhận nếu trạng thái là 'shipping'
