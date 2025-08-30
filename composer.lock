@@ -4541,66 +4541,6 @@
             "time": "2024-12-14T21:03:54+00:00"
         },
         {
-            "name": "phpviet/omnipay-vnpay",
-            "version": "dev-master",
-            "dist": {
-                "type": "path",
-                "url": "packages/omnipay-vnpay",
-                "reference": "76954c522e372c23eac5a36704bd5b8bd998743a"
-            },
-            "require": {
-                "omnipay/common": "^3.0",
-                "php": "^7.1 | ^8.0"
-            },
-            "require-dev": {
-                "omnipay/tests": "^3.0",
-                "scrutinizer/ocular": "^1.5"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Omnipay\\VNPay\\": "src"
-                }
-            },
-            "autoload-dev": {
-                "psr-4": {
-                    "Omnipay\\VNPay\\Tests\\": "tests"
-                }
-            },
-            "scripts": {
-                "test": [
-                    "\"vendor/bin/phpunit\""
-                ]
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Vuong Xuong Minh",
-                    "email": "vuongxuongminh@gmail.com"
-                }
-            ],
-            "description": "Thư viện hổ trợ tích hợp cổng thanh toán VNPay.",
-            "homepage": "https://github.com/phpviet/omnipay-vnpay",
-            "keywords": [
-                "payment",
-                "payment-gateway",
-                "phpviet",
-                "vietnam-payment",
-                "vietnam-payment-gateway",
-                "vnpay"
-            ],
-            "transport-options": {
-                "relative": true
-            }
-        },
-        {
             "name": "psr/clock",
             "version": "1.0.0",
             "source": {
