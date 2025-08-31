@@ -111,15 +111,19 @@
                             </div>
                         </div>
                     @else
-                        <p class="flex gap-2">
-                            <b class="flex items-center gap-1">
+                        <div class="flex gap-2">
+                            <label class="flex items-center gap-1 font-bold" for="status">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 24 24" class="shrink-0 size-5">
                                     <path fill="currentColor" d="M13.82 3a.5.5 0 0 0-.847-.36l-1.778 1.71a35.551 35.551 0 0 0-6.63 8.715a.5.5 0 0 0 .435.746h4.31V21a.5.5 0 0 0 .837.37l.795-.725a35.498 35.498 0 0 0 7.001-8.78l.492-.87a.5.5 0 0 0-.435-.747h-4.18V3Z"/>
                                 </svg>
                                 Trạng thái:
-                            </b>
-                            {{ $order->status->description() }}
-                        </p>
+                            </label>
+                            <select name="status" id="status" class="cursor-pointer">
+                                @foreach(\App\Enum\PaymentStatus::cases() as $status)
+                                    <option value="{{ $status->value }}" @selected($status == $order->status)>{{ $status->description() }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     @endif
 
                     <label class="flex items-center gap-1 font-bold" for="note">

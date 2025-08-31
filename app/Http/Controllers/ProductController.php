@@ -49,10 +49,8 @@ class ProductController extends Controller
     {
         $products_39_42 = Product::whereBetween('id', [39, 42])->get();
         $products_43_46 = Product::whereBetween('id', [43, 46])->get();
-        $products_48_50 = Product::whereBetween('id', [48, 50])->get();
-        $products_51_53 = Product::whereBetween('id', [51, 53])->get();
-        $product_47     = Product::find(47);
-        return view('product', compact('products_39_42', 'products_43_46', 'product_47', 'products_48_50', 'products_51_53'));
+        $products       = Product::query()->where('stock', '>', 0)->latest('updated_at')->paginate(perPage: 8);
+        return view('product', compact('products_39_42', 'products_43_46', 'products'));
     }
 
     // Hiển thị form thêm sản phẩm

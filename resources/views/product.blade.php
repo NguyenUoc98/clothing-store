@@ -73,53 +73,27 @@
         </div>
     </section>
     <section>
-        <div class="container1 !grid !grid-cols-4 !container !mx-auto !gap-4 !max-w-7xl">
-            <div class="card1 row-span-2">
-                <div class="card1 !block h-full">
-                    <div class="content1 h-full !justify-between">
-                        <div class="aspect-[1/2] imgBx !h-fit">
-                            <img src="{{ asset('storage/' . $product_47->image) }}" alt="{{ $product_47->name }}">
-                        </div>
-                        <div class="contentBx !relative !bottom-0 w-full p-4">
-                            <a href="{{ route('product.detail', $product_47->id) }}">
-                                <h3 class="!leading-7">{{ $product_47->name }}</h3>
-                                <p class="!text-lg">{{ number_format($product_47->price, 0, ',', '.') }} VND</p>
-                            </a>
+        <div class="container1 !container !mx-auto !max-w-7xl">
+            <div class="!grid !grid-cols-4 !gap-4">
+                @foreach($products as $product)
+                    <div class="card1 !block h-full">
+                        <div class="content1 h-full !justify-between">
+                            <div class="aspect-square imgBx !h-fit">
+                                <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
+                            </div>
+                            <div class="contentBx !relative !bottom-0 w-full p-4">
+                                <a href="{{ route('product.detail', $product->id) }}">
+                                    <h3 class="!leading-7">{{ $product->name }}</h3>
+                                    <p class="!text-lg">{{ number_format($product->price, 0, ',', '.') }} VND</p>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                @endforeach
             </div>
-
-            @foreach($products_48_50 as $product)
-                <div class="card1 !block h-full">
-                    <div class="content1 h-full !justify-between">
-                        <div class="aspect-square imgBx !h-fit">
-                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
-                        </div>
-                        <div class="contentBx !relative !bottom-0 w-full p-4">
-                            <a href="{{ route('product.detail', $product->id) }}">
-                                <h3 class="!leading-7">{{ $product->name }}</h3>
-                                <p class="!text-lg">{{ number_format($product->price, 0, ',', '.') }} VND</p>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-            @foreach($products_51_53 as $product)
-                <div class="card1 !block h-full">
-                    <div class="content1 h-full !justify-between">
-                        <div class="aspect-square imgBx !h-fit">
-                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
-                        </div>
-                        <div class="contentBx !relative !bottom-0 w-full p-4">
-                            <a href="{{ route('product.detail', $product->id) }}">
-                                <h3 class="!leading-7">{{ $product->name }}</h3>
-                                <p class="!text-lg">{{ number_format($product->price, 0, ',', '.') }} VND</p>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
+            <div class="w-full">
+                {!! $products->links() !!}
+            </div>
         </div>
 
     </section>
