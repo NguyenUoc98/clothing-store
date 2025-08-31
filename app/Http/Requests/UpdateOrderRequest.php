@@ -25,11 +25,11 @@ class UpdateOrderRequest extends FormRequest
                 Rule::enum(PaymentStatus::class),
             ],
             'shipping_unit' => [
-                Rule::requiredIf($order->type == \App\Enum\PaymentType::COD),
+                Rule::requiredIf($order->type == \App\Enum\PaymentType::COD && $order->status == \App\Enum\PaymentStatus::SHIPPING),
                 'string',
             ],
             'shipping_code' => [
-                Rule::requiredIf($order->type == \App\Enum\PaymentType::COD),
+                Rule::requiredIf($order->type == \App\Enum\PaymentType::COD && $order->status == \App\Enum\PaymentStatus::SHIPPING),
                 'string',
             ],
             'note'          => 'nullable|string',
