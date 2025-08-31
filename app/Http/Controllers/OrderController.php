@@ -41,7 +41,7 @@ class OrderController extends Controller
         $dataUpdate['addition_information'] = $information;
 
         // Trừ số lượng sản phẩm
-        if ($order->status == PaymentStatus::INIT && $dataUpdate['status'] != PaymentStatus::INIT && $dataUpdate['status'] != PaymentStatus::CANCEL) {
+        if ($order->status == PaymentStatus::INIT && $dataUpdate['status'] != PaymentStatus::INIT->value && $dataUpdate['status'] != PaymentStatus::CANCEL->value) {
             foreach ($order->cart->items as $item) {
                 $item->product->decrement('stock', $item->quantity);
             }
