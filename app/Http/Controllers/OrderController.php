@@ -31,12 +31,11 @@ class OrderController extends Controller
             $information['note'] = $request->note;
         }
 
-        $dataUpdate = [];
+        $dataUpdate                   = $request->only('status');
 
         if ($order->type == PaymentType::COD) {
             $information['shipping_unit'] = $request->shipping_unit;
             $information['shipping_code'] = $request->shipping_code;
-            $dataUpdate                   = $request->only('status');
         }
         $dataUpdate['addition_information'] = $information;
 
