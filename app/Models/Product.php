@@ -10,14 +10,19 @@ class Product extends Model
 {
     protected $fillable = [
         'name',
-        'description', 
-        'category_id', 
+        'description',
+        'category_id',
         'image',
-        'size', 
+        'size',
         'price',
         'stock',
         'color',
-        'product_code'
+        'active_status',
+        'product_code',
+    ];
+
+    protected $casts = [
+        'active_status' => 'boolean',
     ];
 
     // Quan hệ với OrderItem
@@ -29,8 +34,8 @@ class Product extends Model
     public function transactions()
     {
         return $this->belongsToMany(Transaction::class, 'transaction_product')
-                    ->withPivot('quantity', 'price') // Lấy thông tin bổ sung từ bảng trung gian
-                    ->withTimestamps(); // Sử dụng timestamps nếu cần
+            ->withPivot('quantity', 'price') // Lấy thông tin bổ sung từ bảng trung gian
+            ->withTimestamps(); // Sử dụng timestamps nếu cần
     }
 
     /**

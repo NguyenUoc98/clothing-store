@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Product;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 
 class ProductController extends Controller
@@ -17,10 +18,10 @@ class ProductController extends Controller
         $c      = $request->get('c');
 
         $query = Product::query()->with('category')
-            ->where('stock', '>', 0)
+            ->whereActiveStatus(true)
             ->orderBy('id', 'desc');
         if ($search) {
-            $search = \Str::lower($search);
+            $search = Str::lower($search);
             $query  = $query
                 ->whereRaw("LOWER(name) REGEXP '{$search}'");
         }
@@ -36,10 +37,10 @@ class ProductController extends Controller
     // Hiển thị danh sách sản phẩm cho trang chủ
     public function home()
     {
-        $products_35_38 = Product::whereBetween('id', [35, 38])->get();
-        $products_39_42 = Product::whereBetween('id', [39, 42])->get();
-        $products_43_46 = Product::whereBetween('id', [43, 46])->get();
-        $products_47_53 = Product::whereBetween('id', [47, 53])->get();
+        $products_35_38 = Product::whereBetween('id', [35, 38])->whereActiveStatus(true)->get();
+        $products_39_42 = Product::whereBetween('id', [39, 42])->whereActiveStatus(true)->get();
+        $products_43_46 = Product::whereBetween('id', [43, 46])->whereActiveStatus(true)->get();
+        $products_47_53 = Product::whereBetween('id', [47, 53])->whereActiveStatus(true)->get();
 
         return view('home', compact('products_35_38', 'products_39_42', 'products_43_46', 'products_47_53'));
     }
@@ -47,9 +48,15 @@ class ProductController extends Controller
     // Hiển thị danh sách sản phẩm cho trang sản phẩm
     public function product()
     {
-        $products_39_42 = Product::whereBetween('id', [39, 42])->get();
-        $products_43_46 = Product::whereBetween('id', [43, 46])->get();
-        $products       = Product::query()->where('stock', '>', 0)->latest('updated_at')->paginate(perPage: 8);
+        $products_39_42 = Product::whereBetween('id', [39, 42])
+            ->whereActiveStatus(true)->get();
+        $products_43_46 = Product::whereBetween('id', [43, 46])
+            ->whereActiveStatus(true)->get();
+        $products       = Product::query()
+            ->where('stock', '>', 0)
+            ->whereActiveStatus(true)
+            ->latest('updated_at')
+            ->paginate(perPage: 8);
         return view('product', compact('products_39_42', 'products_43_46', 'products'));
     }
 
@@ -170,7 +177,7 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $product = Product::query()->findOrFail($id);
-        $product->update(['stock' => 0]);
+        $product->update(['active_status' => false]);
 
         return redirect()->route('products.index')->with('success', 'Sản phẩm đã được xóa.');
     }
@@ -185,7 +192,7 @@ class ProductController extends Controller
     // Hiển thị chi tiết sản phẩm
     public function show($id)
     {
-        $product = Product::findOrFail($id);
+        $product = Product::query()->whereActiveStatus(true)->findOrFail($id);
 
         // Giả sử kích thước và màu sắc được lưu dạng JSON hoặc chuỗi trong DB
         $sizes  = $product->size ? json_decode($product->size, true) : [];
@@ -193,45 +200,4 @@ class ProductController extends Controller
 
         return view('productItem', compact('product', 'sizes', 'colors'));
     }
-
-
-    public function addToCart(Request $request)
-    {
-        // Validate input
-        $validated = $request->validate([
-            'product_id' => 'required|exists:products,id',
-            'size'       => 'required|string',
-            'color'      => 'required|string',
-            'quantity'   => 'required|integer|min:1',
-        ]);
-
-        // Lấy thông tin sản phẩm
-        $product = Product::findOrFail($validated['product_id']);
-
-        // Thêm sản phẩm vào giỏ hàng
-        Cart::add([
-            'id'      => $product->id,
-            'name'    => $product->name,
-            'qty'     => $validated['quantity'],
-            'price'   => $product->price,
-            'options' => [
-                'size'  => $validated['size'],
-                'color' => $validated['color'],
-            ],
-        ]);
-
-        return redirect()->back()->with('success', 'Sản phẩm đã được thêm vào giỏ hàng thành công!');
-    }
-
-    public function sizes()
-    {
-        return $this->hasMany(Size::class);
-    }
-
-    public function colors()
-    {
-        return $this->hasMany(Color::class);
-    }
-
-
 }

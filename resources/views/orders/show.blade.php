@@ -3,6 +3,9 @@
 @section('title', "Chi tiết đơn hàng #{$order->id}")
 
 @section('content')
+    @php
+        $status = false;
+    @endphp
     <div class="flex w-full gap-6">
         <div class="w-3/5">
             <p class="mb-3 text-xl">Danh sách sản phẩm</p>
@@ -15,6 +18,9 @@
                             <th>Số lượng</th>
                             <th>Giá</th>
                             <th>Tổng</th>
+                            @if($order->status == \App\Enum\PaymentStatus::INIT)
+                                <th>Trạng thái</th>
+                            @endif
                         </tr>
                         </thead>
                         <tbody>
@@ -24,6 +30,18 @@
                                 <td class="text-center">{{ $item->quantity }}</td>
                                 <td class="text-right font-semibold text-red-600">{{ number_format($item->price, 0, ',', '.') }}</td>
                                 <td class="text-right font-semibold text-red-600">{{ number_format($item->quantity * $item->price, 0, ',', '.') }}</td>
+                                @if($order->status == \App\Enum\PaymentStatus::INIT)
+                                    <td class="text-center">
+                                        @if($item->quantity > $item->product->stock)
+                                            @php
+                                                $status = true;
+                                            @endphp
+                                            <span class="text-red-600">Đã hết hàng</span>
+                                        @else
+                                            <span class="text-green-600">Sẵn hàng</span>
+                                        @endif
+                                    </td>
+                                @endif
                             </tr>
                         @endforeach
                         </tbody>
@@ -31,6 +49,15 @@
                 </div>
             </div>
         </div>
+
+        @php
+            if ($status) {
+                $case = [\App\Enum\PaymentStatus::INIT, \App\Enum\PaymentStatus::CANCEL];
+            } else {
+                $case = \App\Enum\PaymentStatus::cases();
+            }
+        @endphp
+
         <div class="grow">
             <p class="mb-3 text-xl">Thông tin</p>
             <form method="POST" class="card !p-0" action="{{ route('orders.update', ['order' => $order->id]) }}">
@@ -89,7 +116,7 @@
                                 Trạng thái:
                             </label>
                             <select name="status" id="status" class="cursor-pointer">
-                                @foreach(\App\Enum\PaymentStatus::cases() as $status)
+                                @foreach($case as $status)
                                     <option value="{{ $status->value }}" @selected($status == $order->status)>{{ $status->description() }}</option>
                                 @endforeach
                             </select>
@@ -119,7 +146,7 @@
                                 Trạng thái:
                             </label>
                             <select name="status" id="status" class="cursor-pointer">
-                                @foreach(\App\Enum\PaymentStatus::cases() as $status)
+                                @foreach($case as $status)
                                     <option value="{{ $status->value }}" @selected($status == $order->status)>{{ $status->description() }}</option>
                                 @endforeach
                             </select>

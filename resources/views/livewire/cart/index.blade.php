@@ -100,7 +100,7 @@
                                     'text-yellow-500' => $cartProcessed->order->status == \App\Enum\PaymentStatus::SHIPPING,
                                     'text-blue-500' => $cartProcessed->order->status == \App\Enum\PaymentStatus::INIT,
                             ])>
-                                {{ __($cartProcessed->order->status->description()) }}</p>
+                                {{ __($cartProcessed->order->status == \App\Enum\PaymentStatus::CANCEL ? 'Đã hết hàng' : $cartProcessed->order->status->description()) }}</p>
                         </div>
                     </div>
                     <div class="divide-y divide-gray-200">

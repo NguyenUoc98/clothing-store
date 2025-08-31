@@ -6,6 +6,7 @@ use App\Enum\PaymentStatus;
 use App\Enum\PaymentType;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Models\Order;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
@@ -31,7 +32,7 @@ class OrderController extends Controller
             $information['note'] = $request->note;
         }
 
-        $dataUpdate                   = $request->only('status');
+        $dataUpdate = $request->only('status');
 
         if ($order->type == PaymentType::COD) {
             $information['shipping_unit'] = $request->shipping_unit;
@@ -41,7 +42,7 @@ class OrderController extends Controller
 
         // Trừ số lượng sản phẩm
         if ($order->status == PaymentStatus::INIT && $dataUpdate['status'] != PaymentStatus::INIT) {
-            foreach ($order->cart->items as $item){
+            foreach ($order->cart->items as $item) {
                 $item->product->decrement('stock', $item->quantity);
             }
         }
