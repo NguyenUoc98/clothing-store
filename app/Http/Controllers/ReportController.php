@@ -81,12 +81,12 @@ class ReportController extends Controller
     public function productReport()
     {
         $statistics = CartItem::query()
-            ->selectRaw('product_id, SUM(quantity) as count, SUM(price) as money')
-            ->leftJoin('carts', 'cart_items.cart_id', '=', 'carts.id')
-            ->leftJoin('orders', 'carts.id', '=', 'orders.cart_id')
+            ->selectRaw('cart_items.product_id, SUM(cart_items.quantity) as count, SUM(cart_items.quantity * cart_items.price) as money')
+            ->join('products', 'cart_items.product_id', '=', 'products.id')
+            ->join('carts', 'cart_items.cart_id', '=', 'carts.id')
+            ->join('orders', 'carts.id', '=', 'orders.cart_id')
             ->where('orders.status', PaymentStatus::SUCCESS)
-            ->with(['product', 'product.category'])
-            ->groupBy('product_id')
+            ->groupBy('cart_items.product_id')
             ->orderByDesc('money')
             ->orderByDesc('count')
             ->paginate(5);

@@ -26,18 +26,15 @@ class OrderController extends Controller
 
     public function update(UpdateOrderRequest $request, Order $order)
     {
-        $information = [];
+        $information = $order->addition_information;
 
         if ($request->note) {
             $information['note'] = $request->note;
         }
 
-        $dataUpdate = $request->only('status');
-
-        if ($order->type == PaymentType::COD) {
-            $information['shipping_unit'] = $request->shipping_unit;
-            $information['shipping_code'] = $request->shipping_code;
-        }
+        $dataUpdate                         = $request->only('status');
+        $information['shipping_unit']       = $request->shipping_unit;
+        $information['shipping_code']       = $request->shipping_code;
         $dataUpdate['addition_information'] = $information;
 
         // Trừ số lượng sản phẩm

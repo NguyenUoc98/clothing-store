@@ -107,51 +107,35 @@
                         <span class="font-semibold text-red-600">{{ number_format($order->total_price, 0, ',', '.') }}</span>
                     </p>
                     @csrf
-                    @if($order->type == \App\Enum\PaymentType::COD)
-                        <div class="flex gap-2">
-                            <label class="flex items-center gap-1 font-bold" for="status">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 24 24" class="shrink-0 size-5">
-                                    <path fill="currentColor" d="M13.82 3a.5.5 0 0 0-.847-.36l-1.778 1.71a35.551 35.551 0 0 0-6.63 8.715a.5.5 0 0 0 .435.746h4.31V21a.5.5 0 0 0 .837.37l.795-.725a35.498 35.498 0 0 0 7.001-8.78l.492-.87a.5.5 0 0 0-.435-.747h-4.18V3Z"/>
-                                </svg>
-                                Trạng thái:
-                            </label>
-                            <select name="status" id="status" class="cursor-pointer">
-                                @foreach($case as $status)
-                                    <option value="{{ $status->value }}" @selected($status == $order->status)>{{ $status->description() }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <p class="flex items-center gap-1 font-bold">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 16 16" class="shrink-0 size-5">
-                                <path fill="currentColor" fill-rule="evenodd" d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16ZM9 5a1 1 0 1 1-2 0a1 1 0 0 1 2 0ZM7 7a.75.75 0 0 0 0 1.5h.25v2h-1a.75.75 0 0 0 0 1.5h3.5a.75.75 0 0 0 0-1.5h-1V7H7Z" clip-rule="evenodd"/>
+                    <div class="flex gap-2">
+                        <label class="flex items-center gap-1 font-bold" for="status">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 24 24" class="shrink-0 size-5">
+                                <path fill="currentColor" d="M13.82 3a.5.5 0 0 0-.847-.36l-1.778 1.71a35.551 35.551 0 0 0-6.63 8.715a.5.5 0 0 0 .435.746h4.31V21a.5.5 0 0 0 .837.37l.795-.725a35.498 35.498 0 0 0 7.001-8.78l.492-.87a.5.5 0 0 0-.435-.747h-4.18V3Z"/>
                             </svg>
-                            Thông tin thêm:
-                        </p>
-                        <div class="mt-2 ml-6 space-y-2">
-                            <div class="flex items-center gap-2">
-                                <label for="shipping-unit" class="w-32">Đơn vị chuyển <span class="text-red-400">*</span></label>
-                                <input type="text" @class(['grow', '!border-red-300' => $errors->has('shipping_unit')]) name="shipping_unit" id="shipping-unit" value="{{$order->addition_information['shipping_unit'] ?? ''}}"/>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <label for="shipping-code" class="w-32">Mã vận đơn <span class="text-red-400">*</span></label>
-                                <input type="text" @class(['grow', '!border-red-300' => $errors->has('shipping_code')]) name="shipping_code" id="shipping-code" value="{{$order->addition_information['shipping_code'] ?? ''}}"/>
-                            </div>
+                            Trạng thái:
+                        </label>
+                        <select name="status" id="status" class="cursor-pointer">
+                            @foreach($case as $status)
+                                <option value="{{ $status->value }}" @selected($status == $order->status)>{{ $status->description() }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <p class="flex items-center gap-1 font-bold">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 16 16" class="shrink-0 size-5">
+                            <path fill="currentColor" fill-rule="evenodd" d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16ZM9 5a1 1 0 1 1-2 0a1 1 0 0 1 2 0ZM7 7a.75.75 0 0 0 0 1.5h.25v2h-1a.75.75 0 0 0 0 1.5h3.5a.75.75 0 0 0 0-1.5h-1V7H7Z" clip-rule="evenodd"/>
+                        </svg>
+                        Thông tin thêm:
+                    </p>
+                    <div class="mt-2 ml-6 space-y-2">
+                        <div class="flex items-center gap-2">
+                            <label for="shipping-unit" class="w-32">Đơn vị chuyển <span class="text-red-400">*</span></label>
+                            <input type="text" @class(['grow', '!border-red-300' => $errors->has('shipping_unit')]) name="shipping_unit" id="shipping-unit" value="{{$order->addition_information['shipping_unit'] ?? ''}}"/>
                         </div>
-                    @else
-                        <div class="flex gap-2">
-                            <label class="flex items-center gap-1 font-bold" for="status">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 24 24" class="shrink-0 size-5">
-                                    <path fill="currentColor" d="M13.82 3a.5.5 0 0 0-.847-.36l-1.778 1.71a35.551 35.551 0 0 0-6.63 8.715a.5.5 0 0 0 .435.746h4.31V21a.5.5 0 0 0 .837.37l.795-.725a35.498 35.498 0 0 0 7.001-8.78l.492-.87a.5.5 0 0 0-.435-.747h-4.18V3Z"/>
-                                </svg>
-                                Trạng thái:
-                            </label>
-                            <select name="status" id="status" class="cursor-pointer">
-                                @foreach($case as $status)
-                                    <option value="{{ $status->value }}" @selected($status == $order->status)>{{ $status->description() }}</option>
-                                @endforeach
-                            </select>
+                        <div class="flex items-center gap-2">
+                            <label for="shipping-code" class="w-32">Mã vận đơn <span class="text-red-400">*</span></label>
+                            <input type="text" @class(['grow', '!border-red-300' => $errors->has('shipping_code')]) name="shipping_code" id="shipping-code" value="{{$order->addition_information['shipping_code'] ?? ''}}"/>
                         </div>
-                    @endif
+                    </div>
 
                     <label class="flex items-center gap-1 font-bold" for="note">
                         <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 16 16" class="shrink-0 size-5">

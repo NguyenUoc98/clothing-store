@@ -79,6 +79,7 @@
                                 </svg>
                                 <b>Nhập địa chỉ mới</b>
                             </p>
+                            <input type="hidden" name="is_default" value="true">
                             <div class="mt-1 ml-6 grid grid-cols-3 gap-2">
                                 <label for="name" class="font-bold leading-10">
                                     Tên người nhận <span class="text-red-400">*</span>
