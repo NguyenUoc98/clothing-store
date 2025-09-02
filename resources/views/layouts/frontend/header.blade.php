@@ -1,20 +1,13 @@
 <nav class="bg-white sticky top-0 w-full z-10 shadow">
-    <div class="menu flex max-w-7xl !mx-auto items-center !justify-between">
-        <div class="search !w-fit">
-            <input type="text" id="search-box" placeholder="Search products..." autocomplete="off">
-            <ul id="suggestions" class="suggestions-list"></ul>
-            <div class="iconsearch">
-                <i class="fa-solid fa-magnifying-glass"></i>
-            </div>
-        </div>
-        <ul class="!ml-14">
+    <div class="menu max-w-7xl !mx-auto items-center relative">
+        <ul class="!mx-auto">
             <li><a href="{{ route('product.index') }}">Product</a></li>
             <li><a href="{{ route('blog') }}">Blog</a></li>
             <li><a href="{{ route('home') }}" class="!m-0 !px-6"><img src="{{ asset('asset/img/logo.png') }}" alt="Logo" class="anh"></a></li>
             <li><a href="{{ route('about') }}">About</a></li>
             <li><a href="{{ route('contact') }}">Contact</a></li>
         </ul>
-        <div class="icon !m-0" id="menuIcon">
+        <div class="icon !m-0 absolute right-0" id="menuIcon">
             <div class="icon1">
                 <div class="iconsearch1">
                     @guest('customer')
