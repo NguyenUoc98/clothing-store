@@ -53,7 +53,6 @@ class ProductController extends Controller
         $products_43_46 = Product::whereBetween('id', [43, 46])
             ->whereActiveStatus(true)->get();
         $products       = Product::query()
-            ->where('stock', '>', 0)
             ->whereActiveStatus(true)
             ->latest('updated_at')
             ->paginate(perPage: 8);
