@@ -26,10 +26,12 @@ class UpdateOrderRequest extends FormRequest
             ],
             'shipping_unit' => [
                 Rule::requiredIf($order->status == \App\Enum\PaymentStatus::SHIPPING),
+                'nullable',
                 'string',
             ],
             'shipping_code' => [
                 Rule::requiredIf($order->status == \App\Enum\PaymentStatus::SHIPPING),
+                'nullable',
                 'string',
             ],
             'note'          => 'nullable|string',
